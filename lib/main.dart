@@ -25,6 +25,9 @@ Repository repository = new Repository();
                   accentColor: Color.fromRGBO(142, 144, 146, 1),
                   canvasColor: Colors.transparent,
                   fontFamily: 'Montserrat',
+                  focusColor: Color.fromRGBO(255, 143, 52, 1),
+                  cursorColor: Color.fromRGBO(255, 143, 52, 1),
+                  textSelectionColor: Color.fromRGBO(255, 143, 52, 1),
                   textTheme: TextTheme(body1: TextStyle(color: Colors.white))),
               home:   /* (tk!="" && tk!=null) ?ContainerHome(): */LoginScreen(),
               routes: <String, WidgetBuilder> {

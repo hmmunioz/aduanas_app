@@ -23,10 +23,11 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
     Navigator.pushNamed(context, "/recoverpasscode");
   }
   void addEmailRecoverToSink(String value, Bloc bloc){
-   bloc.recoverPhone.changePhoneRecover(value);
+   bloc.recoverEmail.changeEmailRecover(value);
   }
-  void sumbitSms(Bloc bloc, BuildContext context){
-    bloc.smsService.submit(context);
+  void sumbitSms(Bloc bloc, BuildContext context){  
+    Navigator.pushNamed(context, "/recoverpasscode");
+    //bloc.smsService.submit(context);
   }
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,80 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
     final bloc = Provider.of<Bloc>(context);
     bloc.initSmsService();
    
-    return Stack(
+    return
+    Stack(
+      children: <Widget>[
+               Scaffold(
+                     resizeToAvoidBottomInset: true,
+            backgroundColor: Colors.white,
+            body: Stack(
+              children: <Widget>[
+                CurvedShape(),             
+               AppTitle(
+                  inputText: "RCB logistic!",
+                   withAppBar: false,
+                ),
+                AppRoundIcon(),
+                Container(
+                    padding: EdgeInsets.symmetric(horizontal: 44.0),
+                    height: MediaQuery.of(context).size.height/0.5,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 2.88,
+                          ),                                  
+                            Text("Recuperar contraseña",
+                                style: TextStyle(
+                                    color:Theme.of(context).accentColor,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700)),
+                            SizedBox(
+                              height: 2.0,
+                            ),
+                           SizedBox(
+                        height: 20.0,
+                      ),
+                      AppTextField(                 
+                        addObsucre: false,
+                        inputType: TextInputType.emailAddress,
+                        streamDataTransform: bloc.recoverEmail.getEmailRecover,      
+                        onChanged: (value)=> addEmailRecoverToSink(value, bloc),             
+                        inputText: "CORREO ELECTRONICO",
+                        inputIcon: Icon(
+                          Icons.alternate_email,
+                          color: Theme.of(context).accentColor,
+                        ),
+                        inputColor: Theme.of(context).accentColor,
+                      ),
+                      SizedBox(
+                        height: 7.0,
+                      ),
+                      AppButton(
+                        streamDataTransform: bloc.recoverEmail.getEmailRecover,
+                        color: Color.fromRGBO(255, 143, 52, 1),
+                          invertColors: false,
+                        name: "ENVIAR",
+                        onPressed: ()=> sumbitSms(bloc, context),
+                        /* _con.submit() */
+                      )
+                         ],
+                      ),
+                    )
+                   ),
+              ],
+            )
+          ),
+      SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState), 
+      ],
+    );
+  
+    
+    
+    
+    /* Stack(
       children: <Widget>[
         Scaffold(
             backgroundColor: Colors.white,
@@ -73,13 +147,12 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
                       SizedBox(
                         height: 30.0,
                       ),
-                      AppTextField(
-                     /*    controller: _con.phoneController, */
+                      AppTextField(                 
                         addObsucre: false,
                         inputType: TextInputType.emailAddress,
-                        streamDataTransform: bloc.recoverPhone.getPhoneRecover,      
+                        streamDataTransform: bloc.recoverEmail.getEmailRecover,      
                         onChanged: (value)=> addEmailRecoverToSink(value, bloc),             
-                        inputText: "NUMERO TELEFONICO",
+                        inputText: "CORREO ELECTRONICO",
                         inputIcon: Icon(
                           Icons.phone_android,
                           color: Theme.of(context).accentColor,
@@ -90,7 +163,7 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
                         height: 7.0,
                       ),
                       AppButton(
-                        streamDataTransform: bloc.recoverPhone.getPhoneRecover,
+                        streamDataTransform: bloc.recoverEmail.getEmailRecover,
                         color: Color.fromRGBO(255, 143, 52, 1),
                           invertColors: false,
                         name: "ENVIAR",
@@ -106,5 +179,5 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
         SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState), 
       ],
     );
-  }
+   */}
 }

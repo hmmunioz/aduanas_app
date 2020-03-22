@@ -30,4 +30,13 @@ Future<int> addTramite(TramiteModel tramiteModel) async{
      }     
      return null;
    }
+
+    Future<int> updateTramite(TramiteModel tramiteModel) async {
+    print("Este es el estado");
+    print(tramiteModel.getEstado);
+    Database db = await database;
+    tramiteModel.getEstado==1?tramiteModel.setEstado(2):tramiteModel.setEstado(3);    
+    return await db.update(tableName, tramiteModel.toJson(),
+        where: 'id = ?', whereArgs: [tramiteModel.getId]);
+  }  
 }

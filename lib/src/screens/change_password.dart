@@ -4,6 +4,7 @@ import 'package:flutter_chat/src/models/password_model.dart';
 import 'package:flutter_chat/src/widgets/appButton.dart';
 import 'package:flutter_chat/src/widgets/appCurvedShape.dart';
 import 'package:flutter_chat/src/widgets/appRoundIcon.dart';
+import 'package:flutter_chat/src/widgets/appSpinner.dart';
 import 'package:flutter_chat/src/widgets/appTextField.dart';
 import 'package:flutter_chat/src/widgets/appTitle.dart';
 import 'package:provider/provider.dart';
@@ -34,44 +35,38 @@ class _ChangePasswordState extends State<ChangePassword> {
        final bloc = Provider.of<Bloc>(context);
     return Stack(
       children: <Widget>[
-        Scaffold(
+             Scaffold(
+            resizeToAvoidBottomInset: true,
             backgroundColor: Colors.white,
             body: Stack(
               children: <Widget>[
-                CurvedShape(),
-                AppTitle(
+                CurvedShape(),   
+                  SizedBox(height: 10.0,),          
+                  AppTitle(
                   inputText: "RCB logistic!",
+                   withAppBar: false,
                 ),
                 AppRoundIcon(),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 44.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              height: 280.0,
-                            ),
-                            Text("Recuperar contraseña",
+                    padding: EdgeInsets.symmetric(horizontal: 44.0),
+                    height: MediaQuery.of(context).size.height/0.40,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 2.70,
+                          ),                                  
+                               Text("Recuperar contraseña",
                                 style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w700)),
-                            SizedBox(
-                              height: 2.0,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      AppTextField(
-                      
+                          SizedBox(
+                        height:20.0,
+                         ),
+                            AppTextField(                      
                         addObsucre: true,
                         onChanged:(value) => setNewPass(value, bloc) /* (value)=> setNewPass(value, bloc) */,
                         inputText: "NUEVA CONTRASEÑA",
@@ -81,31 +76,34 @@ class _ChangePasswordState extends State<ChangePassword> {
                         ),
                         inputColor: Theme.of(context).accentColor,
                       ),
-                      SizedBox(
-                        height: 2.0,
-                      ),
-                      AppTextField(                         
+                SizedBox(
+                  height: 10.0,
+                ),
+                  AppTextField(                         
                         addObsucre: true,
                         onChanged:(value) =>  setRepeatNewPass(value, bloc)/* (value, bloc) */,
-                        inputText: "CONFIRMAR CONTRASEÑA",
+                        inputText: "REPETIR CONTRASEÑA",
                         inputIcon: Icon(Icons.vpn_key, color: Colors.white),
                         inputColor: Theme.of(context).accentColor,
                       ),
-                      SizedBox(
-                        height: 7.0,
-                      ),
-                      AppButton(
+                SizedBox(
+                  height: 10.0,
+                ),
+                AppButton(
                         streamDataTransform: bloc.changePassword.getChangePassword,
                         color:Theme.of(context).primaryColor,
                         name: "CAMBIAR",
                         invertColors: false,
                         onPressed: () { print("CAMBIAAR CLAVEE");},
                       ),
-                    ],
-                  ),
-                ),
+                         ],
+                      ),
+                    )
+                   ),
               ],
-            ))
+            )
+          ),
+      SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState), 
       ],
     );
   }

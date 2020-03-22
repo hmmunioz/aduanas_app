@@ -20,7 +20,7 @@ class VerificationCodeInput extends StatefulWidget {
       this.length = 4,
       this.itemDecoration,
       this.itemSize = 50,
-      this.focusColors = Colors.white,
+      this.focusColors ,
       this.textStyle = const TextStyle(fontSize: 25.0, color: Colors.black),
       this.autofocus = true,
       this.bloc})
@@ -72,7 +72,9 @@ class _VerificationCodeInputState extends State<VerificationCodeInput> {
       maxLength: 2,
       focusNode: _listFocusNode[index],
       decoration: InputDecoration(
+    
           focusedBorder: OutlineInputBorder(
+            
             borderSide: BorderSide(color: widget.focusColors, width: 2.0),
             borderRadius: BorderRadius.circular(25.0),
           ),

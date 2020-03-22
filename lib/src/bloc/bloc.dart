@@ -1,7 +1,7 @@
 
 
 import 'package:flutter_chat/src/bloc/recovercode/recoverCodeBloc.dart';
-import 'package:flutter_chat/src/bloc/recoverphone/recovePhoneBloc.dart';
+import 'package:flutter_chat/src/bloc/recoveremail/recoveEmailBloc.dart';
 import 'package:flutter_chat/src/bloc/tramitesscreen/tramiteBloc.dart';
 import 'package:flutter_chat/src/bloc/utils/utilsBloc.dart';
 import 'package:flutter_chat/src/repositories/repository.dart';
@@ -14,7 +14,7 @@ import 'firebaseSmsService/smsServiceBloc.dart';
 
 class Bloc with Validators{
   LoginScreenBloc login = new LoginScreenBloc();
-  RecoverPhoneBloc recoverPhone = new RecoverPhoneBloc();
+  RecoverEmailBloc recoverEmail = new RecoverEmailBloc();
   RecoverCodeBloc recoverCode = new RecoverCodeBloc();
   UtilsBloc utilsBloc = new UtilsBloc();
   ChangePasswordBloc changePassword = new ChangePasswordBloc();
@@ -37,7 +37,7 @@ void initLoginScreen(){
  }
 
  void initSmsService(){
-      smsService.blocPhoneRecover= recoverPhone;
+      smsService.blocEmailRecover= recoverEmail;
       smsService.blocSpinnerRecover= utilsBloc;
       smsService.blocCodeRecover=recoverCode;
   }
@@ -45,7 +45,7 @@ void initLoginScreen(){
   dispose()
   {
       login.dispose();
-      recoverPhone.dispose();
+      recoverEmail.dispose();
       recoverCode.dispose();
       changePassword.dispose();
       containerScreens.dispose();

@@ -24,10 +24,6 @@ LoginScreen({this.profileModel});
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
-
-
-
   void singIn(Bloc bloc){
        bloc.login.singIn(okLogin ,failed);
   }
@@ -59,15 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
     WidgetsFlutterBinding.ensureInitialized();
     final bloc = Provider.of<Bloc>(context);
-     bloc.initLoginScreen();
-
-  //  firebaseToken(bloc);
-    iniToken(context, bloc);
-   
-    bloc.utilsBloc.changeSpinnerState(true);
-    //bloc.utilsBloc.changeSpinnerState(null);
-
- 
+     bloc.initLoginScreen(); 
+    iniToken(context, bloc);   
+    bloc.utilsBloc.changeSpinnerState(true); 
     KeyboardVisibilityNotification().addNewListener(
     onChange: (bool visible) {
       if(visible)
@@ -91,6 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
       
         AppRoundIcon(streamDataTransform: bloc.utilsBloc.getKeyboardState, bloc: bloc,),
         Scaffold(
+          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.transparent,
           body: 
             Container(
@@ -98,13 +89,11 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                
+              children: <Widget>[                
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                               
+                    children: <Widget>[                               
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 4,
                       ),

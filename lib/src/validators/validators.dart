@@ -51,7 +51,7 @@ class Validators{
       StreamTransformer<String, String>
       .fromHandlers(
         handleData: (code, sink){       
-         if(code!=null && code.length==6){
+         if(code!=null && code.length==5){
    
            sink.add(code);
          }

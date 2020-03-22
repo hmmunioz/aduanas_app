@@ -96,15 +96,23 @@ class TramiteBloc with Validators{
 
   changeTramiteById(BuildContext context, TramiteModel tramiteObj) async {
      utilbloc.changeSpinnerState(true);
-     dynamic resultChangeTramite = await repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado);
-     if(resultChangeTramite)
-     {
-      changeTramite(context, tramiteObj );
+   //  dynamic resultChangeTramite = await  repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj);
+   //  dynamic resultChangeTramite = await repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado);
+    
+    repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado).then((resultChangeTramiteApi)=> 
+      resultChangeTramiteApi!=null? repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((resultChangeTramiteDB)=> changeTramite(context, tramiteObj )):print("error")
+    );
+    
 
+    /*  if(resultChangeTramite!=0 && resultChangeTramite!=null)
+     {
+      //await  repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((tramiteId)=>
+            changeTramite(context, tramiteObj );
+      /* ); */
      }
      else{
        print("microerror");
-     }
+     } */
   }
 
   searchTramiteById(BuildContext context, String tramiteId ){

@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return  AppTitle(
                     inputText:  "Bienvendio a Aduanas",
                     secondText: "¿Qué trámites realizaremos hoy?",
+                     withAppBar: true,
                    );
   }
   

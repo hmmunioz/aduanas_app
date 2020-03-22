@@ -48,4 +48,9 @@ class TramiteModel {
   String get getId => _id;
   String get getNumeroTramite => _numeroTramite;
   String get getFechaRegistro => _fechaRegistro;
+
+  void setEstado(int estado){
+       _estado= estado;
+  }
+
 }

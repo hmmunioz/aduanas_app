@@ -43,11 +43,7 @@ class LoginScreenBloc with Validators {
   Function(ProfileModel) get addSinkProfile => _profileController.sink.add;
  
   void firebaseToken() async{ 
-   ImeiPlugin.getImei( shouldShowRequestPermissionRationale: true ).then((imei)=>{          
-        FirebaseAuth.instance.currentUser().then( (user) => {
-          user!=null ? user.getIdToken().then((token) => print(token.token))  :  print("null")
-          })       
-    });     
+  
  }
 
   //Logic Bloc Methods
@@ -107,9 +103,17 @@ class LoginScreenBloc with Validators {
        profileModelRes =pf;
        addSinkProfile(profileModelRes);
        storage.write(key: 'jwt', value: profileModelRes.getUsuarioUUID);     
-       repository.apiProvider.tramiteApiProvider.getTramites().then((tramiteList)=>{
+       ImeiPlugin.getImei( shouldShowRequestPermissionRationale: true ).then((imei)=>{          
+        FirebaseAuth.instance.currentUser().then( (user) => {
+          user!=null ? user.getIdToken().then((token) => repository.apiProvider.tramiteApiProvider.getTramites().then((tramiteList)=>{
+                   addTramitesTolocalData(tramiteList)                
+             }))  :  print("null")
+          })       
+       });     
+       
+      /*  repository.apiProvider.tramiteApiProvider.getTramites().then((tramiteList)=>{
               addTramitesTolocalData(tramiteList)                
-        }); 
+        }); */ 
     }    
      
      void singInResult(resultSingIn) async{

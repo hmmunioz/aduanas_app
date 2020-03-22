@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class AppTitle extends StatelessWidget {
   final String inputText;
   final String secondText;
-  const AppTitle({this.inputText, this.secondText});
+  final bool  withAppBar;
+  const AppTitle({this.inputText, this.secondText, this.withAppBar});
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        top: (MediaQuery.of(context).size.height)*1/100,
+        top:  withAppBar==true?(MediaQuery.of(context).size.height)*1/100:(MediaQuery.of(context).size.height)*5.5/100  ,
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Center(
@@ -31,10 +32,7 @@ class AppTitle extends StatelessWidget {
     if (secondText != null) {
       return Column(
         children: <Widget>[
-         /*  SizedBox(
-            height: 5.0,
-          ), */
-          Text(secondText,
+         Text(secondText,
               style: TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 16.0,

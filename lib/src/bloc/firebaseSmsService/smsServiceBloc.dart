@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_chat/src/bloc/recovercode/recoverCodeBloc.dart';
-import 'package:flutter_chat/src/bloc/recoverphone/recovePhoneBloc.dart';
+import 'package:flutter_chat/src/bloc/recoveremail/recoveEmailBloc.dart';
 import 'package:flutter_chat/src/bloc/utils/utilsBloc.dart';
 import 'package:flutter_chat/src/validators/validators.dart';
 import 'package:flutter_chat/src/models/password_model.dart';
 import 'package:flutter_chat/src/services/dialog_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 class SmsServiceBloc with Validators{
- RecoverPhoneBloc blocPhoneRecover;
+ RecoverEmailBloc blocEmailRecover;
    RecoverCodeBloc blocCodeRecover;
     UtilsBloc blocSpinnerRecover;
-      SmsServiceBloc({this.blocPhoneRecover, this.blocCodeRecover, this.blocSpinnerRecover});
+      SmsServiceBloc({this.blocEmailRecover, this.blocCodeRecover, this.blocSpinnerRecover});
     ///FirebaseMessagin Service
      String phoneNumber="";
      String smsCode;
@@ -49,7 +49,7 @@ class SmsServiceBloc with Validators{
          var errorText = exception.code + ": " + exception.message;
           openDialog(context, errorText);      
     };
-    var phoneNumber =blocPhoneRecover.getDataPhoneRecover();
+    var phoneNumber =blocEmailRecover.getDataEmailRecover();
     print("phoneNumber ----------------------- $phoneNumber");
     await FirebaseAuth.instance.verifyPhoneNumber(   
         phoneNumber: "+593${phoneNumber.substring(1)}",
