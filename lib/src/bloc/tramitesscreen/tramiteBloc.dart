@@ -115,7 +115,6 @@ class TramiteBloc with Validators{
      if(porRecibirExist!=-1){
       TramiteModel tramiteObjTemp =  _porRecibirTramiteList[porRecibirExist];
         return tramiteObjTemp;
-    /*   changeTramiteById(context, tramiteObjTemp); */
      }
      else if(recibidoExist !=-1){
       TramiteModel tramiteObjTemp =  _recibidosTramiteList[recibidoExist];
