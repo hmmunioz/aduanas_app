@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "58481034272",
+    "firebase_url": "https://appaduanas-11187.firebaseio.com",
+    "project_id": "appaduanas-11187",
+    "storage_bucket": "appaduanas-11187.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58481034272:android:3067a25b943bf14497e845",
+        "android_client_info": {
+          "package_name": "com.rcb.aduanas_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58481034272-i84hk0on4bvsg3cpi12asle2f60db7p3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rcb.aduanas_app",
+            "certificate_hash": "1a32fea726e9f81130045b5b6f8965442b75e6bb"
+          }
+        },
+        {
+          "client_id": "58481034272-4bogkcg1g0ngpvlm9n078pipakemse3u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rcb.aduanas_app",
+            "certificate_hash": "8c1149f7833a2b87ee93d1f5cda614bcfb19ddee"
+          }
+        },
+        {
+          "client_id": "58481034272-8r0mse3q8q1m50f2pnqt3e7ae5v0t4bh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnfQG35bmtjtl-cajHs0-mGKEYLRU100E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58481034272-8r0mse3q8q1m50f2pnqt3e7ae5v0t4bh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
