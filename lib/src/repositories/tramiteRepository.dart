@@ -1,5 +1,7 @@
-import 'package:flutter_chat/src/apiprovider/tramiteApiProvider.dart';
-import 'package:flutter_chat/src/models/tramites_model.dart';
+import 'package:aduanas_app/src/apiprovider/tramiteApiProvider.dart';
+import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
+import 'package:aduanas_app/src/models/tramites_model.dart';
+import 'package:flutter/cupertino.dart';
 
 
 class TramiteRepository {
@@ -10,8 +12,8 @@ class TramiteRepository {
   }
 
   TramiteApiProvider tramiteApiProvider;
-  Future<dynamic> getTramites() => tramiteApiProvider.getTramites();
-  Future<dynamic> changeTramite(String tramiteId, int estado) => tramiteApiProvider.changeTramite(tramiteId, estado);
+  Future<dynamic> getTramites(BuildContext context) => tramiteApiProvider.getTramites(context);
+  Future<dynamic> changeTramite(String tramiteId, int estado, UtilsBloc utilbloc, BuildContext context) => tramiteApiProvider.changeTramite(tramiteId, estado, utilbloc, context );
 
 
 }

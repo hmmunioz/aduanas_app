@@ -1,4 +1,4 @@
-package com.example.flutter_chat
+package com.rcb.aduanas_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

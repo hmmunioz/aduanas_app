@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_chat/src/models/password_model.dart';
-import 'package:flutter_chat/src/screens/aforos_screen.dart';
-import 'package:flutter_chat/src/screens/home_screen.dart';
-import 'package:flutter_chat/src/screens/qrscanner_screen.dart';
-import 'package:flutter_chat/src/screens/tramites_screen.dart';
+import 'package:aduanas_app/src/models/password_model.dart';
+import 'package:aduanas_app/src/screens/aforos_screen.dart';
+import 'package:aduanas_app/src/screens/home_screen.dart';
+import 'package:aduanas_app/src/screens/qrscanner_screen.dart';
+import 'package:aduanas_app/src/screens/tramites_screen.dart';
 
 class Validators{
   final validateEmail = 

@@ -1,4 +1,4 @@
-import 'package:flutter_chat/src/models/tramites_model.dart';
+import 'package:aduanas_app/src/models/tramites_model.dart';
 import 'package:sqflite/sqflite.dart';
 class DBProviderTramite{
 String tableName="tramites";
@@ -29,6 +29,23 @@ Future<int> addTramite(TramiteModel tramiteModel) async{
       return responseData;
      }     
      return null;
+   }
+
+    Future<TramiteModel> getTramite(String tramiteId) async{       
+    Database db = await database;
+     var maps = await db.query(tableName, 
+      columns: null,
+      where: 'id = ?', whereArgs: [tramiteId]
+     );
+  
+     if(maps!=null && maps.length>0) {
+      return TramiteModel.fromDb(maps[0]);
+     }     
+     else{
+       print("nuuuuuuuuuuull");
+              return null;
+     }
+ //!    return null;
    }
 
     Future<int> updateTramite(TramiteModel tramiteModel) async {

@@ -1,10 +1,11 @@
+import 'package:aduanas_app/src/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_chat/src/bloc/recovercode/recoverCodeBloc.dart';
-import 'package:flutter_chat/src/bloc/recoveremail/recoveEmailBloc.dart';
-import 'package:flutter_chat/src/bloc/utils/utilsBloc.dart';
-import 'package:flutter_chat/src/validators/validators.dart';
-import 'package:flutter_chat/src/models/password_model.dart';
-import 'package:flutter_chat/src/services/dialog_service.dart';
+import 'package:aduanas_app/src/bloc/recovercode/recoverCodeBloc.dart';
+import 'package:aduanas_app/src/bloc/recoveremail/recoveEmailBloc.dart';
+import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
+import 'package:aduanas_app/src/validators/validators.dart';
+import 'package:aduanas_app/src/models/password_model.dart';
+import 'package:aduanas_app/src/services/dialog_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 class SmsServiceBloc with Validators{
  RecoverEmailBloc blocEmailRecover;
@@ -55,7 +56,7 @@ class SmsServiceBloc with Validators{
         phoneNumber: "+593${phoneNumber.substring(1)}",
         codeAutoRetrievalTimeout: autoRetrieve,
         codeSent: smsCodeSent,
-        timeout: const Duration(seconds: 5),
+        timeout:  Duration(seconds: ConstantsApp.of(context).appConfig.timeout),
         verificationCompleted: verifiedSuccess,
         verificationFailed: veriFailed);        
   }

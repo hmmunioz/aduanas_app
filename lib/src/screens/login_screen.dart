@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
-import 'package:flutter_chat/src/models/profile_model.dart';
-import 'package:flutter_chat/src/widgets/appButton.dart';
-import 'package:flutter_chat/src/widgets/appRoundIcon.dart';
-import 'package:flutter_chat/src/widgets/appSpinner.dart';
-import 'package:flutter_chat/src/widgets/appTextField.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/models/profile_model.dart';
+import 'package:aduanas_app/src/widgets/appButton.dart';
+import 'package:aduanas_app/src/widgets/appRoundIcon.dart';
+import 'package:aduanas_app/src/widgets/appSpinner.dart';
+import 'package:aduanas_app/src/widgets/appTextField.dart';
 import 'package:provider/provider.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -24,8 +24,8 @@ LoginScreen({this.profileModel});
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  void singIn(Bloc bloc){
-       bloc.login.singIn(okLogin ,failed);
+  void singIn(Bloc bloc, BuildContext context){
+       bloc.login.singIn(okLogin ,context);
   }
   void onChangedEmail(value, Bloc bloc) {
     bloc.login.changeEmail(value);
@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   name: "INGRESAR",
                     invertColors: false,
                   onPressed: () {
-                      singIn(bloc);              
+                      singIn(bloc, context);              
                   },
                 ),
                 Center(

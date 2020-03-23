@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
-import 'package:flutter_chat/src/models/profile_model.dart';
-/* import 'package:flutter_chat/src/repositories/repository.dart'; */
-import 'package:flutter_chat/src/screens/aforos_screen.dart';
-import 'package:flutter_chat/src/widgets/appSpinner.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/models/profile_model.dart';
+/* import 'package:aduanas_app/src/repositories/repository.dart'; */
+import 'package:aduanas_app/src/screens/aforos_screen.dart';
+import 'package:aduanas_app/src/widgets/appSpinner.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -64,7 +64,10 @@ class _ContainerHomeState extends State<ContainerHome> {
   WidgetsFlutterBinding.ensureInitialized();
    final bloc = Provider.of<Bloc>(context);      
    iniToken(context, bloc);    
-   bloc.containerScreens.changeActualScreen(0);    
+      if(bloc.containerScreens.getDataActualScreen()!=0){
+        bloc.containerScreens.changeActualScreen(0);    
+     }
+   
     return WillPopScope(
       onWillPop: () => navigationBack(bloc, context),
  

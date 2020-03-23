@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
 
 class VerificationCodeInput extends StatefulWidget {
   final ValueChanged<String> onCompleted;

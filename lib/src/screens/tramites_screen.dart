@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
-import 'package:flutter_chat/src/widgets/appCurvedShape.dart';
-import 'package:flutter_chat/src/widgets/appTitleList.dart';
-import 'package:flutter_chat/src/widgets/appTramiteCard.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/widgets/appCurvedShape.dart';
+import 'package:aduanas_app/src/widgets/appTitleList.dart';
+import 'package:aduanas_app/src/widgets/appTramiteCard.dart';
 import 'package:provider/provider.dart';
 
 class TramitesScreen extends StatelessWidget {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
-import 'package:flutter_chat/src/widgets/appCurvedShape.dart';
-import 'package:flutter_chat/src/widgets/appRoundCard.dart';
-import 'package:flutter_chat/src/widgets/appRoundIcon.dart';
-import 'package:flutter_chat/src/widgets/appTitle.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/widgets/appCurvedShape.dart';
+import 'package:aduanas_app/src/widgets/appRoundCard.dart';
+import 'package:aduanas_app/src/widgets/appRoundIcon.dart';
+import 'package:aduanas_app/src/widgets/appTitle.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_chat/src/models/profile_model.dart';
+import 'package:aduanas_app/src/models/profile_model.dart';
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/home";
   ProfileModel profileModel;
@@ -18,7 +18,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   void changeActualScreen(Bloc bloc, int actualScreen){ 
-      bloc.containerScreens.changeActualScreen(actualScreen); 
+     if(bloc.containerScreens.getDataActualScreen()!=actualScreen){
+        bloc.containerScreens.changeActualScreen(actualScreen); 
+     }
+      
   }
 
   Widget appTitleData(String nombreTemp){
@@ -36,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ProfileModel p = await bloc.login.addProfileData();
       widget.profileModel = p;     
       widget.nombre=widget.profileModel.getNombre;
-      bloc.containerScreens.changeHomeScreen(true);      
+     bloc.containerScreens.changeHomeScreen(true);      
     }
 
     WidgetsFlutterBinding.ensureInitialized();

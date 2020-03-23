@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
-import 'package:flutter_chat/src/widgets/appButton.dart';
-import 'package:flutter_chat/src/widgets/appCurvedShape.dart';
-import 'package:flutter_chat/src/widgets/appRoundIcon.dart';
-import 'package:flutter_chat/src/widgets/appSpinner.dart';
-import 'package:flutter_chat/src/widgets/appTitle.dart';
-import 'package:flutter_chat/src/widgets/appVerificationCode.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/widgets/appButton.dart';
+import 'package:aduanas_app/src/widgets/appCurvedShape.dart';
+import 'package:aduanas_app/src/widgets/appRoundIcon.dart';
+import 'package:aduanas_app/src/widgets/appSpinner.dart';
+import 'package:aduanas_app/src/widgets/appTitle.dart';
+import 'package:aduanas_app/src/widgets/appVerificationCode.dart';
 import 'package:provider/provider.dart';
 
 class RecoverPassCode extends StatefulWidget {

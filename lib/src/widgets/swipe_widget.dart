@@ -83,7 +83,7 @@ class _OnSlideState extends State<OnSlide> {
    BoxDecoration myBoxDecoration2() {
     return BoxDecoration(
       //color:  Color.fromRGBO(142, 144, 146,0.5),
-    color: Color.fromRGBO(142, 144, 146, 0.9),
+    color:Theme.of(context).accentColor.withOpacity(0.9),
       borderRadius: BorderRadius.all(
           Radius.circular(25.0) //         <--- border radius here
           ),
@@ -171,7 +171,7 @@ class _OnSlideState extends State<OnSlide> {
     Widget scrollview = new NotificationListener(
       child:   Card(
   elevation: 0,
-  color: Color.fromRGBO(142, 144, 146, 0.5),
+  color: Theme.of(context).accentColor.withOpacity(0.5),
  shape:RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft:Radius.circular(25) ,

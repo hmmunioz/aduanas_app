@@ -1,14 +1,15 @@
+import 'package:aduanas_app/src/constants/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
-import 'package:flutter_chat/src/constants/services_url.dart';
-import 'package:flutter_chat/src/repositories/repository.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/constants/services_url.dart';
+import 'package:aduanas_app/src/repositories/repository.dart';
 
-import 'package:flutter_chat/src/screens/container_screens.dart';
+import 'package:aduanas_app/src/screens/container_screens.dart';
 
-import 'package:flutter_chat/src/screens/login_screen.dart';
-import 'package:flutter_chat/src/screens/recoverpass_code.dart';
-import 'package:flutter_chat/src/screens/recoverpass_email.dart';
-import 'package:flutter_chat/src/screens/change_password.dart';
+import 'package:aduanas_app/src/screens/login_screen.dart';
+import 'package:aduanas_app/src/screens/recoverpass_code.dart';
+import 'package:aduanas_app/src/screens/recoverpass_email.dart';
+import 'package:aduanas_app/src/screens/change_password.dart';
 import 'package:provider/provider.dart';
 
 Repository repository = new Repository();
@@ -17,7 +18,7 @@ Repository repository = new Repository();
   runApp(Provider<Bloc>(
       create: (context) => Bloc(),
       dispose: (context, bloc) => bloc.dispose(),
-      child: UrlServices(
+      child: ConstantsApp(
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(

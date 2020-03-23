@@ -1,4 +1,6 @@
-import 'package:flutter_chat/src/validators/validators.dart';
+import 'package:aduanas_app/src/services/dialog_service.dart';
+import 'package:aduanas_app/src/validators/validators.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UtilsBloc with Validators{
@@ -10,14 +12,26 @@ class UtilsBloc with Validators{
 
     getDataKeyboardState(){
       final stateKeyboard = _keyBoardController.value;  
-      print("data a mostrar $stateKeyboard");
       return stateKeyboard;
     }
-
+    
      ///Spinner widget
      final _toggleSpinnerController = BehaviorSubject<bool>();  ////Trasnform inData to outData Spinner widget   
      Stream<bool> get getSpinnerState => _toggleSpinnerController.stream.transform(validateSpinnerState);    ////Set data to block Spinner widget
      Function(bool) get changeSpinnerState => _toggleSpinnerController.sink.add;
+ 
+     Future<Set<void>> openDialog(BuildContext context, String contentError, Function singInOk, bool primaryButton, bool secondaryButton) async {
+                     final action =
+                       await Dialogs.yesAbortDialog(context, "Ha ocurrido un error", contentError, primaryButton, secondaryButton);
+                        if (action == DialogAction.yes) 
+                        {
+                          print("ok");  
+                        } else 
+                        {    
+                            print("canel");  
+                        }
+           }
+
 
     dipose(){
       _keyBoardController.close();

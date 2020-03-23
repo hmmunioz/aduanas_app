@@ -1,5 +1,5 @@
-import 'package:flutter_chat/src/models/password_model.dart';
-import 'package:flutter_chat/src/validators/validators.dart';
+import 'package:aduanas_app/src/models/password_model.dart';
+import 'package:aduanas_app/src/validators/validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ChangePasswordBloc with Validators{      

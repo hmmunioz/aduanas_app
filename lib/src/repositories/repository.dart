@@ -1,9 +1,9 @@
-import 'package:flutter_chat/src/apiprovider/apiProvider.dart';
-import 'package:flutter_chat/src/apiprovider/tramiteApiProvider.dart';
-import 'package:flutter_chat/src/dbprovider/db_provider.dart';
-import 'package:flutter_chat/src/models/tramites_model.dart';
-import 'package:flutter_chat/src/repositories/autenticationRepository.dart';
-import 'package:flutter_chat/src/repositories/tramiteRepository.dart';
+import 'package:aduanas_app/src/apiprovider/apiProvider.dart';
+import 'package:aduanas_app/src/apiprovider/tramiteApiProvider.dart';
+import 'package:aduanas_app/src/dbprovider/db_provider.dart';
+import 'package:aduanas_app/src/models/tramites_model.dart';
+import 'package:aduanas_app/src/repositories/autenticationRepository.dart';
+import 'package:aduanas_app/src/repositories/tramiteRepository.dart';
 
 
 class Repository {

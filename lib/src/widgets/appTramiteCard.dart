@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
-import 'package:flutter_chat/src/services/dialog_service.dart';
-import 'package:flutter_chat/src/widgets/swipe_widget.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/services/dialog_service.dart';
+import 'package:aduanas_app/src/widgets/swipe_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'appCardElementList.dart';
@@ -15,7 +15,7 @@ class TramiteCard extends StatefulWidget {
 
 class _TramiteCardState extends State<TramiteCard> {
   void _settingModalBottomSheet(context, dynamic objTramite, Bloc bloc) {
-    var nameTramite = objTramite.getNumeroTramite;
+
     showModalBottomSheet(
         context: context,
         builder: (builder) {
@@ -36,18 +36,7 @@ class _TramiteCardState extends State<TramiteCard> {
                     ListTile(
                       leading: Icon(Icons.check),
                       title: Text('Realizar Tramite'),
-                      onTap:  () async {
-                     final action =
-                       await Dialogs.yesAbortDialog(context, nameTramite, '¿Esta seguro de realizar este trámite?', true, true);
-                        if (action == DialogAction.yes) {
-                           print("Si");
-                           
-                            bloc.tramiteScreen.changeTramiteById(context, objTramite);
-                            //  bloc.tramiteScreen.changeTramiteList(objTramite.toString());
-                        } else {                          
-                         print("No");
-                        }
-                      } ,
+                      onTap:  () async{  bloc.utilsBloc.openDialog(context, '¿Esta seguro de realizar este trámite?',  bloc.tramiteScreen.changeTramiteById(context, objTramite), true, true); } ,
                     ),
                   ],
                 )),

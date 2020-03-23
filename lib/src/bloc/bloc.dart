@@ -1,13 +1,13 @@
 
 
-import 'package:flutter_chat/src/bloc/recovercode/recoverCodeBloc.dart';
-import 'package:flutter_chat/src/bloc/recoveremail/recoveEmailBloc.dart';
-import 'package:flutter_chat/src/bloc/tramitesscreen/tramiteBloc.dart';
-import 'package:flutter_chat/src/bloc/utils/utilsBloc.dart';
-import 'package:flutter_chat/src/repositories/repository.dart';
+import 'package:aduanas_app/src/bloc/recovercode/recoverCodeBloc.dart';
+import 'package:aduanas_app/src/bloc/recoveremail/recoveEmailBloc.dart';
+import 'package:aduanas_app/src/bloc/tramitesscreen/tramiteBloc.dart';
+import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
+import 'package:aduanas_app/src/repositories/repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_chat/src/validators/validators.dart';
-import 'package:flutter_chat/src/bloc/login/loginSceenBloc.dart';
+import 'package:aduanas_app/src/validators/validators.dart';
+import 'package:aduanas_app/src/bloc/login/loginSceenBloc.dart';
 import 'changepassword/changePasswordBloc.dart';
 import 'containerscreens/containerScreensBloc.dart';
 import 'firebaseSmsService/smsServiceBloc.dart';

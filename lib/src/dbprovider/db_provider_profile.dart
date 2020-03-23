@@ -1,4 +1,4 @@
-import 'package:flutter_chat/src/models/profile_model.dart';
+import 'package:aduanas_app/src/models/profile_model.dart';
 import 'package:sqflite/sqflite.dart';
 class DBProviderProfile{
 String tableName="profile";

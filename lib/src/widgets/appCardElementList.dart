@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/widgets/appMicroCircle.dart';
+import 'package:aduanas_app/src/widgets/appMicroCircle.dart';
 
 class CardElementList extends StatefulWidget {
   final dynamic element;

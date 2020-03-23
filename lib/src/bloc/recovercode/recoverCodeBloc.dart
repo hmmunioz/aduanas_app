@@ -1,4 +1,4 @@
-import 'package:flutter_chat/src/validators/validators.dart';
+import 'package:aduanas_app/src/validators/validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 class RecoverCodeBloc with Validators{

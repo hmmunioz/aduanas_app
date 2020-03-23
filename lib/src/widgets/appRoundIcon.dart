@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/src/bloc/bloc.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
 
 class AppRoundIcon extends StatelessWidget {
   final Stream<dynamic> streamDataTransform;

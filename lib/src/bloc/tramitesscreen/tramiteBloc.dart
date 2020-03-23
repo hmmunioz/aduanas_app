@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:aduanas_app/src/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_chat/src/bloc/containerscreens/containerScreensBloc.dart';
-import 'package:flutter_chat/src/bloc/utils/utilsBloc.dart';
-import 'package:flutter_chat/src/models/tramites_model.dart';
-import 'package:flutter_chat/src/repositories/repository.dart';
-import 'package:flutter_chat/src/services/dialog_service.dart';
-import 'package:flutter_chat/src/validators/validators.dart';
+import 'package:aduanas_app/src/bloc/containerscreens/containerScreensBloc.dart';
+import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
+import 'package:aduanas_app/src/models/tramites_model.dart';
+import 'package:aduanas_app/src/repositories/repository.dart';
+import 'package:aduanas_app/src/validators/validators.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class TramiteBloc with Validators{
@@ -58,19 +59,6 @@ class TramiteBloc with Validators{
      }
   }
 
-  void openDialog(BuildContext context, String contentError) async {
-     final action =
-      await Dialogs.yesAbortDialog(context, "Error", contentError, true, false);
-      if (action == DialogAction.yes)
-       {
-          print("yesss");    
-      } 
-      else {  
-           print("noffff");  
-           Navigator.of(context).pop();
-      }
-  }
-
   List getPorRecibirList(){
      return _porRecibirTramiteList;
    }
@@ -95,50 +83,78 @@ class TramiteBloc with Validators{
   }
 
   changeTramiteById(BuildContext context, TramiteModel tramiteObj) async {
-     utilbloc.changeSpinnerState(true);
-   //  dynamic resultChangeTramite = await  repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj);
-   //  dynamic resultChangeTramite = await repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado);
-    
-    repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado).then((resultChangeTramiteApi)=> 
+     utilbloc.changeSpinnerState(true);   
+    repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado, utilbloc, context).then((resultChangeTramiteApi)=> 
       resultChangeTramiteApi!=null? repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((resultChangeTramiteDB)=> changeTramite(context, tramiteObj )):print("error")
-    );
+    ).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Intente de nuevo porfavor.", null, true, false ));   
     
-
-    /*  if(resultChangeTramite!=0 && resultChangeTramite!=null)
-     {
-      //await  repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((tramiteId)=>
-            changeTramite(context, tramiteObj );
-      /* ); */
-     }
-     else{
-       print("microerror");
-     } */
   }
 
-  searchTramiteById(BuildContext context, String tramiteId ){
-     int porRecibirExist = _porRecibirTramiteList.indexWhere((tramite) => tramite.getId== tramiteId); 
-     int recibidoExist = _recibidosTramiteList.indexWhere((tramite) => tramite.getId== tramiteId); 
-     int entregadoExist = _entregadosTramiteList.indexWhere((tramite) => tramite.getId== tramiteId);
+  /* void caseTramite(tramiteObjTemp){
+      int porRecibirExist = _porRecibirTramiteList.indexWhere((tramite) => tramite.getId== tramiteId); 
+                int recibidoExist = _recibidosTramiteList.indexWhere((tramite) => tramite.getId== tramiteId); 
+                int entregadoExist = _entregadosTramiteList.indexWhere((tramite) => tramite.getId== tramiteId);
 
-     if(porRecibirExist!=-1){
-      TramiteModel tramiteObjTemp =  _porRecibirTramiteList[porRecibirExist];
-        return tramiteObjTemp;
-     }
-     else if(recibidoExist !=-1){
-      TramiteModel tramiteObjTemp =  _recibidosTramiteList[recibidoExist];
-        return tramiteObjTemp;  
-     }
-     else if(entregadoExist !=-1){
-      TramiteModel tramiteObjTemp =  _entregadosTramiteList[entregadoExist];
-        return tramiteObjTemp;
-     }
-     else{
-        return null;
-     }
-  }
+                if(porRecibirExist!=-1){
+                  TramiteModel tramiteObjTemp =  _porRecibirTramiteList[porRecibirExist];
+                    return tramiteObjTemp;
+                }
+                else if(recibidoExist !=-1){
+                  TramiteModel tramiteObjTemp =  _recibidosTramiteList[recibidoExist];
+                    return tramiteObjTemp;  
+                }
+                else if(entregadoExist !=-1){
+                  TramiteModel tramiteObjTemp =  _entregadosTramiteList[entregadoExist];
+                    return tramiteObjTemp;
+                }
+                else{
+                   print("nuuuuuuuuuuuuuuuulsisioismo");
+                } 
+  } */
 
+  void searchTramiteById(BuildContext context, String tramiteId ) async{
+    print("tramiteeee iddaaaaa");
+    print(tramiteId);
+       repository.dbProvider.dbProviderTramite.getTramite(tramiteId).then((trm) {
+
+         _settingModalBottomSheet(context, trm);
+        /*  print(trm.getActividad); */
+         return trm;
+       } );
+}      
+        
+    /**/
+ void _settingModalBottomSheet(BuildContext context, TramiteModel objTramite) {
+    var nameTramite = objTramite.getNumeroTramite;
   
-
+      showModalBottomSheet(
+        context: context,
+        builder: (builder) {
+          return  Container(
+            color: Colors.transparent,
+            child:  Container(
+                decoration:  BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:  BorderRadius.only(
+                        topLeft: const Radius.circular(25.0),
+                        topRight: const Radius.circular(25.0))),
+                child: Wrap(
+                  children: <Widget>[
+                    ListTile(
+                        leading: Icon(Icons.info_outline),
+                        title: Text('Mas informacion'),
+                        onTap: () => {}),
+                    ListTile(
+                      leading: Icon(Icons.check),
+                      title: Text('Realizar Tramite'),
+                      onTap:  ()  async{  utilbloc.openDialog(context, '¿Esta seguro de realizar este trámite?',  changeTramiteById(context, objTramite), true, true); } ,  
+                    ),
+                  ],
+                )),
+          );
+        }); 
+     }
+     
    dispose(){
       _tramiteListController.close();
       _tramitesList.close();

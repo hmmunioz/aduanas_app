@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
+import 'package:aduanas_app/src/constants/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_chat/src/models/tramites_model.dart';
+import 'package:aduanas_app/src/models/tramites_model.dart';
 import 'package:http/http.dart' show Client, Response;
 import 'dart:convert';
 
@@ -16,16 +19,13 @@ class TramiteApiProvider {
   final List<TramiteModel> _recibidos = [];
   final List<TramiteModel> _entregados = [];
   Map<String, String> headers = {"Content-type":"application/json"};
-
-  final _baseUrl = "http://192.168.5.118:9090/api/v1/tramite/all";
-  final _changeTramitesrtr ="http://192.168.5.118:9090/api/v1/tramite/status";
-  //final _baseUrl= "https://jsonplaceholder.typicode.com/posts";
- Future<dynamic> changeTramite(String tramiteId, int estado) async {
+ Future<dynamic> changeTramite(String tramiteId, int estado,  UtilsBloc utilbloc, BuildContext context) async {
    if(estado<3){
      estado++;
    }
    dynamic objPostChangeTramite ={"id":tramiteId, "estado": estado }; 
-   final response = await client.put("$_changeTramitesrtr", headers:headers, body:json.encode(objPostChangeTramite) /* objPostGetTramites.toString() */);
+    String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.tramites['changeTramiteStatus'];  
+   final response = await client.put("$urlApi", headers:headers, body:json.encode(objPostChangeTramite) );
    if (response.statusCode == 200) 
     {      
       if(json.decode(response.body)["exito"]==true)
@@ -36,15 +36,18 @@ class TramiteApiProvider {
         return false;
       }
     }else{
+       utilbloc.openDialog(context, response.body.toString(), null,  true, false );
         print(response.statusCode.toString());
         print(response.body.toString());
       throw Exception('---------------------------Failed to load post');
     } 
    }  
-
-  Future<dynamic> getTramites() async {   
-    dynamic objPostGetTramites ={"usuarioId":9, "fechaUltimSincronisacion": "" };        
-    final response = await client.post("$_baseUrl", headers:headers, body:json.encode(objPostGetTramites) /* objPostGetTramites.toString() */);
+ 
+ 
+  Future<dynamic> getTramites(BuildContext context) async {   
+    dynamic objPostGetTramites ={"usuarioId":9, "fechaUltimSincronisacion": "" };       
+     String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.tramites['getAll'];  
+    final response = await client.post("$urlApi", headers:headers, body:json.encode(objPostGetTramites) /* objPostGetTramites.toString() */);
 
     if (response.statusCode == 200) 
     {       
@@ -70,9 +73,6 @@ class TramiteApiProvider {
         'recibidos': _recibidos,
         'entregados': _entregados
       };
-    /*    _porRecibir.clear();
-       _recibidos.clear();
-       _entregados.clear(); */
 
       return responseData;
     } else {

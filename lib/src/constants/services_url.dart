@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-class UrlServices extends InheritedWidget {
-  static UrlServices of(BuildContext context) => context. dependOnInheritedWidgetOfExactType<UrlServices>();
-
-   UrlServices({Widget child, Key key}): super(key: key, child: child);
-
-
-  final String base_url ="192.168.5.118:9090";
+class UrlServices { 
  
   final dynamic autentication ={
     'singIn':'/login/all',   
@@ -16,7 +9,4 @@ class UrlServices extends InheritedWidget {
     'changeTramiteStatus':'/tramite/status'
   };
 
-  @override
-  bool updateShouldNotify(UrlServices oldWidget) => false;
-    /* UrlServices(); */
 }
