@@ -20,11 +20,12 @@ class UtilsBloc with Validators{
      Stream<bool> get getSpinnerState => _toggleSpinnerController.stream.transform(validateSpinnerState);    ////Set data to block Spinner widget
      Function(bool) get changeSpinnerState => _toggleSpinnerController.sink.add;
  
-     Future<Set<void>> openDialog(BuildContext context, String contentError, Function singInOk, bool primaryButton, bool secondaryButton) async {
+     Future<Set<void>> openDialog(BuildContext context,String titleDialog, String contentDialog, Function singInOk, bool primaryButton, bool secondaryButton) async {
                      final action =
-                       await Dialogs.yesAbortDialog(context, "Ha ocurrido un error", contentError, primaryButton, secondaryButton);
+                       await Dialogs.yesAbortDialog(context, titleDialog, contentDialog, primaryButton, secondaryButton);
                         if (action == DialogAction.yes) 
                         {
+                          singInOk();
                           print("ok");  
                         } else 
                         {    

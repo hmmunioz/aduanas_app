@@ -19,7 +19,7 @@ class TramiteApiProvider {
   final List<TramiteModel> _recibidos = [];
   final List<TramiteModel> _entregados = [];
   Map<String, String> headers = {"Content-type":"application/json"};
- Future<dynamic> changeTramite(String tramiteId, int estado,  UtilsBloc utilbloc, BuildContext context) async {
+ Future<bool> changeTramite(String tramiteId, int estado,  UtilsBloc utilbloc, BuildContext context) async {
    if(estado<3){
      estado++;
    }
@@ -33,10 +33,11 @@ class TramiteApiProvider {
           return true;
       }
       else{
+        //   utilbloc.openDialog(context, "Usuario o Password incorrectos.", null,  true, false );
         return false;
       }
     }else{
-       utilbloc.openDialog(context, response.body.toString(), null,  true, false );
+       utilbloc.openDialog(context, "Ha ocurrido un error.", response.body.toString(), null,  true, false );
         print(response.statusCode.toString());
         print(response.body.toString());
       throw Exception('---------------------------Failed to load post');
@@ -44,8 +45,9 @@ class TramiteApiProvider {
    }  
  
  
-  Future<dynamic> getTramites(BuildContext context) async {   
-    dynamic objPostGetTramites ={"usuarioId":9, "fechaUltimSincronisacion": "" };       
+  Future<dynamic> getTramites(BuildContext context) async { 
+   
+     dynamic objPostGetTramites ={"usuarioId":await storage.read(key: 'jwt'), "fechaUltimSincronisacion":await storage.read(key: 'fechaSincroniza')!=null?await storage.read(key: 'fechaSincroniza'):""};       
      String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.tramites['getAll'];  
     final response = await client.post("$urlApi", headers:headers, body:json.encode(objPostGetTramites) /* objPostGetTramites.toString() */);
 
@@ -66,8 +68,10 @@ class TramiteApiProvider {
           .map((tr) =>!_entregados.contains(new TramiteModel.fromJson(tr))? _entregados.add(new TramiteModel.fromJson(tr)):print("Ya existe"))
           .toList(); 
           
-     storage.write(key: 'fechaSincroniza', value: json.decode(response.body)["fechaSincroniza"]);
-
+     (json.decode(response.body)["fechaSincroniza"]!=""&& json.decode(response.body)["fechaSincroniza"]!=null)
+     ? storage.write(key: 'fechaSincroniza', value: json.decode(response.body)["fechaSincroniza"].toString().split(' ')[0]+"T"+json.decode(response.body)["fechaSincroniza"].toString().split(' ')[1])
+      :print("fechaVacia");
+  
       dynamic responseData = {
         'porRecibir': _porRecibir,
         'recibidos': _recibidos,
@@ -81,5 +85,9 @@ class TramiteApiProvider {
       // If that call was not successful, throw an error.
       throw Exception('---------------------------Failed to load post');
     }
-  }
+ 
+       /*      }
+    });   */
+
+     }
 }

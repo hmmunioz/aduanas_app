@@ -59,15 +59,15 @@ class TramiteBloc with Validators{
      }
   }
 
-  List getPorRecibirList(){
+  List<TramiteModel> getPorRecibirList(){
      return _porRecibirTramiteList;
    }
 
-  List getRecibidosList(){
+  List<TramiteModel> getRecibidosList(){
      return _recibidosTramiteList;
    }
 
-  List getEntregadosList(){
+  List<TramiteModel> getEntregadosList(){
      return _entregadosTramiteList;
    }
 
@@ -86,7 +86,7 @@ class TramiteBloc with Validators{
      utilbloc.changeSpinnerState(true);   
     repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado, utilbloc, context).then((resultChangeTramiteApi)=> 
       resultChangeTramiteApi!=null? repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((resultChangeTramiteDB)=> changeTramite(context, tramiteObj )):print("error")
-    ).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Intente de nuevo porfavor.", null, true, false ));   
+    ).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
     
   }
 
@@ -125,7 +125,7 @@ class TramiteBloc with Validators{
         
     /**/
  void _settingModalBottomSheet(BuildContext context, TramiteModel objTramite) {
-    var nameTramite = objTramite.getNumeroTramite;
+      var mensaje = "Tramite numero #" + objTramite.getNumeroTramite;
   
       showModalBottomSheet(
         context: context,
@@ -147,7 +147,7 @@ class TramiteBloc with Validators{
                     ListTile(
                       leading: Icon(Icons.check),
                       title: Text('Realizar Tramite'),
-                      onTap:  ()  async{  utilbloc.openDialog(context, '¿Esta seguro de realizar este trámite?',  changeTramiteById(context, objTramite), true, true); } ,  
+                      onTap:  ()  async{  utilbloc.openDialog(context, mensaje, '¿Esta seguro de realizar este trámite?',  ()=>{changeTramiteById(context, objTramite)}, true, true); } ,  
                     ),
                   ],
                 )),

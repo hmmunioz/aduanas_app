@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
 import 'package:aduanas_app/src/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:aduanas_app/src/models/tramites_model.dart';
 import 'package:http/http.dart' show Client, Response;
 import 'dart:convert';
@@ -15,12 +14,7 @@ class AutenticationApiProvider {
   }
 
   Client client = Client();
-
-  final List<TramiteModel> _porRecibir = [];
-  final List<TramiteModel> _recibidos = [];
-  final List<TramiteModel> _entregados = [];
-  Map<String, String> headers = {"Content-type":"application/json"};
-  
+  Map<String, String> headers = {"Content-type":"application/json"};  
  Future<dynamic> singIn(String username, String password, String platformImei, UtilsBloc utilbloc, BuildContext context) async {
    
    dynamic objPostSingIn ={"username":username, "password": password, /* "imei":platformImei  */}; 
@@ -32,7 +26,7 @@ class AutenticationApiProvider {
          return json.decode(response.body);  
     
     }else{
-    utilbloc.openDialog(context, response.body.toString(), null,  true, false );
+    utilbloc.openDialog(context, "Ha ocurrido un error.", response.body.toString(), null,  true, false );
         print(response.statusCode.toString());
         print(response.body.toString());
       throw Exception('---------------------------Failed to load post');

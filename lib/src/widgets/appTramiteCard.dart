@@ -1,3 +1,4 @@
+import 'package:aduanas_app/src/models/tramites_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aduanas_app/src/bloc/bloc.dart';
 import 'package:aduanas_app/src/services/dialog_service.dart';
@@ -8,14 +9,14 @@ import 'appCardElementList.dart';
 class TramiteCard extends StatefulWidget {
   @override
   _TramiteCardState createState() => _TramiteCardState();
-  final dynamic objTramite;
+  final TramiteModel objTramite;
   final int typeTramite;
   TramiteCard({this.objTramite, this.typeTramite});
 }
 
 class _TramiteCardState extends State<TramiteCard> {
-  void _settingModalBottomSheet(context, dynamic objTramite, Bloc bloc) {
-
+  void _settingModalBottomSheet(context, TramiteModel objTramite, Bloc bloc) {
+      var mensaje = "Tramite numero #" + objTramite.getNumeroTramite;
     showModalBottomSheet(
         context: context,
         builder: (builder) {
@@ -36,7 +37,7 @@ class _TramiteCardState extends State<TramiteCard> {
                     ListTile(
                       leading: Icon(Icons.check),
                       title: Text('Realizar Tramite'),
-                      onTap:  () async{  bloc.utilsBloc.openDialog(context, '¿Esta seguro de realizar este trámite?',  bloc.tramiteScreen.changeTramiteById(context, objTramite), true, true); } ,
+                      onTap: ()=> bloc.utilsBloc.openDialog(context,mensaje, '¿Esta seguro de realizar este trámite?', ()=>{ bloc.tramiteScreen.changeTramiteById(context, objTramite)}, true, true) ,
                     ),
                   ],
                 )),

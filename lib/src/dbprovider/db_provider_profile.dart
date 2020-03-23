@@ -1,12 +1,13 @@
 import 'package:aduanas_app/src/models/profile_model.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class DBProviderProfile{
 String tableName="profile";
 Future<Database> database;
 DBProviderProfile({this.database});
-
+final storage = new FlutterSecureStorage();
 Future<int> addProfile(ProfileModel profileModel) async{
-    Database db = await database;
+    Database db = await database;   
     int idBdd = await db.insert(tableName,
     profileModel.toJson(),
     conflictAlgorithm: ConflictAlgorithm.replace,    

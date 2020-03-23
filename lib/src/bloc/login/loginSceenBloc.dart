@@ -104,7 +104,7 @@ class LoginScreenBloc with Validators {
 /*        ImeiPlugin.getImei( shouldShowRequestPermissionRationale: true ).then((imei)=>{          */ 
     /*     FirebaseAuth.instance.currentUser().then( (user) => {
           user!=null ? user.getIdToken().then((token) => */ repository.apiProvider.tramiteApiProvider.getTramites(context).then((tramiteList)=>{
-                   addTramitesTolocalData(tramiteList) }).timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Intente de nuevo porfavor.", null, true, false ));                  
+                   addTramitesTolocalData(tramiteList) }).timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));                  
             /*  )  :  print("null")
           });        */
      /*   });     */        
@@ -128,7 +128,7 @@ class LoginScreenBloc with Validators {
         .apiProvider.autenticationApiProvider
         .singIn(getDataEmail(), getDataPass(), "platformImei", utilbloc, context).then((resultSingIn)=>{
               singInResult(resultSingIn)
-        }).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Intente de nuevo porfavor.", null, true, false ));   
+        }).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
   }
   
 
