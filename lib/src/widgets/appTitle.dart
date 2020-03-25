@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'appTypewriterBox.dart';
+
 class AppTitle extends StatelessWidget {
   final String inputText;
   final String secondText;
+  final bool inputTextAnimation;
+  final bool secondTextAnimation;
   final bool  withAppBar;
-  const AppTitle({this.inputText, this.secondText, this.withAppBar});
+  const AppTitle({this.inputText, this.secondText, this.withAppBar, this.inputTextAnimation, this.secondTextAnimation});
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -15,12 +19,24 @@ class AppTitle extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(inputText,
+               inputTextAnimation!=false?   ApppTypeWriter(textWriter:inputText, textStyle:TextStyle(
+                        decoration: TextDecoration.none,
+                        fontSize: 25.0,
+                  /*       fontFamily: 'Montserrat', */
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700)): Text(inputText,
+                    style: TextStyle(
+                        decoration: TextDecoration.none,
+                        fontSize: 25.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700)),
+
+              /*   Text(inputText,
                     style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 32.0,
                         color: Colors.white,
-                        fontWeight: FontWeight.w700)),
+                        fontWeight: FontWeight.w700)), */
                 secondTextShow()
               ],
             ),
@@ -32,12 +48,18 @@ class AppTitle extends StatelessWidget {
     if (secondText != null) {
       return Column(
         children: <Widget>[
-         Text(secondText,
+          secondTextAnimation!=false?
+            ApppTypeWriter(textWriter:secondText, textStyle:TextStyle(
+                  decoration: TextDecoration.none,
+                  fontSize: 15.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700)): Text(secondText,
               style: TextStyle(
                   decoration: TextDecoration.none,
-                  fontSize: 16.0,
+                  fontSize: 15.0,
                   color: Colors.white,
                   fontWeight: FontWeight.w700)),
+      
           SizedBox(
             height: 3.0,
           ),

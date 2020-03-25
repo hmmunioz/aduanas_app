@@ -24,32 +24,39 @@ class Bloc with Validators{
   Repository repository = new Repository();
   FlutterSecureStorage storage = new FlutterSecureStorage();
 
- void initTramiteUtils(){
-    tramiteScreen.utilbloc = utilsBloc;
-    tramiteScreen.containerScreensBloc = containerScreens;
-    tramiteScreen.repository= repository;
- }
 
-void initLoginScreen(){
-    login.utilbloc = utilsBloc;  
+void initInstanceBlocs(){
+    login.utilsbloc = utilsBloc;  
     login.repository= repository;
     login.storage = storage;
+    recoverEmail.repository= repository;
+    recoverCode.repository=repository;
+    recoverEmail.utilsBloc=utilsBloc;
+    recoverCode.utilsBloc=utilsBloc;    
+    tramiteScreen.utilsbloc = utilsBloc;
+    tramiteScreen.containerScreensBloc = containerScreens;
+    tramiteScreen.repository= repository;
+    recoverCode.recoverEmailBloc= recoverEmail;
+    changePassword.recoverEmailBloc= recoverEmail;
+    changePassword.repository= repository;
+    changePassword.utilsbloc= utilsBloc;
+    utilsBloc.tramiteBloc= tramiteScreen;
  }
-
- void initSmsService(){
-      smsService.blocEmailRecover= recoverEmail;
-      smsService.blocSpinnerRecover= utilsBloc;
-      smsService.blocCodeRecover=recoverCode;
-  }
+disposeLogin(){
+     /*    login.dispose();
+      recoverEmail.dispose();
+      recoverCode.dispose();
+      changePassword.dispose(); */
+}
   //Clean memory
   dispose()
   {
-      login.dispose();
+    /*   login.dispose();
       recoverEmail.dispose();
       recoverCode.dispose();
       changePassword.dispose();
       containerScreens.dispose();
       tramiteScreen.dispose();
-      utilsBloc.dipose();  
+      utilsBloc.dipose();   */
   }
 }

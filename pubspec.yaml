@@ -33,13 +33,8 @@ dependencies:
     git:
       url: https://github.com/kiatuki/animated_qr_code_scanner.git
       ref: v0.1.7
-   
- #Code Verificacion Component
-  #flutter_verification_code_input:
-  # git:
-  #    url: git://github.com/tiny-express/flutter_verification_code_input.git
-  #  version: ^0.1.2
-  # qr_code_scanner: "0.0.12"
+  qr_flutter: ^3.1.0   
+  permission_handler: '^4.4.0+hotfix.2'
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,8 +47,18 @@ dev_dependencies:
   path_provider: "^0.4.1"
   flutter_secure_storage: ^3.3.1+1
   imei_plugin: ^1.1.6
-  
+  device_id: ^0.2.0
+  pull_to_refresh: ^1.5.8
+  simple_animations: ^1.2.0
+  url_launcher: ^5.0.2
+  slimy_card: ^1.0.1
+  flutter_launcher_icons: "^0.7.0"
 
+flutter_icons:
+  ios: true
+  android: "launcher_icon" 
+  image_path: "assetsapp/logolauncher.png"  
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -69,37 +74,18 @@ flutter:
   assets:
     - images/
   #  - images/a_dot_ham.jpeg
-fonts:
-     - family: Montserrat
-       fonts:
-         - asset: fonts/Montserrat-Black.otf        
-         - asset: fonts/Montserrat-Bold.otf       
-         - asset: fonts/Montserrat-Light.otf    
-         - asset: fonts/Montserrat-Medium.otf       
-         - asset: fonts/Montserrat-Regular.otf
+  fonts:
+   - family: Montserrat
+     fonts:
+       - asset: fonts/Montserrat-Black.otf        
+       - asset: fonts/Montserrat-Bold.otf       
+       - asset: fonts/Montserrat-Light.otf    
+       - asset: fonts/Montserrat-Medium.otf       
+       - asset: fonts/Montserrat-Regular.otf
 
 
 
- #        - asset: fonts/MontserratAlternates-Black.ttf
-  #       - asset: fonts/MontserratAlternates-BlackItalic.otf
-  #       - asset: fonts/MontserratAlternates-Bold.otf
-  #       - asset: fonts/MontserratAlternates-BoldItalic.otf
-  #       - asset: fonts/MontserratAlternates-ExtraBold.otf
-  #       - asset: fonts/MontserratAlternates-ExtraBoldItalic.otf
-  #       - asset: fonts/MontserratAlternates-ExtraLight.otf
-  #       - asset: fonts/MontserratAlternates-ExtraLightItalic.otf
-  #       - asset: fonts/MontserratAlternates-Italic.otf
-  #       - asset: fonts/MontserratAlternates-Light.otf
-  #       - asset: fonts/MontserratAlternates-LightItalic.otf
-  #       - asset: fonts/MontserratAlternates-Medium.otf
-  #       - asset: fonts/MontserratAlternates-MediumItalic.otf
-  #       - asset: fonts/MontserratAlternates-Regular.otf
-  #       - asset: fonts/MontserratAlternates-SemiBold.otf
-  #       - asset: fonts/MontserratAlternates-SemiBoldItalic.otf
-  #       - asset: fonts/MontserratAlternates-Thin.otf
-  #      - asset: fonts/MontserratAlternates-ThinItalic.otf
-
-
+ 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

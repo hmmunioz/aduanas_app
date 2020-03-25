@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aduanas_app/src/screens/waiting_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:aduanas_app/src/models/password_model.dart';
 import 'package:aduanas_app/src/screens/aforos_screen.dart';
@@ -107,13 +108,19 @@ class Validators{
             sink.add(TramitesScreen());
          }
          else if(actualScreen==2){
-             sink.add(AforosScreen());
+             sink.add(WaitingScreen());
+         }
+         else if(actualScreen==3){
+             sink.add(WaitingScreen());
+         }
+         else if(actualScreen==4){
+             sink.add(WaitingScreen());
          }
          else if(actualScreen==5){
              sink.add(ScanScreen());
          }
          else if(actualScreen==null){
-             sink.add(AforosScreen());
+             sink.add(WaitingScreen());
          }         
          else{
            sink.addError("Numero incorrecto");

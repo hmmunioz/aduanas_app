@@ -38,9 +38,10 @@ class _ScanScreenState extends State<ScanScreen> {
             child: AnimatedQRView(
               squareColor: Theme.of(context).primaryColor.withOpacity(0.25),
               animationDuration: const Duration(milliseconds: 600),
-              onScanBeforeAnimation: (String str) {
+              /* onScanBeforeAnimation: (String str) {
                _onQRViewCreate(context, str, bloc);
-              },            
+              },      */
+              onScan: (val){_onQRViewCreate(context, val, bloc); },       
               controller: controller )             
             
             )
@@ -56,8 +57,10 @@ class _ScanScreenState extends State<ScanScreen> {
 
 
   void _onQRViewCreate(BuildContext context, String value, Bloc bloc) {
+    
+    
      if(banderadialog==0){
-        bloc.tramiteScreen.searchTramiteById(context, value);
+        bloc.tramiteScreen.searchTramiteById(context, value, (){controller.pause(); controller.controller.resumeCamera(); controller.resume();});
       banderadialog++;     
       }     
   }

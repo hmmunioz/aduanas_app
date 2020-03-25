@@ -17,8 +17,9 @@ class RecoverPassCode extends StatefulWidget {
 }
 
 class _RecoverPassCodeState extends State<RecoverPassCode> {
-  void goToChangePassword(Bloc bloc, BuildContext context) {
-    Navigator.of(context).pushNamed("/changePassword");
+  void validateCode(Bloc bloc, BuildContext context) {
+    bloc.recoverCode.validateCode(context);
+    /* Navigator.of(context).pushNamed("/changePassword"); */
    /*  bloc.utilsBloc.changeSpinnerState(true);
     bloc.smsService.signIn(context); */
   }
@@ -37,6 +38,7 @@ class _RecoverPassCodeState extends State<RecoverPassCode> {
                   AppTitle(
                   inputText: "RCB logistic!",
                    withAppBar: false,
+                   inputTextAnimation: true,
                 ),
                 AppRoundIcon(),
                 Container(
@@ -82,7 +84,7 @@ class _RecoverPassCodeState extends State<RecoverPassCode> {
                         color:Theme.of(context).primaryColor,
                         name: "ENVIAR",
                        invertColors: false,
-                        onPressed: ()=> goToChangePassword(bloc, context),
+                        onPressed: ()=> validateCode(bloc, context),
                       )
                          ],
                       ),
@@ -94,82 +96,5 @@ class _RecoverPassCodeState extends State<RecoverPassCode> {
       SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState), 
       ],
     );
-    
-    
-    
- /*    Stack(      
-      children: <Widget>[
-        Scaffold(
-             resizeToAvoidBottomInset: true,
-            backgroundColor: Colors.white,
-            body: Stack(
-              children: <Widget>[
-                CurvedShape(),
-                AppTitle(
-                  inputText: "RCB logistic!",
-                   withAppBar: false,
-                ),
-                AppRoundIcon(),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height / 2.5),
-                            Text("Validación contraseña",
-                                style: TextStyle(
-                                    color:Theme.of(context).accentColor,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w700)),
-                                 SizedBox(
-                              height: 4.0,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Center(
-                        child: VerificationCodeInput(
-                          keyboardType: TextInputType.number,
-                          bloc: bloc,
-                          length: 5,
-                          focusColors: Theme.of(context).primaryColor,
-                          textStyle: TextStyle(
-                            color: Theme.of(context).accentColor,
-                          ),  
-                          autofocus: true,
-                          onCompleted: (String value) {
-                             bloc.recoverCode.changeCodeRecover(value);
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),                     
-                      AppButton(
-                        streamDataTransform: bloc.recoverCode.getCodeRecover,
-                        color:Theme.of(context).primaryColor,
-                        name: "ENVIAR",
-                       invertColors: false,
-                        onPressed: ()=> goToChangePassword(bloc, context),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            )
-        )    ,
-        SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState),  
-      ],
-    );
-  */ }
+}
 }

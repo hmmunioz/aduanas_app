@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:aduanas_app/src/bloc/bloc.dart';
 import 'package:aduanas_app/src/models/profile_model.dart';
@@ -9,9 +10,11 @@ import 'package:aduanas_app/src/widgets/appTextField.dart';
 import 'package:provider/provider.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
+import 'package:imei_plugin/imei_plugin.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class LoginScreen extends StatefulWidget {
-
   static const String routeName = "/login";
      String token;
        String platformImeI;
@@ -24,6 +27,34 @@ LoginScreen({this.profileModel});
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+   void initPhoneCredentials(BuildContext context) async{   
+ 
+  PermissionHandler().requestPermissions([PermissionGroup.camera]).then((permisionCamera){
+    if(permisionCamera[PermissionGroup.camera].value==1)
+    {
+             PermissionHandler().requestPermissions([PermissionGroup.phone]).then((permisionPhone){
+        if(permisionPhone[PermissionGroup.phone].value==1){
+           ImeiPlugin.getImei( shouldShowRequestPermissionRationale: true ).then((imei)async{await widget.storage.read(key: 'imei')==null? widget.storage.write(key: 'imei', value:imei):print("ya existe");});
+          FirebaseAuth.instance.signInAnonymously().then((onValue)=>{
+            FirebaseAuth.instance.currentUser().then( (user) async {
+             
+              user.getIdToken().then((token)async{await widget.storage.read(key: 'firebaseToken')==null? widget.storage.write(key: 'firebaseToken', value:token.token):print("ya existe");});      
+              })
+          });  
+        }
+        else{
+          Navigator.pop(context);
+        }
+     });
+    }
+    else{
+      Navigator.pop(context);
+    }
+       });        
+ }
+
+
   void singIn(Bloc bloc, BuildContext context){
        bloc.login.singIn(okLogin ,context);
   }
@@ -40,7 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
     print("failed");
   }
   @override
-  Widget build(BuildContext context) {      
+  Widget build(BuildContext context) {
+    initPhoneCredentials(context);
    void iniToken(BuildContext context, Bloc bloc)async{
     widget.profileModel =  bloc.login.getDataProfile();   
     widget.token=await  widget.storage.read(key: 'jwt') ;
@@ -54,8 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
     WidgetsFlutterBinding.ensureInitialized();
-    final bloc = Provider.of<Bloc>(context);
-     bloc.initLoginScreen(); 
+
+    final bloc = Provider.of<Bloc>(context);  
     iniToken(context, bloc);   
     bloc.utilsBloc.changeSpinnerState(true); 
     KeyboardVisibilityNotification().addNewListener(
@@ -70,10 +102,13 @@ class _LoginScreenState extends State<LoginScreen> {
      
     },
   );
-    return  Stack(
+   return 
+   
+      Stack(
+      
       children: <Widget>[            
         Image.asset(
-          "images/backgroundPages.png",
+          "images/celular.gif",
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.cover,
@@ -165,8 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),  
         ),
      SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState),     
-      ],
-    );   
+      ]);   
     
     }
 }

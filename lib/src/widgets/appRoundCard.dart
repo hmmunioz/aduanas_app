@@ -15,11 +15,21 @@ class AppRoundCard extends StatefulWidget {
 class _AppRoundCardState extends State<AppRoundCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      
-      margin: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0, bottom: 10.0),
+    return 
+    Container(
+       margin: EdgeInsets.only(left: 12.0, right: 12.0, top: 20.0, bottom: 10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(25.0) //         <--- border radius here
+          ),
+         border: Border.all(
+        color:Theme.of(context).accentColor , //                   <--- border color
+        width:2.0,
+      ),
+      ),
+      child:    Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      elevation: 4.0,
+      elevation: 0.2,
       child:/*  GestureDetector(
           onTap: () {
            
@@ -45,6 +55,7 @@ class _AppRoundCardState extends State<AppRoundCard> {
             )),
           )
           /* ), */
+    ),
     );
   }
 }

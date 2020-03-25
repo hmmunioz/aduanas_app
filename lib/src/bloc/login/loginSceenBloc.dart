@@ -1,7 +1,5 @@
 import 'package:aduanas_app/src/constants/constants.dart';
-import 'package:aduanas_app/src/services/dialog_service.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:aduanas_app/main.dart';
 import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
 import 'package:aduanas_app/src/models/profile_model.dart';
 import 'package:aduanas_app/src/models/tramites_model.dart';
@@ -9,20 +7,16 @@ import 'package:aduanas_app/src/repositories/repository.dart';
 import 'package:aduanas_app/src/validators/validators.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:imei_plugin/imei_plugin.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-// Create storage
 
-// Write value
 
 class LoginScreenBloc with Validators {
-  UtilsBloc utilbloc;
+  UtilsBloc utilsbloc;
   Repository repository;
   ProfileModel profileModelRes;
   FlutterSecureStorage storage;
 
   String token;
-  LoginScreenBloc({this.utilbloc, this.repository, this.profileModelRes, this.storage, this.token});
+  LoginScreenBloc({this.utilsbloc, this.repository, this.profileModelRes, this.storage, this.token});
 
   ///LoginScreen
   final _emailController = BehaviorSubject<String>();
@@ -63,9 +57,9 @@ class LoginScreenBloc with Validators {
     Navigator.pushReplacementNamed(context, "/login");
   }
 
+
   singIn(Function singInOk, BuildContext context,) async {
-    //firebaseToken();
-    void singOk(Function addProfileSingInOk, String imei, String token) async {   
+    void singOk(Function addProfileSingInOk) async {   
         repository.dbProvider.setInstanceProfile();
         repository.dbProvider.dbProviderProfile.getProfile().then((pf)=>{
              addProfileSingInOk(pf)
@@ -99,36 +93,33 @@ class LoginScreenBloc with Validators {
 
      void addProfileSingInOk(ProfileModel pf){
        profileModelRes =pf;
-       addSinkProfile(profileModelRes);
-       storage.write(key: 'jwt', value: profileModelRes.getUsuarioUUID);     
-/*        ImeiPlugin.getImei( shouldShowRequestPermissionRationale: true ).then((imei)=>{          */ 
-    /*     FirebaseAuth.instance.currentUser().then( (user) => {
-          user!=null ? user.getIdToken().then((token) => */ repository.apiProvider.tramiteApiProvider.getTramites(context).then((tramiteList)=>{
-                   addTramitesTolocalData(tramiteList) }).timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));                  
-            /*  )  :  print("null")
-          });        */
-     /*   });     */        
-    
-    }    
+       addSinkProfile(profileModelRes);          
+        repository.apiProvider.tramiteApiProvider.getTramites(context, utilsbloc).then((tramiteList)=>{
+         addTramitesTolocalData(tramiteList) }).timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));                  
+   }    
      
      void singInResult(resultSingIn) async{
           print("comprobar logiiiiiiiiiiiiiiin"); 
         repository.dbProvider.setInstanceProfile();            
-         resultSingIn!=null?repository
-                     .dbProvider
-                     .dbProviderProfile
-                     .addProfile(ProfileModel.fromDb(resultSingIn[0]))
-                     .then((idProfile)=>{
-                      idProfile>0  ? singOk(addProfileSingInOk,"imei"," token.toString()" ) : print("error")
-                    }):print("error");        
+        repository.dbProvider.dbProviderProfile
+                     .addProfile(ProfileModel.fromDb(resultSingIn[0])).then((idProfile)=>{
+                      idProfile>0  ? singOk(addProfileSingInOk ) : print("error")
+                    });        
      }    
     
-    utilbloc.changeSpinnerState(true);
+    utilsbloc.changeSpinnerState(true);
     repository
         .apiProvider.autenticationApiProvider
-        .singIn(getDataEmail(), getDataPass(), "platformImei", utilbloc, context).then((resultSingIn)=>{
-              singInResult(resultSingIn)
-        }).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
+        .singIn(getDataEmail(), getDataPass(),  utilsbloc, context,).then((resultSingIn){
+             if(resultSingIn!=null)
+             {
+              repository
+              .apiProvider.autenticationApiProvider
+              .getPhoneData(utilsbloc, context).then((result){
+                 result!=null?singInResult(resultSingIn):print("error");
+              });        
+             }              
+        }).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
   }
   
 

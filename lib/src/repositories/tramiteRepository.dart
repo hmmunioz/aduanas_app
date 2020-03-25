@@ -12,8 +12,8 @@ class TramiteRepository {
   }
 
   TramiteApiProvider tramiteApiProvider;
-  Future<dynamic> getTramites(BuildContext context) => tramiteApiProvider.getTramites(context);
-  Future<bool> changeTramite(String tramiteId, int estado, UtilsBloc utilbloc, BuildContext context) => tramiteApiProvider.changeTramite(tramiteId, estado, utilbloc, context );
+  Future<dynamic> getTramites(BuildContext context, UtilsBloc utilsbloc) => tramiteApiProvider.getTramites(context, utilsbloc);
+  Future<bool> changeTramite(String tramiteId, int estado, UtilsBloc utilsbloc, BuildContext context) => tramiteApiProvider.changeTramite(tramiteId, estado, utilsbloc, context );
 
 
 }

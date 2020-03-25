@@ -16,7 +16,15 @@ class ContainerHome extends StatefulWidget {
     final storage = new FlutterSecureStorage();
      ProfileModel profileModel;
    void logOut(Bloc bloc, BuildContext context){
+      Navigator.pop(context);
+      bloc.dispose();
       bloc.login.logOut(context);
+   }
+     void refreshTramites(Bloc bloc, BuildContext context){
+      bloc.tramiteScreen.refreshTramites(context);
+   }
+   void moreInfoDialog(Bloc bloc, BuildContext context){
+     bloc.utilsBloc.openDialog(context, "Informacion de la App", "Version 1.0.0\n\n"+ "Desarrollador\n\n"+ "Mauricio Muñoz", null, true, false);
    }
         ContainerHome({this.token, this.profileModel});
 
@@ -30,25 +38,14 @@ class _ContainerHomeState extends State<ContainerHome> {
     // TODO: implement initState
     super.initState();
   }
-/*  final Repository repository = new Repository(); */
-  @override
 
-  Widget build(BuildContext context) {
- 
-    void iniToken(BuildContext context, Bloc bloc)async{
-    widget.token=await  widget.storage.read(key: 'jwt') ;
-    if(widget.token==null ||  widget.token=="" ){
-        Navigator.pushNamed(context, "/login");
-    }
-    else{   
-    //   bloc.initLoginScreen();
-       ProfileModel p = await bloc.login.addProfileData();        
+  void iniToken(BuildContext context, Bloc bloc)async{   
+        ProfileModel p = await bloc.login.addProfileData();        
        widget.profileModel = p;   
-    }    
+     }
 
-  }
   Future<bool> navigationBack(Bloc bloc, BuildContext context){
-      //  Navigator.pop(context, true);
+
        if(bloc.containerScreens.getDataActualScreen()==0){
           SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         }
@@ -61,19 +58,24 @@ class _ContainerHomeState extends State<ContainerHome> {
         }
   }
 
+
+
+  Widget build(BuildContext context) {    
+ 
   WidgetsFlutterBinding.ensureInitialized();
-   final bloc = Provider.of<Bloc>(context);      
+   final bloc = Provider.of<Bloc>(context);  
+   bloc.disposeLogin();    
    iniToken(context, bloc);    
-      if(bloc.containerScreens.getDataActualScreen()!=0){
+   if(bloc.containerScreens.getDataActualScreen()!=0){
         bloc.containerScreens.changeActualScreen(0);    
-     }
-   
+    }   
     return WillPopScope(
       onWillPop: () => navigationBack(bloc, context),
  
       child:Stack(
       children: <Widget>[           
          Scaffold(
+           backgroundColor: Colors.white,
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0), // here the desired height
           child: AppBar(
@@ -112,9 +114,7 @@ class _ContainerHomeState extends State<ContainerHome> {
             return Drawer(
                   child: getListDrawer(bloc),
                 );
-          });
-    
-    
+          });  
   }
 
   ListTile getItem(Icon icon, String description, String route, int actualScreen, Bloc bloc) {
@@ -152,8 +152,7 @@ class _ContainerHomeState extends State<ContainerHome> {
             style: TextStyle(color: Colors.white),
           ),
           accountEmail: Text(
-            widget.profileModel.getCorreo
-          /*  bloc.login.getProfile().getCorreo!=null?bloc.login.getProfile().getCorreo: */,
+            widget.profileModel.getCorreo,        
             style: TextStyle(color: Colors.white),
           ),
           currentAccountPicture: CircleAvatar(
@@ -173,16 +172,25 @@ class _ContainerHomeState extends State<ContainerHome> {
           height: 20.0,
         ),
         Divider(),
-        getItemAccion(Icon(Icons.refresh), "Actualizar"),
-        AboutListTile(
+         GestureDetector(
+          onTap: () => widget.refreshTramites( bloc,  context),
+          child:    getItemAccion(Icon(Icons.refresh), "Actualizar"),
+        ),  
+     GestureDetector(
+          onTap: () => widget.moreInfoDialog( bloc,  context),
+          child:   getItemAccion(Icon(Icons.info), "Más Información"),
+        ),   
+       /*  AboutListTile(
           child: Text(
+            
             "Más Información",
             style: TextStyle(color: Theme.of(context).accentColor),
           ),
+          
           applicationVersion: "1.1.0",
           applicationIcon: Icon(Icons.info),
           icon: Icon(Icons.info),
-        ),
+        ), */
         GestureDetector(
           onTap: () => widget.logOut( bloc,  context),
           child:   getItemAccion(Icon(Icons.exit_to_app), "Salir"),

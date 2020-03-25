@@ -1,7 +1,8 @@
+
+import 'package:aduanas_app/src/widgets/appMenuAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:aduanas_app/src/bloc/bloc.dart';
 import 'package:aduanas_app/src/widgets/appCurvedShape.dart';
-import 'package:aduanas_app/src/widgets/appRoundCard.dart';
 import 'package:aduanas_app/src/widgets/appRoundIcon.dart';
 import 'package:aduanas_app/src/widgets/appTitle.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,12 @@ class HomeScreen extends StatefulWidget {
  
 
 class _HomeScreenState extends State<HomeScreen> {
-  void changeActualScreen(Bloc bloc, int actualScreen){ 
+  void changeActualScreen(Bloc bloc, int actualScreen, BuildContext context){ 
+    if(actualScreen==4){
+      
+    //  Navigator.of(context).popAndPushNamed('/testpage');
+      //  Navigator.pushNamed(context,"/testpage");
+    }
      if(bloc.containerScreens.getDataActualScreen()!=actualScreen){
         bloc.containerScreens.changeActualScreen(actualScreen); 
      }
@@ -29,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     inputText:  "Bienvendio a Aduanas",
                     secondText: "¿Qué trámites realizaremos hoy?",
                      withAppBar: true,
+                     inputTextAnimation: false,
+                     secondTextAnimation: true,
                    );
   }
   
@@ -55,50 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 CurvedShape(),
                 appTitleData(widget.nombre),
                 SizedBox(height: 25.0,),
-                AppRoundIcon(),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 44.0),
-                    height: MediaQuery.of(context).size.height/0.5,
-              /*       child: Center( */
+               AppRoundIcon(),     
+                Container(                
+                    height: MediaQuery.of(context).size.height/0.5,           
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                           SizedBox(
-                            height: MediaQuery.of(context).size.height / 2.88,
+                            height: MediaQuery.of(context).size.height / 2.70,
                           ),
-                          GridView.count(
-                            primary: false,                            
-                            padding: const EdgeInsets.fromLTRB(1, 10, 1, 10),
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.80,
-                            mainAxisSpacing: 0.2,
-                            crossAxisSpacing: 1.0,
-                            children: <Widget>[
-                              AppRoundCard(
-                                  onClick:()=> changeActualScreen(bloc, 1),
-                                  inputText: "Tramites",
-                                  iconCard: Icons.description,
-                                  inputColor:Theme.of(context).accentColor),
-                              AppRoundCard(
-                                  onClick:()=> changeActualScreen(bloc, 2),
-                                  inputText: "Aforos",
-                                  iconCard: Icons.group,
-                                  inputColor:Theme.of(context).accentColor),
-                              AppRoundCard(
-                                  onClick:()=> changeActualScreen(bloc,3),
-                                  inputText: "Archivos",
-                                  iconCard: Icons.folder_special,
-                                  inputColor:Theme.of(context).accentColor),
-                              AppRoundCard(
-                                  onClick:()=> changeActualScreen(bloc, 4),
-                                  inputText: "Reporteria",
-                                  iconCard: Icons.pie_chart,
-                                  inputColor: Theme.of(context).accentColor),
-                            ],
-                            shrinkWrap: true,
-                          )
-                        ],
+                          AppMenuAnimation(),
+                      ],
                       ),
                    ),
               ],

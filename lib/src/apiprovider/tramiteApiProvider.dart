@@ -19,7 +19,7 @@ class TramiteApiProvider {
   final List<TramiteModel> _recibidos = [];
   final List<TramiteModel> _entregados = [];
   Map<String, String> headers = {"Content-type":"application/json"};
- Future<bool> changeTramite(String tramiteId, int estado,  UtilsBloc utilbloc, BuildContext context) async {
+ Future<bool> changeTramite(String tramiteId, int estado,  UtilsBloc utilsbloc, BuildContext context) async {
    if(estado<3){
      estado++;
    }
@@ -33,11 +33,12 @@ class TramiteApiProvider {
           return true;
       }
       else{
-        //   utilbloc.openDialog(context, "Usuario o Password incorrectos.", null,  true, false );
+        //   utilsbloc.openDialog(context, "Usuario o Password incorrectos.", null,  true, false );
         return false;
       }
     }else{
-       utilbloc.openDialog(context, "Ha ocurrido un error.", response.body.toString(), null,  true, false );
+      utilsbloc.changeSpinnerState(false);
+       utilsbloc.openDialog(context, "Ha ocurrido un error.", response.body.toString(), null,  true, false );
         print(response.statusCode.toString());
         print(response.body.toString());
       throw Exception('---------------------------Failed to load post');
@@ -45,14 +46,15 @@ class TramiteApiProvider {
    }  
  
  
-  Future<dynamic> getTramites(BuildContext context) async { 
+  Future<dynamic> getTramites(BuildContext context, UtilsBloc utilsbloc) async { 
    
      dynamic objPostGetTramites ={"usuarioId":await storage.read(key: 'jwt'), "fechaUltimSincronisacion":await storage.read(key: 'fechaSincroniza')!=null?await storage.read(key: 'fechaSincroniza'):""};       
      String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.tramites['getAll'];  
     final response = await client.post("$urlApi", headers:headers, body:json.encode(objPostGetTramites) /* objPostGetTramites.toString() */);
-
+print("respuesta de tramites");
     if (response.statusCode == 200) 
     {       
+  print("traaamiteeees 2000");
        _porRecibir.clear();
        _recibidos.clear();
        _entregados.clear();
@@ -80,6 +82,7 @@ class TramiteApiProvider {
 
       return responseData;
     } else {
+        utilsbloc.changeSpinnerState(false);
         print(response.statusCode.toString());
         print(response.body.toString());
       // If that call was not successful, throw an error.

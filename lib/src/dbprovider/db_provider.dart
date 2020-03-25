@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'package:aduanas_app/src/dbprovider/db_provider_profile.dart';
-import 'package:aduanas_app/src/models/profile_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
 import 'db_provider_tramites.dart';
 class DBProvider{
 DBProviderProfile dbProviderProfile = new DBProviderProfile();
@@ -66,7 +64,7 @@ static final  List<String> tablas=["profile", "tramites"];
    void deleteDataBase()async{
      await _db.delete("profile");
     await _db.delete("tramites");
-     await _db.close();
+    // await _db.close();
    }
    void setInstanceProfile() {     
     dbProviderProfile.database=  getDataInstance();   

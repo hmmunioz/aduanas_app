@@ -13,29 +13,42 @@ import 'package:rxdart/rxdart.dart';
 class TramiteBloc with Validators{
 
   ///TramiteBloc  
-    UtilsBloc utilbloc;
+    UtilsBloc utilsbloc;
     ContainerScreensBloc containerScreensBloc;
     Repository repository;
-    TramiteBloc({this.utilbloc, this.containerScreensBloc, this.repository});
+    TramiteBloc({this.utilsbloc, this.containerScreensBloc, this.repository});
     List<TramiteModel> _porRecibirTramiteList = [];
     List<TramiteModel> _recibidosTramiteList = [];
     List<TramiteModel> _entregadosTramiteList = [];
 
  final _tramiteListController = BehaviorSubject<bool>();    
  final _tramitesList = BehaviorSubject<Future<dynamic>>();
+ final _tramiteDetailController = BehaviorSubject<TramiteModel>();
+  final _isCompleteListLoadingController = BehaviorSubject<bool>();
+
 
  Function(bool) get addSinkTramiteList => _tramiteListController.sink.add; ////Set data to block TramiteScreen
  Stream<bool> get  changesTramiteList => _tramiteListController.stream.transform(validateTramiteObj);
+Function(TramiteModel) get addSinkTramiteDetail => _tramiteDetailController.sink.add;
+Function(bool) get addIsCompleteLoading => _isCompleteListLoadingController.sink.add;
+Stream<bool> get  getTransformerIsCompleteLoading => _isCompleteListLoadingController.stream.transform(validateTramiteObj);
+
+bool getIsCompleteLoadingValue(){
+  return _isCompleteListLoadingController.value;
+}
+
  void changeTramiteState(BuildContext context, List listaActual, int position, int tipoTramite){
    var objetoActual = listaActual[position];
    listaActual.removeAt(position);
    tipoTramite==1 ? _recibidosTramiteList.add(objetoActual) : _entregadosTramiteList.add(objetoActual);
    addSinkTramiteList(true);
-   utilbloc.changeSpinnerState(false);
+   utilsbloc.changeSpinnerState(false);
    Navigator.of(context).pop();
    containerScreensBloc.changeActualScreen(1);
  }
-
+ TramiteModel getValueTramiteDetail(){
+   return _tramiteDetailController.value;
+ }
   void changeTramite(BuildContext context, TramiteModel tramiteObj)
   {   
      int porRecibirExist = _porRecibirTramiteList.indexWhere((tramite) => tramite.getId== tramiteObj.getId); 
@@ -70,93 +83,78 @@ class TramiteBloc with Validators{
   List<TramiteModel> getEntregadosList(){
      return _entregadosTramiteList;
    }
+  
+
+   refreshAddTramites(tramiteList, BuildContext context){
+
+       List<TramiteModel> _porRecibirTramiteList = tramiteList['porRecibir'];
+     List<TramiteModel> _recibidosTramiteList = tramiteList['recibidos'];
+     List<TramiteModel> _entregadosTramiteList = tramiteList['entregados']; 
+     repository.dbProvider.setInstanceTramite();  
+    _porRecibirTramiteList.forEach((f) =>  repository.dbProvider.dbProviderTramite.addTramite(TramiteModel.fromDb(f.toJson()))
+     .then((idTramite)=>{
+        idTramite>0 ? print(f.getActividad) :print("failed tramite ")                   
+       })
+     );
+
+      _recibidosTramiteList.forEach((f) =>  repository.dbProvider.dbProviderTramite.addTramite(TramiteModel.fromDb(f.toJson()))
+     .then((idTramite)=>{
+        idTramite>0 ? print(f.getActividad) :print("failed tramite ")                   
+       })
+     );
+
+      _entregadosTramiteList.forEach((f) =>  repository.dbProvider.dbProviderTramite.addTramite(TramiteModel.fromDb(f.toJson()))
+     .then((idTramite)=>{
+        idTramite>0 ? print(f.getActividad) :print("failed tramite ")                   
+       })
+     );
+
+     utilsbloc.changeSpinnerState(false);
+    // Navigator.pop(context);          
+   }
+
+   refreshTramites(BuildContext context,){
+    utilsbloc.changeSpinnerState(true);
+    repository.apiProvider.tramiteApiProvider.getTramites(context, utilsbloc).then((tramiteList)=>{
+                   refreshAddTramites(tramiteList, context  ) });/* .timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false )); */
+   }
 
   getTramitesByUser() async { 
-    utilbloc.changeSpinnerState(true);
+    utilsbloc.changeSpinnerState(true);
     repository.dbProvider.setInstanceTramite();
     dynamic listaTramitesTemp = await repository.dbProvider.dbProviderTramite.getTramites();
     _porRecibirTramiteList =listaTramitesTemp['porRecibir'];
     _recibidosTramiteList = listaTramitesTemp['recibidos'];
     _entregadosTramiteList = listaTramitesTemp['entregados'];
     addSinkTramiteList(true);
-    utilbloc.changeSpinnerState(false);    
+    utilsbloc.changeSpinnerState(false);    
   }
 
   changeTramiteById(BuildContext context, TramiteModel tramiteObj) async {
-     utilbloc.changeSpinnerState(true);   
-    repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado, utilbloc, context).then((resultChangeTramiteApi)=> 
+     utilsbloc.changeSpinnerState(true);   
+    repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado, utilsbloc, context).then((resultChangeTramiteApi)=> 
       resultChangeTramiteApi!=null? repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((resultChangeTramiteDB)=> changeTramite(context, tramiteObj )):print("error")
-    ).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
+    ).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
     
   }
 
-  /* void caseTramite(tramiteObjTemp){
-      int porRecibirExist = _porRecibirTramiteList.indexWhere((tramite) => tramite.getId== tramiteId); 
-                int recibidoExist = _recibidosTramiteList.indexWhere((tramite) => tramite.getId== tramiteId); 
-                int entregadoExist = _entregadosTramiteList.indexWhere((tramite) => tramite.getId== tramiteId);
-
-                if(porRecibirExist!=-1){
-                  TramiteModel tramiteObjTemp =  _porRecibirTramiteList[porRecibirExist];
-                    return tramiteObjTemp;
-                }
-                else if(recibidoExist !=-1){
-                  TramiteModel tramiteObjTemp =  _recibidosTramiteList[recibidoExist];
-                    return tramiteObjTemp;  
-                }
-                else if(entregadoExist !=-1){
-                  TramiteModel tramiteObjTemp =  _entregadosTramiteList[entregadoExist];
-                    return tramiteObjTemp;
-                }
-                else{
-                   print("nuuuuuuuuuuuuuuuulsisioismo");
-                } 
-  } */
-
-  void searchTramiteById(BuildContext context, String tramiteId ) async{
+  void searchTramiteById(BuildContext context, String tramiteId, Function controllerReset ) async{
     print("tramiteeee iddaaaaa");
     print(tramiteId);
        repository.dbProvider.dbProviderTramite.getTramite(tramiteId).then((trm) {
-
-         _settingModalBottomSheet(context, trm);
-        /*  print(trm.getActividad); */
-         return trm;
+          
+        trm!=null?utilsbloc.settingModalBottomSheet(context, trm,(){controllerReset(); changeTramiteById(context, trm);})
+        :utilsbloc.openDialog(context, "Ha ocurrido un error","El tramite que busca no existe.", null, true, false) ;
+       
        } );
 }      
         
-    /**/
- void _settingModalBottomSheet(BuildContext context, TramiteModel objTramite) {
-      var mensaje = "Tramite numero #" + objTramite.getNumeroTramite;
-  
-      showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return  Container(
-            color: Colors.transparent,
-            child:  Container(
-                decoration:  BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:  BorderRadius.only(
-                        topLeft: const Radius.circular(25.0),
-                        topRight: const Radius.circular(25.0))),
-                child: Wrap(
-                  children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.info_outline),
-                        title: Text('Mas informacion'),
-                        onTap: () => {}),
-                    ListTile(
-                      leading: Icon(Icons.check),
-                      title: Text('Realizar Tramite'),
-                      onTap:  ()  async{  utilbloc.openDialog(context, mensaje, '¿Esta seguro de realizar este trámite?',  ()=>{changeTramiteById(context, objTramite)}, true, true); } ,  
-                    ),
-                  ],
-                )),
-          );
-        }); 
-     }
-     
+
    dispose(){
       _tramiteListController.close();
       _tramitesList.close();
+      _isCompleteListLoadingController.close();
+      _tramiteDetailController.close();
+
     }
 }

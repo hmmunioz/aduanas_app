@@ -83,7 +83,7 @@ class _OnSlideState extends State<OnSlide> {
    BoxDecoration myBoxDecoration2() {
     return BoxDecoration(
       //color:  Color.fromRGBO(142, 144, 146,0.5),
-    color:Theme.of(context).accentColor.withOpacity(0.9),
+    color:Colors.white.withOpacity(0.9),
       borderRadius: BorderRadius.all(
           Radius.circular(25.0) //         <--- border radius here
           ),
@@ -131,15 +131,14 @@ class _OnSlideState extends State<OnSlide> {
     for (ActionItems item in widget.items) {
       under.add(new Container(
         decoration: myBoxDecoration3(),
-          alignment: Alignment.center,
-          
+          alignment: Alignment.center,         
      
           width: 60.0,
           height: childSize.height,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[item.icon, Text('Mas')],
+              children: <Widget>[item.icon, Text('Mas', style: TextStyle(color: Theme.of(context).primaryColor),)],
             ),
           )));
 

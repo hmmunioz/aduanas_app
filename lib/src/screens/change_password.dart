@@ -30,6 +30,9 @@ class _ChangePasswordState extends State<ChangePassword> {
     bloc.changePassword.changePassword(changePasswordText);
     print(value);
   }
+  void sendNewCredentials(BuildContext context, Bloc bloc){
+    bloc.changePassword.sendNewCredentials(context);
+  }
   @override
   Widget build(BuildContext context) {
        final bloc = Provider.of<Bloc>(context);
@@ -45,6 +48,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   AppTitle(
                   inputText: "RCB logistic!",
                    withAppBar: false,
+                   inputTextAnimation: true,
                 ),
                 AppRoundIcon(),
                 Container(
@@ -94,7 +98,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         color:Theme.of(context).primaryColor,
                         name: "CAMBIAR",
                         invertColors: false,
-                        onPressed: () { print("CAMBIAAR CLAVEE");},
+                        onPressed: () { sendNewCredentials(context, bloc);},
                       ),
                          ],
                       ),
