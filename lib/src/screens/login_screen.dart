@@ -66,8 +66,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
   void okLogin(){
 
-  
-   Navigator.pushNamed(context, "/containerHome");
+  Navigator.of(context).pushNamedAndRemoveUntil(
+  "/containerHome",
+  (route) => route.isCurrent && route.settings.name == "/containerHome"
+      ? false
+      : true);
+ //  Navigator.pushNamed(context, "/containerHome");
   }
   void failed(){
     print("failed");
@@ -80,8 +84,12 @@ class _LoginScreenState extends State<LoginScreen> {
     widget.token=await  widget.storage.read(key: 'jwt') ;
     if(widget.token!=null &&  widget.token!="" ){
          bloc.utilsBloc.changeSpinnerState(false);
-         
-        Navigator.pushReplacementNamed(context, "/containerHome");
+        Navigator.of(context).pushNamedAndRemoveUntil(
+  "/containerHome",
+  (route) => route.isCurrent && route.settings.name == "/containerHome"
+      ? false
+      : true); 
+       // Navigator.pushReplacementNamed(context, "/containerHome");
     }    
     else{
         bloc.utilsBloc.changeSpinnerState(false);

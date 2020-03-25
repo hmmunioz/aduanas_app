@@ -53,8 +53,13 @@ class LoginScreenBloc with Validators {
   
   logOut(BuildContext context) async{
    await storage.deleteAll();
-   repository.dbProvider.deleteDataBase();        
-    Navigator.pushReplacementNamed(context, "/splashRcbScreen");
+   repository.dbProvider.deleteDataBase();  
+   Navigator.of(context).pushNamedAndRemoveUntil(
+  "/splashRcbScreen",
+  (route) => route.isCurrent && route.settings.name == "/splashRcbScreen"
+      ? false
+      : true);      
+ /*    Navigator.pushReplacementNamed(context, "/splashRcbScreen"); */
   }
 
 
