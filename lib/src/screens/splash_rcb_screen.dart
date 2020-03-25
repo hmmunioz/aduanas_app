@@ -38,6 +38,8 @@ class _SplashRcbScreenState extends State<SplashRcbScreen> {
   Widget build(BuildContext context) {
      final bloc = Provider.of<Bloc>(context);
      bloc.initInstanceBlocs(); 
+       bloc.tramiteScreen.addIsCompleteLoading(false);
+      
     return FancyBackgroundDemo();
     }
 }

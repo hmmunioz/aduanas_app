@@ -53,12 +53,13 @@ class LoginScreenBloc with Validators {
   
   logOut(BuildContext context) async{
    await storage.deleteAll();
-   repository.dbProvider.deleteDataBase();     
-    Navigator.pushReplacementNamed(context, "/login");
+   repository.dbProvider.deleteDataBase();        
+    Navigator.pushReplacementNamed(context, "/splashRcbScreen");
   }
 
 
   singIn(Function singInOk, BuildContext context,) async {
+   
     void singOk(Function addProfileSingInOk) async {   
         repository.dbProvider.setInstanceProfile();
         repository.dbProvider.dbProviderProfile.getProfile().then((pf)=>{

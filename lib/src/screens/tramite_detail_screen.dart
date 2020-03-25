@@ -64,7 +64,7 @@ class _TramiteDetailState extends State<TramiteDetail> {
         SizedBox(height: 10),
                       QrImage(
                 foregroundColor: Colors.white,
-                data: tramiteModel.getId,
+                data: tramiteModel.getNumeroTramite,
                 version: QrVersions.auto,
                 size:(MediaQuery.of(context).size.height*16)/100 ,
               ),

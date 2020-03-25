@@ -38,7 +38,7 @@ class AutenticationApiProvider {
         print(response.statusCode.toString());
         print(response.body.toString());
         
-      throw Exception('---------------------------Failed to load post');
+      return null;
     } 
    }  
 
@@ -59,7 +59,7 @@ class AutenticationApiProvider {
     utilsbloc.openDialog(context, "Ha ocurrido un error.", response.body.toString(), ()=>{bloc.dispose()},  true, false );
         print(response.statusCode.toString());
         print(response.body.toString());
-      throw Exception('---------------------------Failed to load post');
+      return null;
     } 
    }  
 
@@ -68,34 +68,26 @@ class AutenticationApiProvider {
    dynamic objPostSendEmail ={"correo": email }; 
    String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.autentication['sendEmail']; 
    final response = await client.post("$urlApi", headers:headers, body:json.encode(objPostSendEmail));
-   if (response.statusCode == 200) 
-    {   
-      print("responseeeeeee");
-      print(json.decode(response.body));
-      utilsbloc.changeSpinnerState(false);
-        if(json.decode(response.body)['estado']==true )
+   if (response.statusCode == 200)     {
+
+
+     if( json.decode(response.body)[0]!=null&& json.decode(response.body)[0]['estado']==true )
         {
-          print("CODEEEEEEEEEEEEEE");
-          print(json.decode(response.body)['codigo']);
-            utilsbloc.openDialog(context, "Correo enviado", "Se ha enviado un código de validacion a su correo.", ()=>{Navigator.pushNamed(context, "/recoverpasscode")},  true, false );
+           utilsbloc.openDialog(context, "Correo enviado", "Se ha enviado un código de validacion a su correo.", ()=>{Navigator.pushNamed(context, "/recoverpasscode")},  true, false );
         }
         else{
-              if(json.decode(response.body)['codigo']=="enviado"){
-                print("CODEEEEEEEEEEEEEE");
-                print(json.decode(response.body)['codigo']);
+        if(json.decode(response.body)[0]['codigo']=="enviado"){
                 utilsbloc.openDialog(context, "Correo no enviado", "Este usuario ya ha recibido un código de validación",  ()=>{Navigator.pushNamed(context, "/recoverpasscode")},  true, false );
             }
-              else{           
-                print("CODEEEEEEEEEEEEEE");
-                print(json.decode(response.body)['codigo']);
+              else{          
                 utilsbloc.openDialog(context, "Correo no enviado", "El correo es invalido.", null,  true, false );
-              }             
-        }      
+              }         
+        }  
     }
     else{
       utilsbloc.changeSpinnerState(false);
       utilsbloc.openDialog(context, "El correo es invalido", response.body.toString(), null,  true, false );
-      throw Exception('---------------------------Failed to load post');
+      return null;
     } 
    }   
 
@@ -120,7 +112,7 @@ class AutenticationApiProvider {
     else{
       utilsbloc.changeSpinnerState(false);
       utilsbloc.openDialog(context, "El correo es invalido", response.body.toString(), null,  true, false );
-      throw Exception('---------------------------Failed to load post');
+      return null;
     } 
    }   
 
@@ -135,9 +127,9 @@ class AutenticationApiProvider {
     {   
       print(json.decode(response.body));
         utilsbloc.changeSpinnerState(false);
-        if(json.decode(response.body)[0]['estado']==true )
+        if(json.decode(response.body)['estado']==true )
         {
-          bloc.disposeLogin();
+        //  bloc.disposeLogin();
           Navigator.pushNamed(context, "/login");
         }
         else{
@@ -147,7 +139,7 @@ class AutenticationApiProvider {
     else{
       utilsbloc.changeSpinnerState(false);
       utilsbloc.openDialog(context, "El correo es invalido", response.body.toString(), null,  true, false );
-      throw Exception('---------------------------Failed to load post');
+      return null;
     } 
    }   
 }

@@ -38,9 +38,7 @@ class TramitesScreen extends StatelessWidget {
     print("iscompleeetteeeeeeeee");
    bloc.tramiteScreen.addIsCompleteLoading(true);
   }
-  void isLoading(Bloc bloc){
-     bloc.tramiteScreen.addIsCompleteLoading(false);
-  }
+ 
    void openDetailTramite(BuildContext context, TramiteModel tramiteModel, Bloc bloc){
        bloc.tramiteScreen.addSinkTramiteDetail(tramiteModel);
         Navigator.of(context).push(PageRouteBuilder(
@@ -117,7 +115,7 @@ class TramitesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
  
     final bloc = Provider.of<Bloc>(context);
-    isLoading(bloc);
+   // isLoading(bloc);
     Timer(Duration(seconds:2, milliseconds: 5), ()=> isCompleteLoading(bloc));
     bloc.tramiteScreen.getTramitesByUser();
     return SmartRefresher(

@@ -59,12 +59,14 @@ static final  List<String> tablas=["profile", "tramites"];
                 )        
                 """);
       }
-
+ void closeDb() async{
+        await _db.close();
+ }
   // Database helper methods:              
    void deleteDataBase()async{
      await _db.delete("profile");
     await _db.delete("tramites");
-    // await _db.close();
+
    }
    void setInstanceProfile() {     
     dbProviderProfile.database=  getDataInstance();   

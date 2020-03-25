@@ -45,8 +45,8 @@ class _WaitingScreenState extends State<WaitingScreen> {
                         children: <Widget>[
                          Image.asset(
           "images/enconstruccion.png",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+/*           height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width, */
           fit: BoxFit.cover,
         ),
                         ]  ),

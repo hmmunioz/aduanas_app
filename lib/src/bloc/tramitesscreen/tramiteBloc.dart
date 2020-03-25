@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:aduanas_app/src/bloc/bloc.dart';
 import 'package:aduanas_app/src/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aduanas_app/src/bloc/containerscreens/containerScreensBloc.dart';
@@ -20,11 +21,15 @@ class TramiteBloc with Validators{
     List<TramiteModel> _porRecibirTramiteList = [];
     List<TramiteModel> _recibidosTramiteList = [];
     List<TramiteModel> _entregadosTramiteList = [];
+    List<TramiteModel> _tempporRecibirTramiteList = [];
+    List<TramiteModel> _temprecibidosTramiteList = [];
+    List<TramiteModel> _tempentregadosTramiteList = [];
 
  final _tramiteListController = BehaviorSubject<bool>();    
  final _tramitesList = BehaviorSubject<Future<dynamic>>();
  final _tramiteDetailController = BehaviorSubject<TramiteModel>();
   final _isCompleteListLoadingController = BehaviorSubject<bool>();
+  final _searchTramiteController = BehaviorSubject<String>();
 
 
  Function(bool) get addSinkTramiteList => _tramiteListController.sink.add; ////Set data to block TramiteScreen
@@ -32,6 +37,14 @@ class TramiteBloc with Validators{
 Function(TramiteModel) get addSinkTramiteDetail => _tramiteDetailController.sink.add;
 Function(bool) get addIsCompleteLoading => _isCompleteListLoadingController.sink.add;
 Stream<bool> get  getTransformerIsCompleteLoading => _isCompleteListLoadingController.stream.transform(validateTramiteObj);
+
+Function(String) get addSearchController => _searchTramiteController.sink.add;
+/* Stream<String> get  getTransformerSearchController => _searchTramiteController.stream.transform(validateSearch);
+ */String getSearchTramiteValue(){
+   print(_searchTramiteController.value);   
+  return _searchTramiteController.value;
+}
+
 
 bool getIsCompleteLoadingValue(){
   return _isCompleteListLoadingController.value;
@@ -72,16 +85,17 @@ bool getIsCompleteLoadingValue(){
      }
   }
 
+ 
   List<TramiteModel> getPorRecibirList(){
-     return _porRecibirTramiteList;
-   }
+     return  (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)? _porRecibirTramiteList:_porRecibirTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
+    }
 
   List<TramiteModel> getRecibidosList(){
-     return _recibidosTramiteList;
+     return  (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)?  _recibidosTramiteList:_recibidosTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
    }
 
   List<TramiteModel> getEntregadosList(){
-     return _entregadosTramiteList;
+     return (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)? _entregadosTramiteList : _entregadosTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
    }
   
 
@@ -114,7 +128,7 @@ bool getIsCompleteLoadingValue(){
    }
 
    refreshTramites(BuildContext context,){
-    utilsbloc.changeSpinnerState(true);
+
     repository.apiProvider.tramiteApiProvider.getTramites(context, utilsbloc).then((tramiteList)=>{
                    refreshAddTramites(tramiteList, context  ) });/* .timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false )); */
    }
@@ -133,18 +147,18 @@ bool getIsCompleteLoadingValue(){
   changeTramiteById(BuildContext context, TramiteModel tramiteObj) async {
      utilsbloc.changeSpinnerState(true);   
     repository.tramiteRepository.changeTramite(tramiteObj.getId, tramiteObj.getEstado, utilsbloc, context).then((resultChangeTramiteApi)=> 
-      resultChangeTramiteApi!=null? repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((resultChangeTramiteDB)=> changeTramite(context, tramiteObj )):print("error")
+      (resultChangeTramiteApi!=false && resultChangeTramiteApi!=null)? repository.dbProvider.dbProviderTramite.updateTramite(tramiteObj).then((resultChangeTramiteDB)=> changeTramite(context, tramiteObj )):print("error")
     ).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
     
   }
 
-  void searchTramiteById(BuildContext context, String tramiteId, Function controllerReset ) async{
+  void searchTramiteByNum(BuildContext context, String tramiteNum, Function controllerReset, Bloc bloc ) async{
     print("tramiteeee iddaaaaa");
-    print(tramiteId);
-       repository.dbProvider.dbProviderTramite.getTramite(tramiteId).then((trm) {
+
+       repository.dbProvider.dbProviderTramite.getTramite(tramiteNum).then((trm) {
           
         trm!=null?utilsbloc.settingModalBottomSheet(context, trm,(){controllerReset(); changeTramiteById(context, trm);})
-        :utilsbloc.openDialog(context, "Ha ocurrido un error","El tramite que busca no existe.", null, true, false) ;
+        :utilsbloc.openDialog(context, "Ha ocurrido un error","El tramite que busca no existe.", ()=> bloc.containerScreens.changeActualScreen(1), true, false) ;
        
        } );
 }      
@@ -155,6 +169,6 @@ bool getIsCompleteLoadingValue(){
       _tramitesList.close();
       _isCompleteListLoadingController.close();
       _tramiteDetailController.close();
-
+      _searchTramiteController.close();
     }
 }

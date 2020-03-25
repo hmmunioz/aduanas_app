@@ -23,7 +23,7 @@ class RecoverEmailBloc with Validators{
       return valueEmailRecover;
     }
     sendEmail(BuildContext context){         
-        repository.apiProvider.autenticationApiProvider.sendEmail(utilsBloc, context, getDataEmailRecover());/* .getTramites(context).then((tramiteList)=>{
+        repository.apiProvider.autenticationApiProvider.sendEmail(utilsBloc, context, getDataEmailRecover());/* .then((onValue)=>print(onValue)); *//* .getTramites(context).then((tramiteList)=>{
          addTramitesTolocalData(tramiteList) }).timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));                  
   */
     }

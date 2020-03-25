@@ -51,12 +51,13 @@ disposeLogin(){
   //Clean memory
   dispose()
   {
-    /*   login.dispose();
+      login.dispose();
       recoverEmail.dispose();
       recoverCode.dispose();
       changePassword.dispose();
       containerScreens.dispose();
       tramiteScreen.dispose();
-      utilsBloc.dipose();   */
+      utilsBloc.dipose();  
+      repository.dbProvider.closeDb();
   }
 }

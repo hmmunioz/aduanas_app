@@ -12,6 +12,9 @@ class Repository {
   ApiProvider apiProvider =  ApiProvider.get();
   TramiteRepository tramiteRepository = TramiteRepository.get();
   AutenticationRepository autenticationRepository =  AutenticationRepository.get();
+  initDb(){
+    dbProvider = DBProvider.instance;    
+  }
  
   Repository(){
    dbProvider = DBProvider.instance;

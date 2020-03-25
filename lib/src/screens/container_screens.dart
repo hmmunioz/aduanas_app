@@ -1,3 +1,4 @@
+import 'package:aduanas_app/src/widgets/appAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:aduanas_app/src/bloc/bloc.dart';
@@ -17,7 +18,7 @@ class ContainerHome extends StatefulWidget {
      ProfileModel profileModel;
    void logOut(Bloc bloc, BuildContext context){
       Navigator.pop(context);
-      bloc.dispose();
+   //   bloc.dispose();
       bloc.login.logOut(context);
    }
      void refreshTramites(Bloc bloc, BuildContext context){
@@ -52,8 +53,14 @@ class _ContainerHomeState extends State<ContainerHome> {
         else if(bloc.containerScreens.getDataActualScreen()==5){       
           bloc.containerScreens.changeActualScreen(1);
         }
+        else if(bloc.containerScreens.getDataActualScreen()==1){
+
+            bloc.tramiteScreen.addIsCompleteLoading(false);
+            //Navigator.pushNamed(context, "/containerHome");
+            bloc.containerScreens.changeActualScreen(0);
+        }
         else{
-          Navigator.pushNamed(context, "/containerHome");
+         // Navigator.pushNamed(context, "/containerHome");
           bloc.containerScreens.changeActualScreen(0);
         }
   }
@@ -64,7 +71,7 @@ class _ContainerHomeState extends State<ContainerHome> {
  
   WidgetsFlutterBinding.ensureInitialized();
    final bloc = Provider.of<Bloc>(context);  
-   bloc.disposeLogin();    
+   //bloc.disposeLogin();    
    iniToken(context, bloc);    
    if(bloc.containerScreens.getDataActualScreen()!=0){
         bloc.containerScreens.changeActualScreen(0);    
@@ -73,10 +80,14 @@ class _ContainerHomeState extends State<ContainerHome> {
       onWillPop: () => navigationBack(bloc, context),
  
       child:Stack(
-      children: <Widget>[           
-         Scaffold(
+      children: <Widget>[          
+        StreamBuilder(
+          stream: bloc.containerScreens.getActualScreen,
+          builder: (context, snapshot) {
+            
+            return    Scaffold(
            backgroundColor: Colors.white,
-      appBar: PreferredSize(
+      appBar:/*  bloc.containerScreens.getDataActualScreen()==1?AppappBar(): */PreferredSize(
           preferredSize: Size.fromHeight(40.0), // here the desired height
           child: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
@@ -98,8 +109,10 @@ class _ContainerHomeState extends State<ContainerHome> {
           builder: (context, snapshot) {
             return getWidgetActualScreen(bloc, snapshot);
           }) :  AforosScreen() 
-    ),
-     SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState),       
+       );
+     
+          }),
+        SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState),       
       ],
     )
     ); 

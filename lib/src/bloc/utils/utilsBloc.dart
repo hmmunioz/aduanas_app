@@ -61,33 +61,25 @@ class UtilsBloc with Validators{
             color: Colors.transparent,
             child:  Container(
                 decoration:  BoxDecoration(
-                    color: Colors.white,
-                           /*    border: Border(
-
-                    top: BorderSide( color:Theme.of(context).primaryColor,
-                      width:2.0),
-                    left:  BorderSide( color:Theme.of(context).primaryColor,
-                      width:2.0),
-                    right:  BorderSide( color:Theme.of(context).primaryColor,
-                      width:2.0),
-                  ),    
-                                  */
+                    color: Colors.white,                          
                     borderRadius:  BorderRadius.only(
                         topLeft: const Radius.circular(25.0),
                         topRight: const Radius.circular(25.0))),
                 child: Wrap(
                   children: <Widget>[
                     ListTile(
-                        leading: Icon(Icons.info_outline),
+                        leading: Icon(Icons.info_outline, color: Theme.of(context).primaryColor,),
                         title: Text('Mas informacion'),
                         onTap: () => {showTramiteDetail(objTramite, context)}),
+                      objTramite.getEstado!=3?
                     ListTile(
-                      leading: Icon(Icons.check),
+                      leading: Icon(Icons.check_circle_outline,  color: Theme.of(context).primaryColor,),
                       title: Text('Realizar Tramite'),
                       onTap:  ()  async{ openDialog(context, mensaje, '¿Esta seguro de realizar este trámite?',  ()=>{changeTramite()/* changeTramiteById(context, objTramite) */}, true, true); } ,  
-                    ),
+                    ):
+                    SizedBox(height: 0.0,),
                     ListTile(
-                      leading: Icon(Icons.cancel),
+                      leading: Icon(Icons.cancel,  color: Theme.of(context).primaryColor,),
                       title: Text('Salir'),
                       onTap:  ()=>{Navigator.pop(context)}
                     ),

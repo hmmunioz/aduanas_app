@@ -60,7 +60,7 @@ class _ScanScreenState extends State<ScanScreen> {
     
     
      if(banderadialog==0){
-        bloc.tramiteScreen.searchTramiteById(context, value, (){controller.pause(); controller.controller.resumeCamera(); controller.resume();});
+        bloc.tramiteScreen.searchTramiteByNum(context, value, (){controller.pause(); controller.controller.resumeCamera(); controller.resume();}, bloc);
       banderadialog++;     
       }     
   }

@@ -159,6 +159,18 @@ class Validators{
           }
         );
 
+   final validateSearch = 
+        StreamTransformer<String,String>
+        .fromHandlers(
+          handleData: (tramiteIsOk, sink){
+            if(tramiteIsOk!=null){
+              sink.add(tramiteIsOk);
+            }else{
+              sink.addError("No se puedo agregara la lista");
+            }
+          }
+        );
+
    final validateDrawer =
   StreamTransformer<bool,bool>
   .fromHandlers(

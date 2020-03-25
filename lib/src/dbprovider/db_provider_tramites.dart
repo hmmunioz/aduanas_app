@@ -31,13 +31,13 @@ Future<int> addTramite(TramiteModel tramiteModel) async{
      return null;
    }
 
-    Future<TramiteModel> getTramite(String tramiteId) async{  
+    Future<TramiteModel> getTramite(String tramiteNum) async{  
          print("dataabaaaseeeee");
-         print(tramiteId);     
+  
     Database db = await database;
      var maps = await db.query(tableName, 
       columns: null,
-      where: 'id = ?', whereArgs: [tramiteId]
+      where: 'numeroTramite = ?', whereArgs: [tramiteNum]
      );
   
      if(maps!=null && maps.length>0) {
