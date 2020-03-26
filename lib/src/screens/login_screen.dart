@@ -69,8 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Navigator.of(context).pushNamedAndRemoveUntil(
   "/containerHome",
   (route) => route.isCurrent && route.settings.name == "/containerHome"
-      ? false
-      : true);
+      ? true
+      : false);
  //  Navigator.pushNamed(context, "/containerHome");
   }
   void failed(){

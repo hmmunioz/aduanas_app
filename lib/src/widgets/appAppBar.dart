@@ -55,11 +55,11 @@ class _AppappBarState extends State<AppappBar> with SingleTickerProviderStateMix
   }
 
   onSearchQueryChange(String query, Bloc bloc) {
-    if(query!="" && query!=null){
+    
       bloc.tramiteScreen.addSearchController(query);    
-   // bloc.tramiteScreen.addSinkTramiteList(true);
+    bloc.tramiteScreen.addSinkTramiteList(true);
    // bloc.containerScreens.changeActualScreen(1);
-    }
+  
     
    
     print('search $query');

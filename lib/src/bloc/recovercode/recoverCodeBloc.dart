@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 
 class RecoverCodeBloc with Validators{
   Repository repository;
-  UtilsBloc utilsBloc;
+  UtilsBloc utilsBloc ;
   RecoverEmailBloc recoverEmailBloc;
   RecoverCodeBloc({this.repository, this.recoverEmailBloc});
   

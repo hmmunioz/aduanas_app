@@ -14,16 +14,13 @@ import 'package:rxdart/rxdart.dart';
 class TramiteBloc with Validators{
 
   ///TramiteBloc  
-    UtilsBloc utilsbloc;
+    UtilsBloc utilsbloc ;
     ContainerScreensBloc containerScreensBloc;
     Repository repository;
     TramiteBloc({this.utilsbloc, this.containerScreensBloc, this.repository});
     List<TramiteModel> _porRecibirTramiteList = [];
     List<TramiteModel> _recibidosTramiteList = [];
     List<TramiteModel> _entregadosTramiteList = [];
-    List<TramiteModel> _tempporRecibirTramiteList = [];
-    List<TramiteModel> _temprecibidosTramiteList = [];
-    List<TramiteModel> _tempentregadosTramiteList = [];
 
  final _tramiteListController = BehaviorSubject<bool>();    
  final _tramitesList = BehaviorSubject<Future<dynamic>>();

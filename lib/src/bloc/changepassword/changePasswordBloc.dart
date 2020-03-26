@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ChangePasswordBloc with Validators{      
-    UtilsBloc utilsbloc;
+    UtilsBloc utilsbloc ;
     Repository repository;
     RecoverEmailBloc recoverEmailBloc;
 

@@ -8,7 +8,6 @@ import 'package:aduanas_app/src/repositories/tramiteRepository.dart';
 
 class Repository {
     DBProvider dbProvider; 
-
   ApiProvider apiProvider =  ApiProvider.get();
   TramiteRepository tramiteRepository = TramiteRepository.get();
   AutenticationRepository autenticationRepository =  AutenticationRepository.get();

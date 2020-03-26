@@ -40,7 +40,8 @@ class _ContainerHomeState extends State<ContainerHome> {
     super.initState();
   }
 
-  void iniToken(BuildContext context, Bloc bloc)async{   
+  void iniToken(BuildContext context, Bloc bloc)async{ 
+    bloc.utilsBloc.changeSpinnerState(false);  
         ProfileModel p = await bloc.login.addProfileData();        
        widget.profileModel = p;   
      }
@@ -87,7 +88,7 @@ class _ContainerHomeState extends State<ContainerHome> {
             
             return    Scaffold(
            backgroundColor: Colors.white,
-      appBar:/*  bloc.containerScreens.getDataActualScreen()==1?AppappBar(): */PreferredSize(
+      appBar: bloc.containerScreens.getDataActualScreen()==1?AppappBar():PreferredSize(
           preferredSize: Size.fromHeight(40.0), // here the desired height
           child: AppBar(
             iconTheme: IconThemeData(color: Colors.white),

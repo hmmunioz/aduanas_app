@@ -10,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class SmsServiceBloc with Validators{
  RecoverEmailBloc blocEmailRecover;
    RecoverCodeBloc blocCodeRecover;
-    UtilsBloc blocSpinnerRecover;
+    UtilsBloc blocSpinnerRecover ;
       SmsServiceBloc({this.blocEmailRecover, this.blocCodeRecover, this.blocSpinnerRecover});
     ///FirebaseMessagin Service
      String phoneNumber="";
