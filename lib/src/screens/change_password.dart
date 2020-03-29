@@ -33,39 +33,18 @@ class _ChangePasswordState extends State<ChangePassword> {
   void sendNewCredentials(BuildContext context, Bloc bloc){
     bloc.changePassword.sendNewCredentials(context);
   }
-  @override
-  Widget build(BuildContext context) {
-       final bloc = Provider.of<Bloc>(context);
-    return OrientationBuilder(
-        builder: (context, orientation) {
-     return 
-    Stack(
-      children: <Widget>[
-             Scaffold(
-            resizeToAvoidBottomInset: true,
-            backgroundColor: Colors.white,
-            body: Stack(
-              children: <Widget>[
-                CurvedShape(),   
-                  SizedBox(height: 10.0,),          
-                  AppTitle(
-                  inputText: "RCB logistic!",
-                   withAppBar: false,
-                   inputTextAnimation: true,
-                   landscape: true,
-                ),
-               (orientation == Orientation.portrait?AppRoundIcon():SizedBox(height: 1.0,)),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 44.0),
-                    height: MediaQuery.of(context).size.height/0.40,
+  Widget containerRecover(Bloc bloc, Orientation orientation){
+          return Container(
+                    padding: orientation!=Orientation.landscape?EdgeInsets.symmetric(horizontal: 24.0):EdgeInsets.symmetric(horizontal: 20.0,),
+                    height:orientation!=Orientation.landscape?MediaQuery.of(context).size.height/0.44:((MediaQuery.of(context).size.height)*65)/100,
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height / 2.70,
-                          ),                                  
+                            SizedBox(
+                            height: orientation!=Orientation.landscape?MediaQuery.of(context).size.height / 2.88:0.0,
+                          ),                               
                                Text("Recuperar contraseña",
                                 style: TextStyle(
                                     color: Theme.of(context).accentColor,
@@ -76,7 +55,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                          ),
                             AppTextField(                      
                         addObsucre: true,
-                        onChanged:(value) => setNewPass(value, bloc) /* (value)=> setNewPass(value, bloc) */,
+                        onChanged:(value) => setNewPass(value, bloc),
                         inputText: "NUEVA CONTRASEÑA",
                         inputIcon: Icon(
                           Icons.vpn_key,
@@ -107,7 +86,37 @@ class _ChangePasswordState extends State<ChangePassword> {
                          ],
                       ),
                     )
-                   ),
+                   );
+       
+  }
+  @override
+  Widget build(BuildContext context) {
+       final bloc = Provider.of<Bloc>(context);
+    return OrientationBuilder(
+        builder: (context, orientation) {
+     return 
+    Stack(
+      children: <Widget>[
+             Scaffold(
+            resizeToAvoidBottomInset: true,
+            backgroundColor: Colors.white,
+            body: Stack(
+              children: <Widget>[
+                CurvedShape(),   
+                  SizedBox(height: 10.0,),          
+                  AppTitle(
+                  inputText: "RCB logistic!",
+                   withAppBar: false,
+                   inputTextAnimation: true,
+                   landscape: true,
+                ),        
+                 (orientation == Orientation.portrait?AppRoundIcon():SizedBox(height: 1.0,)),
+            (orientation == Orientation.portrait?containerRecover(bloc, orientation):Container(
+              padding: EdgeInsets.only(top:MediaQuery.of(context).size.height / 2.5),
+             child: SingleChildScrollView(
+              child: containerRecover(bloc, orientation),
+            ))
+            ) ,
               ],
             )
           ),

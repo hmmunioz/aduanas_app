@@ -5,11 +5,12 @@ import 'appTypewriterBox.dart';
 class AppTitle extends StatelessWidget {
   final String inputText;
   final String secondText;
+  final bool optionalfont;
   final bool inputTextAnimation;
   final bool secondTextAnimation;
   final bool  withAppBar;
   final bool landscape;
-  const AppTitle({this.inputText, this.secondText, this.withAppBar, this.inputTextAnimation, this.secondTextAnimation, this.landscape});
+  const AppTitle({this.inputText, this.secondText, this.withAppBar, this.inputTextAnimation, this.secondTextAnimation, this.landscape, this.optionalfont});
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(builder:(context, orientation){
@@ -25,7 +26,7 @@ class AppTitle extends StatelessWidget {
               children: <Widget>[
                inputTextAnimation!=false?   AppTypeWriter(textWriter:inputText, textStyle:TextStyle(
                         decoration: TextDecoration.none,
-                        fontSize: 25.0,
+                        fontSize: optionalfont==null?25.0:21,
                         color: Colors.white,
                         fontWeight: FontWeight.w700)): Text(inputText,
                     style: TextStyle(

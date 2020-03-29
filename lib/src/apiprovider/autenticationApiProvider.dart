@@ -21,6 +21,7 @@ class AutenticationApiProvider {
   // final bloc = Provider.of<Bloc>(context);
    dynamic objPostSingIn ={"username":username, "password": password, }; 
    String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.autentication['singIn']; 
+ print("resposneeeeeeeeeeeeeeeeerer LOGIN");
    final response = await client.post("$urlApi", headers:headers, body:json.encode(objPostSingIn) );
 print("LOOOOOOOGIN000");
 print(response.body);
@@ -49,7 +50,7 @@ print(response.body);
 
 
    Future<dynamic> getPhoneData( UtilsBloc utilsbloc, BuildContext context) async {   
-  final bloc = Provider.of<Bloc>(context);
+
    dynamic objPostPhoneData ={"usuarioUUID": await storage.read(key: 'jwtTemp'), "imei":  await storage.read(key: 'imei'), "token": await storage.read(key: 'firebaseToken') }; 
    String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.autentication['getPhoneData']; 
    final response = await client.post("$urlApi", headers:headers, body:json.encode(objPostPhoneData));

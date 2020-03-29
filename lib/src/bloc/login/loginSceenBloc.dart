@@ -54,12 +54,13 @@ class LoginScreenBloc with Validators {
   logOut(BuildContext context) async{
    await storage.deleteAll();
    repository.dbProvider.deleteDataBase();  
-   Navigator.of(context).pushNamedAndRemoveUntil(
+   Navigator.pop(context);
+/*    Navigator.of(context).pushNamedAndRemoveUntil(
   "/splashRcbScreen",
   (route) => route.isCurrent && route.settings.name == "/splashRcbScreen"
       ? false
-      : true);      
- /*    Navigator.pushReplacementNamed(context, "/splashRcbScreen"); */
+      : true);       */
+    Navigator.pushReplacementNamed(context, "/login");
   }
 
 
@@ -127,7 +128,7 @@ class LoginScreenBloc with Validators {
              }
              else{
                storage.delete(key: 'jwt');
-               utilsbloc.openDialog(context, "Ha ocurrido un error.", "Usuario o contraseña invalidos", null,  true, false );
+               utilsbloc.openDialog(context, "Ha ocurrido un error.", "Usuario o contraseña invalidos", (){utilsbloc.changeSpinnerState(false);},  true, false );
              }              
         })/* .timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false )) */;   
   }

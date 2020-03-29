@@ -22,7 +22,11 @@ class TramiteBloc with Validators{
     List<TramiteModel> _porRecibirTramiteList = [];
     List<TramiteModel> _recibidosTramiteList = [];
     List<TramiteModel> _entregadosTramiteList = [];
-
+     dynamic view_more={
+       'porRecibir':false,
+       'recibidos':false,
+       'entregados':false
+     };
  final _tramiteListController = BehaviorSubject<bool>();    
  final _tramitesList = BehaviorSubject<Future<dynamic>>();
  final _tramiteDetailController = BehaviorSubject<TramiteModel>();
@@ -41,6 +45,22 @@ Function(String) get addSearchController => _searchTramiteController.sink.add;
    print(_searchTramiteController.value);   
   return _searchTramiteController.value;
 }
+void changeViewMore(int type){
+   switch (type) {
+     case 1 :
+       view_more['porRecibir']=!view_more['porRecibir'];
+       break;
+    case 2 :
+       view_more['recibidos']=!view_more['recibidos'];
+       break;
+    case 3 :
+       view_more['entregados']=!view_more['entregados'];
+       break;
+     default:
+   }
+   addSinkTramiteList(true); 
+}
+
 
 
 bool getIsCompleteLoadingValue(){
@@ -73,27 +93,51 @@ bool getIsCompleteLoadingValue(){
          case 1 : 
           return changeTramiteState(context, _porRecibirTramiteList, posicionTramite, tipoTramite);
          case 2 :
+              notificationProvider.deleteNotification(_recibidosTramiteList[posicionTramite]);
           return changeTramiteState(context, _recibidosTramiteList, posicionTramite, tipoTramite);
-         case 3 :
-          return changeTramiteState(context, _entregadosTramiteList, posicionTramite, tipoTramite);
+      /*    case 3 :         
+          return changeTramiteState(context, _entregadosTramiteList, posicionTramite, tipoTramite); */
            break;
          default:
        }
 
      }
   }
+     List<TramiteModel> listaViewLess(List<TramiteModel> tempTramiteList){
+       List<TramiteModel> retorno = new List<TramiteModel>();
+         retorno.add(tempTramiteList[0]);
+   /*      if(tempTramiteList.length>=1){
+       
+      //   retorno.add(tempTramiteList[1]);
+        }
+        /* else if(tempTramiteList.length==1){
+          retorno.add(tempTramiteList[0]);
+        } */ */
+        return retorno;
+     }  
 
+  getListLength(){
+    dynamic listLength={
+      '_porRecibirTramiteList':_porRecibirTramiteList,
+        '_recibidosTramiteList':_recibidosTramiteList,
+          '_entregadosTramiteList':_entregadosTramiteList
+    };
+    return listLength;
+  }
+ getViewMore(){  
+    return view_more;
+  }
  
   List<TramiteModel> getPorRecibirList(){
-     return  (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)? _porRecibirTramiteList:_porRecibirTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
+     return  (getSearchTramiteValue()=="" || getSearchTramiteValue()==null) ?  ( view_more['porRecibir']!=true? _porRecibirTramiteList: listaViewLess(_porRecibirTramiteList)) :_porRecibirTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
     }
 
   List<TramiteModel> getRecibidosList(){
-     return  (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)?  _recibidosTramiteList:_recibidosTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
+     return  (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)?   ( view_more['recibidos']!=true? _recibidosTramiteList : listaViewLess(_recibidosTramiteList)):_recibidosTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
    }
 
   List<TramiteModel> getEntregadosList(){
-     return (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)? _entregadosTramiteList : _entregadosTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
+     return (getSearchTramiteValue()=="" || getSearchTramiteValue()==null)?  ( view_more['recibidos']!=true? _entregadosTramiteList : listaViewLess(_entregadosTramiteList))   : _entregadosTramiteList.where((tr) =>  tr.getNumeroTramite.contains(getSearchTramiteValue())).toList();
    }
   
 
@@ -131,13 +175,15 @@ bool getIsCompleteLoadingValue(){
 
   getTramitesByUser() async { 
     utilsbloc.changeSpinnerState(true);
-    repository.dbProvider.setInstanceTramite();
-    dynamic listaTramitesTemp = await repository.dbProvider.dbProviderTramite.getTramites();
-    _porRecibirTramiteList =listaTramitesTemp['porRecibir'];
+    repository.dbProvider.setInstanceTramite();  
+    repository.dbProvider.dbProviderTramite.getTramites().then((listaTramitesTemp){      
+      _porRecibirTramiteList =listaTramitesTemp['porRecibir'];
     _recibidosTramiteList = listaTramitesTemp['recibidos'];
     _entregadosTramiteList = listaTramitesTemp['entregados'];
     addSinkTramiteList(true);
     utilsbloc.changeSpinnerState(false);    
+    });
+    
   }
 
   changeTramiteById(BuildContext context, TramiteModel tramiteObj) async {

@@ -17,7 +17,7 @@ class _SpinnerLoadingState extends State<SpinnerLoading> {
        child: Column(
          mainAxisAlignment:MainAxisAlignment.center,
          children: <Widget>[
-          SpinKitHourGlass(
+          /* SpinKitHourGlass */SpinKitPouringHourglass(
             color:Theme.of(context).primaryColor,
             size: 80.0
           )
@@ -29,7 +29,7 @@ class _SpinnerLoadingState extends State<SpinnerLoading> {
        }
     else{
        print("close spinner");
-      return SizedBox(height: 10.0,);
+      return SizedBox(height: 0.0,);
     }
   }
   @override

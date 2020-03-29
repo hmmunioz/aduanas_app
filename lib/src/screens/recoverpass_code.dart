@@ -23,37 +23,17 @@ class _RecoverPassCodeState extends State<RecoverPassCode> {
    /*  bloc.utilsBloc.changeSpinnerState(true);
     bloc.smsService.signIn(context); */
   }
-  
-  @override
-  Widget build(BuildContext context) {
-     final bloc = Provider.of<Bloc>(context);
-    return  OrientationBuilder(
-        builder: (context, orientation) {
-     return  Stack(
-      children: <Widget>[
-               Scaffold(
-                     resizeToAvoidBottomInset: true,
-            backgroundColor: Colors.white,
-            body: Stack(
-              children: <Widget>[
-                CurvedShape(),             
-                  AppTitle(
-                  inputText: "RCB logistic!",
-                   withAppBar: false,
-                   inputTextAnimation: true,
-                   landscape: true,
-                ),
-             (orientation == Orientation.portrait?AppRoundIcon():SizedBox(height: 1.0,)),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 44.0),
-                    height: MediaQuery.of(context).size.height/0.5,
-                    child: Center(
+  Widget containerRecover(Bloc bloc, Orientation orientation){
+     return      Container(
+                     padding: orientation!=Orientation.landscape?EdgeInsets.symmetric(horizontal: 24.0):EdgeInsets.symmetric(horizontal: 20.0),
+                    height:orientation!=Orientation.landscape?MediaQuery.of(context).size.height/0.5:((MediaQuery.of(context).size.height)*65)/100,
+                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height / 2.88,
+                           SizedBox(
+                            height: orientation!=Orientation.landscape?MediaQuery.of(context).size.height / 2.88:0.0,
                           ),                                  
                                   Text("Validación contraseña",
                                 style: TextStyle(
@@ -92,7 +72,36 @@ class _RecoverPassCodeState extends State<RecoverPassCode> {
                          ],
                       ),
                     )
-                   ),
+                   );          
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+     final bloc = Provider.of<Bloc>(context);
+    return  OrientationBuilder(
+        builder: (context, orientation) {
+     return  Stack(
+      children: <Widget>[
+               Scaffold(
+                     resizeToAvoidBottomInset: true,
+            backgroundColor: Colors.white,
+            body: Stack(
+              children: <Widget>[
+                CurvedShape(),             
+                  AppTitle(
+                  inputText: "RCB logistic!",
+                   withAppBar: false,
+                   inputTextAnimation: true,
+                   landscape: true,
+                ),
+             (orientation == Orientation.portrait?AppRoundIcon():SizedBox(height: 1.0,)),
+                (orientation == Orientation.portrait?containerRecover(bloc, orientation):Container(
+              padding: EdgeInsets.only(top:MediaQuery.of(context).size.height / 2.5),
+     /*          height:  100, */
+              child: SingleChildScrollView(
+              child: containerRecover(bloc, orientation),
+            ))
+            ) ,
               ],
             )
           ),

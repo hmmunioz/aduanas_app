@@ -19,11 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   void changeActualScreen(Bloc bloc, int actualScreen, BuildContext context){ 
-    if(actualScreen==4){
-      
-    //  Navigator.of(context).popAndPushNamed('/testpage');
-      //  Navigator.pushNamed(context,"/testpage");
-    }
+  
      if(bloc.containerScreens.getDataActualScreen()!=actualScreen){
         bloc.containerScreens.changeActualScreen(actualScreen); 
      }

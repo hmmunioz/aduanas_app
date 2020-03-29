@@ -70,45 +70,77 @@ class TramitesScreen extends StatelessWidget {
  bloc.utilsBloc.changeSpinnerState(true);
     _refreshController.loadComplete();
   }
-  Widget tramiteListComplete(Bloc bloc){
+  Widget tramiteListComplete(Bloc bloc, BuildContext context){
     return  Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             TitleList(
                                 "Por Recibir",
-                                bloc.tramiteScreen
-                                    .getPorRecibirList()
+                                bloc.tramiteScreen.getListLength()['_porRecibirTramiteList']
                                     .length
                                     .toString()),
                             SizedBox(
                               height: 8.0,
                             ),
                             Column(children: getTramiteList(1, bloc)),
+                             bloc.tramiteScreen.getListLength()['_porRecibirTramiteList'].length>=2? InputChip(
+                          label: bloc.tramiteScreen.getViewMore()['porRecibir']!=false?Text('Ver más'):Text('Ver menos'),
+                          labelStyle: TextStyle(color: Colors.white),
+                          backgroundColor: bloc.tramiteScreen.getViewMore()['porRecibir']!=false? Theme.of(context).primaryColor:Theme.of(context).accentColor,
+                          onSelected: (bool value) {
+                            viewMore(bloc, 1);
+                          print(value);
+                          },
+                        
+                          selectedColor: Colors.green,
+                        ):SizedBox(height: 0.0,),
                             TitleList(
                                 "Recibidos",
-                                bloc.tramiteScreen
-                                    .getRecibidosList()
+                               bloc.tramiteScreen.getListLength()['_recibidosTramiteList']
                                     .length
                                     .toString()),
                             SizedBox(
                               height: 8.0,
                             ),
                             Column(children: getTramiteList(2, bloc)),
+                             bloc.tramiteScreen.getListLength()['_recibidosTramiteList'].length>=2? InputChip(
+                          label:bloc.tramiteScreen.getViewMore()['recibidos']!=false?Text('Ver más'):Text('Ver menos'),
+                          labelStyle: TextStyle(color: Colors.white),
+                          backgroundColor: bloc.tramiteScreen.getViewMore()['recibidos']!=false? Theme.of(context).primaryColor:Theme.of(context).accentColor,
+                          onSelected: (bool value) {
+                         viewMore(bloc, 2);
+                          },
+                            
+                          selectedColor: Colors.green,
+                        ):SizedBox(height: 0.0,),
                             TitleList(
                                 "Entregados",
-                                bloc.tramiteScreen
-                                    .getEntregadosList()
+                                bloc.tramiteScreen.getListLength()['_entregadosTramiteList']
                                     .length
                                     .toString()),
                             SizedBox(
                               height: 8.0,
                             ),
                             Column(children: getTramiteList(3, bloc)),
+                           bloc.tramiteScreen.getListLength()['_entregadosTramiteList'].length>=2?InputChip(
+                          label:bloc.tramiteScreen.getViewMore()['entregados']!=false?Text('Ver más'):Text('Ver menos'),
+                          labelStyle: TextStyle(color: Colors.white),
+                          backgroundColor: bloc.tramiteScreen.getViewMore()['entregados']!=false?Theme.of(context).primaryColor:Theme.of(context).accentColor,
+                          onSelected: (bool value) {
+                          viewMore(bloc, 3);
+                          },
+                    
+                          selectedColor:Theme.of(context).accentColor,
+                        ):SizedBox(height: 0.0,),
                           ]);
   }
   Widget tramitesListLoading(BuildContext context, AsyncSnapshot<dynamic> snapshot, Bloc bloc){
-    return bloc.tramiteScreen.getIsCompleteLoadingValue()==false?SkeletonList():tramiteListComplete(bloc);     
+    return bloc.tramiteScreen.getIsCompleteLoadingValue()==false?SkeletonList():tramiteListComplete(bloc, context);     
+  }
+  
+  void viewMore(Bloc bloc, int type){
+    bloc.tramiteScreen.changeViewMore(type);
   }
   
   @override

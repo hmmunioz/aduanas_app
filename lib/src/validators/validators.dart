@@ -66,9 +66,8 @@ class Validators{
   final validateEqualPassword =
   StreamTransformer<PasswordModel,bool>
   .fromHandlers(
-          handleData: (modelPassword, sink){       
-            print("data for handlressssss");
-         if(modelPassword.getNewPassword==modelPassword.getRepeatNewPassword && modelPassword.getRepeatNewPassword!="" && modelPassword.getNewPassword!="" && modelPassword!=null)
+          handleData: (modelPassword, sink){  
+         if(modelPassword.getNewPassword.length>5 && modelPassword.getNewPassword==modelPassword.getRepeatNewPassword && modelPassword.getRepeatNewPassword!="" && modelPassword.getNewPassword!="" && modelPassword!=null)
          {           
             sink.add(true);
          }

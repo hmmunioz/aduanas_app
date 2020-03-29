@@ -36,7 +36,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
                 ),
                 AppRoundIcon(),
                 Container(
-                    padding: EdgeInsets.symmetric(horizontal: 44.0),
+                    padding: EdgeInsets.symmetric(horizontal: 24.0),
                     height: MediaQuery.of(context).size.height/0.5,
                     child: Center(
                       child: Column(

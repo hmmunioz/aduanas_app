@@ -16,8 +16,7 @@ import 'package:flutter/cupertino.dart';
 
 Repository repository = new Repository();
 
- void main() {
-   
+ void main() {   
   runApp(Provider<Bloc>(
       create: (context) => Bloc(),
       dispose: (context, bloc) => bloc.dispose(),

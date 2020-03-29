@@ -194,17 +194,7 @@ class _ContainerHomeState extends State<ContainerHome> {
           onTap: () => widget.moreInfoDialog( bloc,  context),
           child:   getItemAccion(Icon(Icons.info), "Más Información"),
         ),   
-       /*  AboutListTile(
-          child: Text(
-            
-            "Más Información",
-            style: TextStyle(color: Theme.of(context).accentColor),
-          ),
-          
-          applicationVersion: "1.1.0",
-          applicationIcon: Icon(Icons.info),
-          icon: Icon(Icons.info),
-        ), */
+    
         GestureDetector(
           onTap: () => widget.logOut( bloc,  context),
           child:   getItemAccion(Icon(Icons.exit_to_app), "Salir"),
