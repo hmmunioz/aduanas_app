@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'appTypewriterBox.dart';
+
 class AppRoundCard extends StatefulWidget {
   final String inputText;
   final Function onClick;
@@ -30,11 +32,7 @@ class _AppRoundCardState extends State<AppRoundCard> {
       child:    Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       elevation: 0.2,
-      child:/*  GestureDetector(
-          onTap: () {
-           
-          },
-          child: */ InkWell(
+      child: InkWell(
             onTap: () {
                widget.onClick();
             },
@@ -47,14 +45,10 @@ class _AppRoundCardState extends State<AppRoundCard> {
                   size: 55.0,
                   color: widget.inputColor,
                 ),
-                Text(
-                  widget.inputText,
-                  style: TextStyle(color: widget.inputColor),
-                ),
+                AppTypeWriter(textWriter:widget.inputText ,textStyle: TextStyle(color: widget.inputColor))               
               ],
             )),
-          )
-          /* ), */
+          )     
     ),
     );
   }

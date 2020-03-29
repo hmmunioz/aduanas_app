@@ -108,7 +108,7 @@ class LoginScreenBloc with Validators {
           print("comprobar logiiiiiiiiiiiiiiin"); 
         repository.dbProvider.setInstanceProfile();            
         repository.dbProvider.dbProviderProfile
-                     .addProfile(ProfileModel.fromDb(resultSingIn[0])).then((idProfile)=>{
+                     .addProfile(ProfileModel.fromDb(resultSingIn/* [0] */)).then((idProfile)=>{
                       idProfile>0  ? singOk(addProfileSingInOk ) : print("error")
                     });        
      }    
@@ -122,10 +122,14 @@ class LoginScreenBloc with Validators {
               repository
               .apiProvider.autenticationApiProvider
               .getPhoneData(utilsbloc, context).then((result){
-                 result!=null?singInResult(resultSingIn):print("error");
+                 result!=null?singInResult(resultSingIn):utilsbloc.changeSpinnerState(false);
               });        
+             }
+             else{
+               storage.delete(key: 'jwt');
+               utilsbloc.openDialog(context, "Ha ocurrido un error.", "Usuario o contraseña invalidos", null,  true, false );
              }              
-        }).timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false ));   
+        })/* .timeout( Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false )) */;   
   }
   
 

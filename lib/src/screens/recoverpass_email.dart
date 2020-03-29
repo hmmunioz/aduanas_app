@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:aduanas_app/src/bloc/bloc.dart';
-
 import 'package:aduanas_app/src/widgets/appButton.dart';
 import 'package:aduanas_app/src/widgets/appCurvedShape.dart';
 import 'package:aduanas_app/src/widgets/appRoundIcon.dart';
@@ -32,7 +31,9 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
   Widget build(BuildContext context) {
    
     final bloc = Provider.of<Bloc>(context);
-    return   Stack(
+    return  OrientationBuilder(
+        builder: (context, orientation) {
+                   return     Stack(
       children: <Widget>[
                Scaffold(
                      resizeToAvoidBottomInset: true,
@@ -44,8 +45,10 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
                   inputText: "RCB logistic!",
                    withAppBar: false,
                    inputTextAnimation: true,
+                   landscape: true,
                 ),
-                AppRoundIcon(),
+          (orientation == Orientation.portrait?AppRoundIcon():SizedBox(height: 1.0,)),
+       
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 44.0),
                     height: MediaQuery.of(context).size.height/0.5,
@@ -101,5 +104,6 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
       SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState), 
       ],
     );    
-  }
+  });
+ }
 }

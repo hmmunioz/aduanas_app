@@ -36,7 +36,10 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
        final bloc = Provider.of<Bloc>(context);
-    return Stack(
+    return OrientationBuilder(
+        builder: (context, orientation) {
+     return 
+    Stack(
       children: <Widget>[
              Scaffold(
             resizeToAvoidBottomInset: true,
@@ -49,8 +52,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                   inputText: "RCB logistic!",
                    withAppBar: false,
                    inputTextAnimation: true,
+                   landscape: true,
                 ),
-                AppRoundIcon(),
+               (orientation == Orientation.portrait?AppRoundIcon():SizedBox(height: 1.0,)),
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 44.0),
                     height: MediaQuery.of(context).size.height/0.40,
@@ -110,5 +114,6 @@ class _ChangePasswordState extends State<ChangePassword> {
       SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState), 
       ],
     );
+    });
   }
 }

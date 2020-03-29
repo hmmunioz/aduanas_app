@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aduanas_app/src/bloc/bloc.dart';
 import 'package:aduanas_app/src/constants/constants.dart';
+import 'package:aduanas_app/src/notificationprovider/notification_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:aduanas_app/src/bloc/containerscreens/containerScreensBloc.dart';
 import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
@@ -13,7 +14,7 @@ import 'package:rxdart/rxdart.dart';
 
 class TramiteBloc with Validators{
 
-  ///TramiteBloc  
+    NotificationProvider notificationProvider =  NotificationProvider.instance;
     UtilsBloc utilsbloc ;
     ContainerScreensBloc containerScreensBloc;
     Repository repository;
@@ -25,8 +26,8 @@ class TramiteBloc with Validators{
  final _tramiteListController = BehaviorSubject<bool>();    
  final _tramitesList = BehaviorSubject<Future<dynamic>>();
  final _tramiteDetailController = BehaviorSubject<TramiteModel>();
-  final _isCompleteListLoadingController = BehaviorSubject<bool>();
-  final _searchTramiteController = BehaviorSubject<String>();
+ final _isCompleteListLoadingController = BehaviorSubject<bool>();
+ final _searchTramiteController = BehaviorSubject<String>();
 
 
  Function(bool) get addSinkTramiteList => _tramiteListController.sink.add; ////Set data to block TramiteScreen
@@ -36,8 +37,7 @@ Function(bool) get addIsCompleteLoading => _isCompleteListLoadingController.sink
 Stream<bool> get  getTransformerIsCompleteLoading => _isCompleteListLoadingController.stream.transform(validateTramiteObj);
 
 Function(String) get addSearchController => _searchTramiteController.sink.add;
-/* Stream<String> get  getTransformerSearchController => _searchTramiteController.stream.transform(validateSearch);
- */String getSearchTramiteValue(){
+  String getSearchTramiteValue(){
    print(_searchTramiteController.value);   
   return _searchTramiteController.value;
 }
@@ -56,9 +56,10 @@ bool getIsCompleteLoadingValue(){
    Navigator.of(context).pop();
    containerScreensBloc.changeActualScreen(1);
  }
- TramiteModel getValueTramiteDetail(){
+  TramiteModel getValueTramiteDetail(){
    return _tramiteDetailController.value;
- }
+  }
+
   void changeTramite(BuildContext context, TramiteModel tramiteObj)
   {   
      int porRecibirExist = _porRecibirTramiteList.indexWhere((tramite) => tramite.getId== tramiteObj.getId); 
@@ -96,9 +97,9 @@ bool getIsCompleteLoadingValue(){
    }
   
 
-   refreshAddTramites(tramiteList, BuildContext context){
-
-       List<TramiteModel> _porRecibirTramiteList = tramiteList['porRecibir'];
+   refreshAddTramites(tramiteList, BuildContext context)
+   {
+     List<TramiteModel> _porRecibirTramiteList = tramiteList['porRecibir'];
      List<TramiteModel> _recibidosTramiteList = tramiteList['recibidos'];
      List<TramiteModel> _entregadosTramiteList = tramiteList['entregados']; 
      repository.dbProvider.setInstanceTramite();  
@@ -119,15 +120,13 @@ bool getIsCompleteLoadingValue(){
         idTramite>0 ? print(f.getActividad) :print("failed tramite ")                   
        })
      );
-
-     utilsbloc.changeSpinnerState(false);
-    // Navigator.pop(context);          
+     utilsbloc.changeSpinnerState(false);         
    }
 
    refreshTramites(BuildContext context,){
-
-    repository.apiProvider.tramiteApiProvider.getTramites(context, utilsbloc).then((tramiteList)=>{
-                   refreshAddTramites(tramiteList, context  ) });/* .timeout(Duration (seconds:ConstantsApp.of(context).appConfig.timeout), onTimeout : () => utilsbloc.openDialog(context, "Ha ocurrido un error.", "Intente de nuevo porfavor.", null, true, false )); */
+     repository.apiProvider.tramiteApiProvider.getTramites(context, utilsbloc).then((tramiteList)=>{
+     refreshAddTramites(tramiteList, context  )
+     }); 
    }
 
   getTramitesByUser() async { 
@@ -150,10 +149,7 @@ bool getIsCompleteLoadingValue(){
   }
 
   void searchTramiteByNum(BuildContext context, String tramiteNum, Function controllerReset, Bloc bloc ) async{
-    print("tramiteeee iddaaaaa");
-
-       repository.dbProvider.dbProviderTramite.getTramite(tramiteNum).then((trm) {
-          
+     repository.dbProvider.dbProviderTramite.getTramite(tramiteNum).then((trm) {          
         trm!=null?utilsbloc.settingModalBottomSheet(context, trm,(){controllerReset(); changeTramiteById(context, trm);})
         :utilsbloc.openDialog(context, "Ha ocurrido un error","El tramite que busca no existe.", ()=> bloc.containerScreens.changeActualScreen(1), true, false) ;
        

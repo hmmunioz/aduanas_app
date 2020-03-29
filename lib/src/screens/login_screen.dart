@@ -76,6 +76,31 @@ class _LoginScreenState extends State<LoginScreen> {
   void failed(){
     print("failed");
   }
+ 
+ Widget appRoundIconTemp(Bloc bloc){
+   return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: 130.0,
+                height:  130.0,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 5),
+                    image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage("images/logoLogistic.png"))),
+              ),
+            ],
+          ),
+       /*  ) */
+        );
+   }
+   
   @override
   Widget build(BuildContext context) {
     initPhoneCredentials(context);
@@ -89,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
   (route) => route.isCurrent && route.settings.name == "/containerHome"
       ? false
       : true); 
-       // Navigator.pushReplacementNamed(context, "/containerHome");
+     
     }    
     else{
         bloc.utilsBloc.changeSpinnerState(false);
@@ -112,9 +137,9 @@ class _LoginScreenState extends State<LoginScreen> {
      
     },
   );
-   return 
-   
-      Stack(
+   return OrientationBuilder(
+        builder: (context, orientation) {
+  return Stack(
       
       children: <Widget>[            
         Image.asset(
@@ -124,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
           fit: BoxFit.cover,
         ),
       
-        AppRoundIcon(streamDataTransform: bloc.utilsBloc.getKeyboardState, bloc: bloc,),
+      
         Scaffold(
           resizeToAvoidBottomInset: true,
           backgroundColor: Colors.transparent,
@@ -134,17 +159,20 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[                
+              children: <Widget>[   
+                 
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[                               
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 4,
-                      ),
+                 orientation==Orientation.portrait? appRoundIconTemp(bloc):SizedBox(height: 0.0,),             
+                       SizedBox(height: 20.0,),
+                     /*  SizedBox(
+                        height: ((MediaQuery.of(context).size.height)*20/100),
+                      ), */
                       Text("Bienvenidos a RCB Logistic",
                           style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.w700)),
+                              fontSize:   orientation==Orientation.portrait? 20.0:25.0, fontWeight: FontWeight.w700)),
                       SizedBox(
                         height: 2.0,
                       ),
@@ -211,6 +239,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
      SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState),     
       ]);   
+
+        });
+   
+  
+   
+ 
     
     }
 }

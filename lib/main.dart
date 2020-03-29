@@ -34,16 +34,15 @@ Repository repository = new Repository();
                   cursorColor: Color.fromRGBO(255, 143, 52, 1),
                   textSelectionColor: Color.fromRGBO(255, 143, 52, 1),
                   textTheme: TextTheme(body1: TextStyle(color: Colors.white))),
-              home:   /* (tk!="" && tk!=null) ?ContainerHome(): */SplashRcbScreen(),
+              home: SplashRcbScreen(),
               routes: <String, WidgetBuilder> {
-            LoginScreen.routeName: (BuildContext context)  =>  /* (tk!="" && tk!=null) ?ContainerHome(): */LoginScreen(),
+            LoginScreen.routeName: (BuildContext context)  => LoginScreen(),
             RecoverPassEmail.routeName: (BuildContext context) =>   RecoverPassEmail(),
             RecoverPassCode.routeName: (BuildContext context) => RecoverPassCode(),
             ChangePassword.routeName: (BuildContext context) =>   ChangePassword(),  
             SplashRcbScreen.routeName: (BuildContext context)=>    SplashRcbScreen(), 
             TestPage.routeName:(BuildContext context)=> TestPage(),      
-            ContainerHome.routeName: (BuildContext context) =>  /* (tk!="" && tk!=null) ? */ContainerHome()/* :LoginScreen() */,        
-/*             TramiteDetail.routeName: (BuildContext context)=> TramiteDetail() */
+            ContainerHome.routeName: (BuildContext context) => ContainerHome(),        
           }
          )
         )

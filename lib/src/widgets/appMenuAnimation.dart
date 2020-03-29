@@ -10,18 +10,10 @@ class Box extends StatelessWidget {
   static final boxDecoration = BoxDecoration(
       color: Colors.transparent,
       borderRadius: BorderRadius.all(Radius.circular(10)),
-     /*  boxShadow: [
-        BoxShadow(
-            color: Colors.black.withAlpha(60),
-            blurRadius: 5,
-            offset: Offset(0, 8),
-            spreadRadius: 2)
-      ] */);
+ );
 void changeActualScreen(Bloc bloc, int actualScreen, BuildContext context){ 
     if(actualScreen==4){
-      
-    //  Navigator.of(context).popAndPushNamed('/testpage');
-      //  Navigator.pushNamed(context,"/testpage");
+ 
     }
      if(bloc.containerScreens.getDataActualScreen()!=actualScreen){
         bloc.containerScreens.changeActualScreen(actualScreen); 
@@ -30,8 +22,7 @@ void changeActualScreen(Bloc bloc, int actualScreen, BuildContext context){
   }      
 Widget menuGrid(BuildContext context, Bloc bloc){
    return  GridView.count(
-                            primary: false,                            
-                           /*  padding: const EdgeInsets.fromLTRB(1, 10, 1, 10), */
+                            primary: false,
                             crossAxisCount: 2,
                             childAspectRatio: 0.80,
                             mainAxisSpacing: 0.2,
@@ -130,10 +121,7 @@ class AppMenuAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
-  /*      
-      width: MediaQuery.of(context).size.width, */
-/*       height: MediaQuery.of(context).size.height, */
+      color: Colors.transparent,  
       child:  Center(child: Box()),     
     );       
 

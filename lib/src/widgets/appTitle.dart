@@ -8,21 +8,24 @@ class AppTitle extends StatelessWidget {
   final bool inputTextAnimation;
   final bool secondTextAnimation;
   final bool  withAppBar;
-  const AppTitle({this.inputText, this.secondText, this.withAppBar, this.inputTextAnimation, this.secondTextAnimation});
+  final bool landscape;
+  const AppTitle({this.inputText, this.secondText, this.withAppBar, this.inputTextAnimation, this.secondTextAnimation, this.landscape});
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-        top:  withAppBar==true?(MediaQuery.of(context).size.height)*1/100:(MediaQuery.of(context).size.height)*5.5/100  ,
+    return OrientationBuilder(builder:(context, orientation){
+      return  Stack(
+        children: <Widget>[
+             Positioned(
+        top:  landscape==null?(withAppBar==true?(MediaQuery.of(context).size.height)*1/100:(MediaQuery.of(context).size.height)*5.5/100):(orientation== Orientation.landscape?(MediaQuery.of(context).size.height)*15/100:(MediaQuery.of(context).size.height)*5.5/100),
         child: Container(
           width: MediaQuery.of(context).size.width,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-               inputTextAnimation!=false?   ApppTypeWriter(textWriter:inputText, textStyle:TextStyle(
+               inputTextAnimation!=false?   AppTypeWriter(textWriter:inputText, textStyle:TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 25.0,
-                  /*       fontFamily: 'Montserrat', */
                         color: Colors.white,
                         fontWeight: FontWeight.w700)): Text(inputText,
                     style: TextStyle(
@@ -31,25 +34,24 @@ class AppTitle extends StatelessWidget {
                         color: Colors.white,
                         fontWeight: FontWeight.w700)),
 
-              /*   Text(inputText,
-                    style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 32.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700)), */
                 secondTextShow()
               ],
             ),
           ),
-        ));
-  }
+        ))
+  
+        ],
+      );
+     
+    });
+}
 
   Widget secondTextShow() {
     if (secondText != null) {
       return Column(
         children: <Widget>[
           secondTextAnimation!=false?
-            ApppTypeWriter(textWriter:secondText, textStyle:TextStyle(
+            AppTypeWriter(textWriter:secondText, textStyle:TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 15.0,
                   color: Colors.white,

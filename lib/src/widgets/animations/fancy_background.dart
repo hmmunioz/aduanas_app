@@ -40,7 +40,7 @@ class FancyBackgroundApp extends StatelessWidget {
                                   image: AssetImage("images/logoLogistic.png"))),
                         ),
                         Padding(padding: EdgeInsets.only(top:10.0)),
-                       ApppTypeWriter(textWriter:"RCB logistic!", textStyle:TextStyle(
+                       AppTypeWriter(textWriter:"RCB logistic!", textStyle:TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 32.0,
                         color: Colors.white,

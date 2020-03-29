@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
-class ApppTypeWriter extends StatelessWidget {
+class AppTypeWriter extends StatelessWidget {
   final String textWriter;
   final TextStyle textStyle;
-  ApppTypeWriter({this.textWriter, this.textStyle});
+  AppTypeWriter({this.textWriter, this.textStyle});
   static final boxDecoration = BoxDecoration(
       color: Colors.orange,
       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -83,6 +83,6 @@ class TypewriterText extends StatelessWidget {
 class TypewriterBoxDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(child: ApppTypeWriter());
+    return Center(child: AppTypeWriter());
   }
 }
