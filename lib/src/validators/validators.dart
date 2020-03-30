@@ -25,7 +25,7 @@ class Validators{
         StreamTransformer<String, String>
         .fromHandlers(
           handleData: (pass, sink){
-            if(pass.length>5){
+            if(pass.length>2){
               sink.add(pass);
             }else{
               sink.addError("Contraseña invalida");

@@ -77,14 +77,14 @@ class TramitesScreen extends StatelessWidget {
                           children: <Widget>[
                             TitleList(
                                 "Por Recibir",
-                                bloc.tramiteScreen.getListLength()['_porRecibirTramiteList']
+                                  bloc.tramiteScreen.getListLength()['_porRecibirTramiteList']
                                     .length
                                     .toString()),
                             SizedBox(
                               height: 8.0,
                             ),
                             Column(children: getTramiteList(1, bloc)),
-                             bloc.tramiteScreen.getListLength()['_porRecibirTramiteList'].length>=2? InputChip(
+                  /*         (bloc.tramiteScreen.getSearchTramiteValue()==""  ||  bloc.tramiteScreen.getSearchTramiteValue()==null)?(bloc.tramiteScreen.getListLength()['_porRecibirTramiteList'].length>=2? InputChip(
                           label: bloc.tramiteScreen.getViewMore()['porRecibir']!=false?Text('Ver más'):Text('Ver menos'),
                           labelStyle: TextStyle(color: Colors.white),
                           backgroundColor: bloc.tramiteScreen.getViewMore()['porRecibir']!=false? Theme.of(context).primaryColor:Theme.of(context).accentColor,
@@ -94,7 +94,7 @@ class TramitesScreen extends StatelessWidget {
                           },
                         
                           selectedColor: Colors.green,
-                        ):SizedBox(height: 0.0,),
+                        ):SizedBox(height: 0.0,)):SizedBox(height: 0.0,), */
                             TitleList(
                                 "Recibidos",
                                bloc.tramiteScreen.getListLength()['_recibidosTramiteList']
@@ -104,7 +104,7 @@ class TramitesScreen extends StatelessWidget {
                               height: 8.0,
                             ),
                             Column(children: getTramiteList(2, bloc)),
-                             bloc.tramiteScreen.getListLength()['_recibidosTramiteList'].length>=2? InputChip(
+                     /*  (bloc.tramiteScreen.getSearchTramiteValue()==""  ||  bloc.tramiteScreen.getSearchTramiteValue()==null)?  bloc.tramiteScreen.getListLength()['_recibidosTramiteList'].length>=2? InputChip(
                           label:bloc.tramiteScreen.getViewMore()['recibidos']!=false?Text('Ver más'):Text('Ver menos'),
                           labelStyle: TextStyle(color: Colors.white),
                           backgroundColor: bloc.tramiteScreen.getViewMore()['recibidos']!=false? Theme.of(context).primaryColor:Theme.of(context).accentColor,
@@ -113,7 +113,7 @@ class TramitesScreen extends StatelessWidget {
                           },
                             
                           selectedColor: Colors.green,
-                        ):SizedBox(height: 0.0,),
+                        ):SizedBox(height: 0.0,):SizedBox(height: 0.0,), */
                             TitleList(
                                 "Entregados",
                                 bloc.tramiteScreen.getListLength()['_entregadosTramiteList']
@@ -123,7 +123,7 @@ class TramitesScreen extends StatelessWidget {
                               height: 8.0,
                             ),
                             Column(children: getTramiteList(3, bloc)),
-                           bloc.tramiteScreen.getListLength()['_entregadosTramiteList'].length>=2?InputChip(
+                     /*       (bloc.tramiteScreen.getSearchTramiteValue()==""  ||  bloc.tramiteScreen.getSearchTramiteValue()==null)? bloc.tramiteScreen.getListLength()['_entregadosTramiteList'].length>=2?InputChip(
                           label:bloc.tramiteScreen.getViewMore()['entregados']!=false?Text('Ver más'):Text('Ver menos'),
                           labelStyle: TextStyle(color: Colors.white),
                           backgroundColor: bloc.tramiteScreen.getViewMore()['entregados']!=false?Theme.of(context).primaryColor:Theme.of(context).accentColor,
@@ -132,7 +132,7 @@ class TramitesScreen extends StatelessWidget {
                           },
                     
                           selectedColor:Theme.of(context).accentColor,
-                        ):SizedBox(height: 0.0,),
+                        ):SizedBox(height: 0.0,):SizedBox(height: 0.0,), */
                           ]);
   }
   Widget tramitesListLoading(BuildContext context, AsyncSnapshot<dynamic> snapshot, Bloc bloc){

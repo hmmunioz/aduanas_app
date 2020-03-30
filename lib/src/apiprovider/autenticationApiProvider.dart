@@ -1,12 +1,12 @@
 import 'dart:async';
-import 'package:aduanas_app/src/bloc/bloc.dart';
 import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
 import 'package:aduanas_app/src/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' show Client;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
-import 'package:provider/provider.dart';
+import 'dart:io';
 
 class AutenticationApiProvider {
   
@@ -16,15 +16,17 @@ class AutenticationApiProvider {
   }
   final storage = new FlutterSecureStorage();
   Client client = Client();  
+  
   Map<String, String> headers = {"Content-type":"application/json"};  
   Future<dynamic> singIn(String username, String password, UtilsBloc utilsbloc, BuildContext context) async {
-  // final bloc = Provider.of<Bloc>(context);
+  
+ try {
+  final result = await InternetAddress.lookup('google.com');
+  if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
    dynamic objPostSingIn ={"username":username, "password": password, }; 
    String urlApi= ConstantsApp.of(context).appConfig.base_url + ConstantsApp.of(context).urlServices.autentication['singIn']; 
- print("resposneeeeeeeeeeeeeeeeerer LOGIN");
+
    final response = await client.post("$urlApi", headers:headers, body:json.encode(objPostSingIn) );
-print("LOOOOOOOGIN000");
-print(response.body);
 
    if (response.statusCode == 200) 
     {    
@@ -34,18 +36,25 @@ print(response.body);
       }
       else{
         return null;
-        //utilsbloc.openDialog(context, "Ha ocurrido un error.", "Usuario o contraseña invalidos", null,  true, false );
-      }
+       }
     }
     else{
-      
-    //  return null;
-    //utilsbloc.openDialog(context, "Ha ocurrido un error.", "Usuario o contraseña invalidos", null,  true, false );
         print(response.statusCode.toString());
       print(response.body.toString());
         
     return null;
     } 
+
+  }
+} on SocketException catch (_) {
+  utilsbloc.openDialog(context, "Error de red", "No tiene conexión a Internet", (){   SystemChannels.platform.invokeMethod('SystemNavigator.pop');}, true, false);
+
+}
+ 
+ 
+ 
+  // final bloc = Provider.of<Bloc>(context);
+  
    }  
 
 

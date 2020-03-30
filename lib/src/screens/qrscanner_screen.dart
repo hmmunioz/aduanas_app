@@ -32,7 +32,7 @@ class _ScanScreenState extends State<ScanScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 SizedBox(height: 20,),
-                Text("Escanea el código QR", style: TextStyle(fontSize: 30.0, color:Colors.white/*  Theme.of(context).accentColor */)),
+                Text("Escanea el código QR", style: TextStyle(fontSize: 30.0, color: Theme.of(context).accentColor)),
                  Container(
             height: MediaQuery.of(context).size.height-130,
             child: AnimatedQRView(

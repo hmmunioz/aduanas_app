@@ -140,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   inputColor: Colors.white),
               SizedBox(
-                height: 10.0,
+                height: 7.0,
               ),
               AppTextField(
                   streamDataTransform: bloc.login.getPass,
@@ -154,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   inputColor: Colors.white),
               SizedBox(
-                height: 10.0,
+                height: 5.0,
               ),
               AppButton(
                 streamDataTransform: bloc.login.submitValid,

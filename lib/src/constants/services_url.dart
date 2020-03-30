@@ -5,7 +5,7 @@ class UrlServices {
     'getPhoneData': 'login/registerSessionTokenFCM',
     'sendEmail': 'login/validaCorreoRecordarContrasenia',
     'validateCode': 'login/validacionTokenRecordarContrasenia',
-    'changePassword':'login/validarCambioContrasenia'    
+    'changePassword':'login/registrarNuevaContrasenia'    
   };
 
    final dynamic tramites ={
