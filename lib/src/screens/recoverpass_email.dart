@@ -69,8 +69,9 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
                       ),
                       AppButton(
                         streamDataTransform: bloc.recoverEmail.getEmailRecover,
-                        color: Color.fromRGBO(255, 143, 52, 1),
+                        color:Theme.of(context).primaryColor,
                           invertColors: false,
+                          context: context,
                         name: "ENVIAR",
                         onPressed: ()=> sendEmail(bloc, context),
                         /* _con.submit() */

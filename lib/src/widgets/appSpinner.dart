@@ -1,3 +1,4 @@
+import 'package:aduanas_app/src/widgets/appTypewriterBox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 class SpinnerLoading extends StatefulWidget {
@@ -16,11 +17,12 @@ class _SpinnerLoadingState extends State<SpinnerLoading> {
       child: Center(
        child: Column(
          mainAxisAlignment:MainAxisAlignment.center,
-         children: <Widget>[
-          /* SpinKitHourGlass */SpinKitPouringHourglass(
+         children: <Widget>[          
+          SpinKitPouringHourglass(
             color:Theme.of(context).primaryColor,
             size: 80.0
-          )
+          ),
+          AppTypeWriter(textWriter: "Cargando", textStyle: TextStyle(decoration: TextDecoration.none, color: Theme.of(context).primaryColor),),
          ],
        ),
      ),

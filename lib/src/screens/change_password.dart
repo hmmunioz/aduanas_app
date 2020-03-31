@@ -81,6 +81,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         color:Theme.of(context).primaryColor,
                         name: "CAMBIAR",
                         invertColors: false,
+                        context: context,
                         onPressed: () { sendNewCredentials(context, bloc);},
                       ),
                          ],

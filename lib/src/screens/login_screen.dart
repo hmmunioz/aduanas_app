@@ -95,8 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 20,
           ),
           Container(
-            width: 130.0,
-            height: 130.0,
+            width:  (MediaQuery.of(context).size.height*17.5)/100,
+            height:  (MediaQuery.of(context).size.height*17.5)/100,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 5),
@@ -160,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 streamDataTransform: bloc.login.submitValid,
                 color: Theme.of(context).primaryColor,
                 name: "INGRESAR",
+                context: context,
                 invertColors: false,
                 onPressed: () {
                   singIn(bloc, context);

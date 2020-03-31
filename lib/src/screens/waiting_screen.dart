@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:aduanas_app/src/bloc/bloc.dart';
-import 'package:aduanas_app/src/widgets/appButton.dart';
 import 'package:aduanas_app/src/widgets/appCurvedShape.dart';
 import 'package:aduanas_app/src/widgets/appRoundIcon.dart';
 import 'package:aduanas_app/src/widgets/appSpinner.dart';
 import 'package:aduanas_app/src/widgets/appTitle.dart';
-import 'package:aduanas_app/src/widgets/appVerificationCode.dart';
 import 'package:provider/provider.dart';
 
 class WaitingScreen extends StatefulWidget {
@@ -45,8 +43,7 @@ class _WaitingScreenState extends State<WaitingScreen> {
                         children: <Widget>[
                          Image.asset(
           "images/enconstruccion.png",
-/*           height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width, */
+
           fit: BoxFit.cover,
         ),
                         ]  ),

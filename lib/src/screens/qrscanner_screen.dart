@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:aduanas_app/src/bloc/bloc.dart';
-import 'package:aduanas_app/src/models/tramites_model.dart';
-import 'package:aduanas_app/src/services/dialog_service.dart';
 import 'package:animated_qr_code_scanner/animated_qr_code_scanner.dart';
 import 'package:animated_qr_code_scanner/AnimatedQRViewController.dart';
-
 import 'package:provider/provider.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 
 class ScanScreen extends StatefulWidget {
   static const String routeName = "/qrScannerCode";
@@ -38,9 +33,6 @@ class _ScanScreenState extends State<ScanScreen> {
             child: AnimatedQRView(
               squareColor: Theme.of(context).primaryColor.withOpacity(0.25),
               animationDuration: const Duration(milliseconds: 600),
-              /* onScanBeforeAnimation: (String str) {
-               _onQRViewCreate(context, str, bloc);
-              },      */
               onScan: (val){_onQRViewCreate(context, val, bloc); },       
               controller: controller )             
             

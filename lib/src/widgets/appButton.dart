@@ -5,8 +5,9 @@ class AppButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String name;
   final bool invertColors;
+  final BuildContext context;
   final Stream<dynamic> streamDataTransform;
-  const AppButton({this.color, this.onPressed, this.name, this.streamDataTransform, this.invertColors});
+  const AppButton({this.color, this.onPressed, this.name, this.streamDataTransform, this.invertColors, this.context});
  
  Widget getButtonAction(VoidCallback onPressedMetod){
      return InkWell(
@@ -19,7 +20,7 @@ class AppButton extends StatelessWidget {
           color: invertColors ? Colors.white : color,
           elevation: 5.0,
           child: SizedBox(
-            width: 290.0,
+          width: (MediaQuery.of(context).size.width*89)/100,
             height: 43.0,
             child: FlatButton(
               
