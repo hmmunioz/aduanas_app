@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
+import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:animated_qr_code_scanner/animated_qr_code_scanner.dart';
+import 'package:animated_qr_code_scanner/AnimatedQRViewController.dart';
+import 'package:provider/provider.dart';
 
 class ScanScreen extends StatefulWidget {
   static const String routeName = "/qrScannerCode";
@@ -16,25 +18,22 @@ class _ScanScreenState extends State<ScanScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: 500.0,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreate,
-              overlay: QrScannerOverlayShape(
-                borderRadius: 10,
-                borderColor: Color.fromRGBO(255, 143, 52, 1),
-                borderLength: 30.0,
-                borderWidth: 10.0,
-                cutOutSize: 300,
-              ),
-            ),
-          )
-        ],
-      ),
+      child:   Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 20,),
+                Text("Escanea el código QR", style: TextStyle(fontSize: 30.0, color: Theme.of(context).accentColor)),
+                 Container(
+            height: MediaQuery.of(context).size.height-130,
+            child: AnimatedQRView(
+              squareColor: Theme.of(context).primaryColor.withOpacity(0.25),
+              animationDuration: const Duration(milliseconds: 600),
+              onScan: (val){_onQRViewCreate(context, val, bloc); },       
+              controller: controller )             
+            
+            )
+            ]) 
     );
   }
 

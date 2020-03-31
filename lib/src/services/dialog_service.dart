@@ -11,6 +11,7 @@ class Dialogs {
       return AppButton(
         color: Color.fromRGBO(255, 143, 52, 1),
         name: title,
+        context: context,
         onPressed: accionButton ? () => Navigator.of(context).pop(DialogAction.yes):  () => Navigator.of(context).pop(DialogAction.abort),
         invertColors: invertColors
       );

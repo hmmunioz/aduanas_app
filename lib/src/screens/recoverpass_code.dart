@@ -85,7 +85,9 @@ class _RecoverPassCodeState extends State<RecoverPassCode> {
                         streamDataTransform: bloc.recoverCode.getCodeRecover,
                         color: Color.fromRGBO(255, 143, 52, 1),
                         name: "ENVIAR",
-                        onPressed: ()=> goToChangePassword(bloc, context),
+                        context: context,
+                       invertColors: false,
+                        onPressed: ()=> validateCode(bloc, context),
                       )
                     ],
                   ),

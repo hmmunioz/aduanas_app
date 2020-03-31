@@ -23,8 +23,8 @@ class AppRoundIcon extends StatelessWidget {
                 height: 20,
               ),
               Container(
-                width: 130.0,
-                height: 130.0,
+                width:  (MediaQuery.of(context).size.height*17.5)/100,
+                height: (MediaQuery.of(context).size.height*17.5)/100,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.white, width: 5),

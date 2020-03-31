@@ -192,8 +192,8 @@ class FancyBackgroundDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+       width:  (MediaQuery.of(context).size.height*17.5)/100,
+      height: (MediaQuery.of(context).size.height*17.5)/100,
       child: FancyBackgroundApp(),
     );
   }

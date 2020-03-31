@@ -22,8 +22,119 @@ class _LoginScreenState extends State<LoginScreen> {
   void onChangedEmail(value, Bloc bloc) {
     bloc.login.changeEmail(value);
   }
-   void onChangedPass(value , Bloc bloc) {
-   bloc.login.changePass(value);
+
+  void onChangedPass(value, Bloc bloc) {
+    bloc.login.changePass(value);
+  }
+
+  void okLogin() {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+        "/containerHome",
+        (route) => route.isCurrent && route.settings.name == "/containerHome"
+            ? true
+            : false);
+    //  Navigator.pushNamed(context, "/containerHome");
+  }
+
+  void failed() {
+    print("failed");
+  }
+
+  Widget appRoundIconTemp(Bloc bloc) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width:  (MediaQuery.of(context).size.height*17.5)/100,
+            height:  (MediaQuery.of(context).size.height*17.5)/100,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 5),
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage("images/logoLogistic.png"))),
+          ),
+        ],
+      ),
+      /*  ) */
+    );
+  }
+
+  Widget containerRecover(Bloc bloc, Orientation orientation) {
+    return Container(
+        padding: orientation != Orientation.landscape
+            ? EdgeInsets.symmetric(horizontal: 24.0)
+            : EdgeInsets.symmetric(horizontal: 20.0),
+        height: orientation != Orientation.landscape
+            ? MediaQuery.of(context).size.height / 0.5
+            : ((MediaQuery.of(context).size.height) * 65) / 100,
+        child: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+               SizedBox(
+                        height:((MediaQuery.of(context).size.height) * 30) / 100,
+                      ),
+               Text("Bienvenidos a RCB Logistic", style: TextStyle( fontSize: orientation==Orientation.portrait? 20.0:25.0, fontWeight: FontWeight.w700)),
+                SizedBox(height: 20.0,),
+              AppTextField(
+                  addObsucre: false,
+                  streamDataTransform: bloc.login.getEmail,
+                  onChanged: (value) => onChangedEmail(value, bloc),
+                  inputType: TextInputType.emailAddress,
+                  inputText: "USUARIO",
+                  inputIcon: Icon(
+                    Icons.account_circle,
+                    color: Colors.white,
+                  ),
+                  inputColor: Colors.white),
+              SizedBox(
+                height: 7.0,
+              ),
+              AppTextField(
+                  streamDataTransform: bloc.login.getPass,
+                  onChanged: (value) => onChangedPass(value, bloc),
+                  inputType: TextInputType.visiblePassword,
+                  addObsucre: true,
+                  inputText: "PASSWORD",
+                  inputIcon: Icon(
+                    Icons.lock_open,
+                    color: Colors.white,
+                  ),
+                  inputColor: Colors.white),
+              SizedBox(
+                height: 5.0,
+              ),
+              AppButton(
+                streamDataTransform: bloc.login.submitValid,
+                color: Theme.of(context).primaryColor,
+                name: "INGRESAR",
+                context: context,
+                invertColors: false,
+                onPressed: () {
+                  singIn(bloc, context);
+                },
+              ),
+              Center(
+                  child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, "/recoverpassemail");
+                },
+                child: Text(
+                  "¿Olvidaste tu contraseña?",
+                  style: TextStyle(
+                    fontSize: 17.0,
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ))
+            ])));
   }
   @override
   Widget build(BuildContext context) {      

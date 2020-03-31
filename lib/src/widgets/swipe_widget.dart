@@ -72,13 +72,31 @@ class _OnSlideState extends State<OnSlide> {
   }
  BoxDecoration myBoxDecoration() {
     return BoxDecoration(
-      //color:  Color.fromRGBO(142, 144, 146,0.5),
-  
       borderRadius: BorderRadius.all(
           Radius.circular(25.0) //         <--- border radius here
           ),
     );
   }
+   BoxDecoration myBoxDecoration2() {
+    return BoxDecoration(
+
+    color:Colors.white.withOpacity(0.9),
+      borderRadius: BorderRadius.all(
+          Radius.circular(25.0) //         <--- border radius here
+          ),
+    );
+  }
+    BoxDecoration myBoxDecoration3() {
+    return BoxDecoration(
+   
+    color: Colors.transparent,
+      borderRadius: BorderRadius.all(
+          Radius.circular(25.0) //         <--- border radius here
+          ),
+    );
+  }
+
+   
   @override
   Widget build(BuildContext context) {
     if (childSize == null) {

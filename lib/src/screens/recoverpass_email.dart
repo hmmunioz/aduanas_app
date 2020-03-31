@@ -89,9 +89,10 @@ class _RecoverPassEmailState extends State<RecoverPassEmail> {
                         height: 7.0,
                       ),
                       AppButton(
-                        streamDataTransform: bloc.recoverPhone.getPhoneRecover,
-                        color: Color.fromRGBO(255, 143, 52, 1),
+                        streamDataTransform: bloc.recoverEmail.getEmailRecover,
+                        color:Theme.of(context).primaryColor,
                           invertColors: false,
+                          context: context,
                         name: "ENVIAR",
                         onPressed: ()=> sumbitSms(bloc, context),
                         /* _con.submit() */

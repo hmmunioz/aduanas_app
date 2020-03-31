@@ -1,3 +1,4 @@
+import 'package:aduanas_app/src/models/tramites_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/src/widgets/appMicroCircle.dart';
 
