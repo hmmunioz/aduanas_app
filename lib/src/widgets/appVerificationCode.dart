@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:flutter_chat/src/bloc/bloc.dart';
 
 class VerificationCodeInput extends StatefulWidget {
   final ValueChanged<String> onCompleted;
@@ -20,7 +20,7 @@ class VerificationCodeInput extends StatefulWidget {
       this.length = 4,
       this.itemDecoration,
       this.itemSize = 50,
-      this.focusColors ,
+      this.focusColors = Colors.white,
       this.textStyle = const TextStyle(fontSize: 25.0, color: Colors.black),
       this.autofocus = true,
       this.bloc})
@@ -72,9 +72,7 @@ class _VerificationCodeInputState extends State<VerificationCodeInput> {
       maxLength: 2,
       focusNode: _listFocusNode[index],
       decoration: InputDecoration(
-    
           focusedBorder: OutlineInputBorder(
-            
             borderSide: BorderSide(color: widget.focusColors, width: 2.0),
             borderRadius: BorderRadius.circular(25.0),
           ),

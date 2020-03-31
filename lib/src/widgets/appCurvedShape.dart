@@ -2,31 +2,25 @@ import "package:flutter/material.dart";
 import 'dart:math';
 
 class CurvedShape extends StatelessWidget {
-  final bool transparent;
-  CurvedShape({this.transparent})
-  ;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: (MediaQuery.of(context).size.height / 2),
       child: CustomPaint(
-        painter: _MyPainter(transparent, context),
+        painter: _MyPainter(),
       ),
     );
   }
 }
 
 class _MyPainter extends CustomPainter {
-  final bool transparent;
-  BuildContext context;
-   _MyPainter(this.transparent, this.context);
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = new Paint()
       ..style = PaintingStyle.fill
       ..isAntiAlias = true
-      ..color = transparent!=null?Colors.transparent:Theme.of(context).primaryColor;
+      ..color = Color.fromRGBO(255, 143, 52, 1);
 
     Offset topLeft = Offset(0, 0);
     Offset bottomLeft = Offset(0, (size.height / 2.00));

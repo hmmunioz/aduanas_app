@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aduanas_app/src/bloc/bloc.dart';
+import 'package:flutter_chat/src/bloc/bloc.dart';
 
 class AppRoundIcon extends StatelessWidget {
   final Stream<dynamic> streamDataTransform;
@@ -13,7 +13,7 @@ class AppRoundIcon extends StatelessWidget {
        keyboardStateTemp = bloc.utilsBloc.getDataKeyboardState();     
     }
    return  Positioned(
-        top: keyboardStateTemp== 1?   (MediaQuery.of(context).size.height / 15): (MediaQuery.of(context).size.height / 10) ,
+        top: keyboardStateTemp== 1?   (MediaQuery.of(context).size.height / 15): (MediaQuery.of(context).size.height / 7.2) ,
         left: (MediaQuery.of(context).size.width / 2) - 65,
         child: Center(
           child: Column(

@@ -10,15 +10,14 @@ class SpinnerLoading extends StatefulWidget {
 class _SpinnerLoadingState extends State<SpinnerLoading> {
   Widget toggleSpinner(AsyncSnapshot snapshot){
     if(snapshot.data==true){
-      print("opeeeen spinner");
       return Positioned(child:Container(
       color: Color.fromRGBO(0, 0, 0, 0.8),
       child: Center(
        child: Column(
          mainAxisAlignment:MainAxisAlignment.center,
          children: <Widget>[
-          /* SpinKitHourGlass */SpinKitPouringHourglass(
-            color:Theme.of(context).primaryColor,
+          SpinKitHourGlass(
+            color:  Color.fromRGBO(255, 143, 52, 1),
             size: 80.0
           )
          ],
@@ -28,8 +27,7 @@ class _SpinnerLoadingState extends State<SpinnerLoading> {
    );
        }
     else{
-       print("close spinner");
-      return SizedBox(height: 0.0,);
+      return SizedBox(height: 10.0,);
     }
   }
   @override

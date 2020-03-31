@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:aduanas_app/src/bloc/bloc.dart';
-import 'package:aduanas_app/src/models/tramites_model.dart';
-import 'package:aduanas_app/src/services/dialog_service.dart';
-import 'package:animated_qr_code_scanner/animated_qr_code_scanner.dart';
-import 'package:animated_qr_code_scanner/AnimatedQRViewController.dart';
-
-import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner/qr_scanner_overlay_shape.dart';
 
@@ -17,51 +10,46 @@ class ScanScreen extends StatefulWidget {
 }
 
 class _ScanScreenState extends State<ScanScreen> {
-  int banderadialog=0;
-  int cont=0;
-
   GlobalKey qrKey = GlobalKey();
   var qrText = "";
-      final AnimatedQRViewController controller = AnimatedQRViewController();
+  QRViewController controller;
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of<Bloc>(context);
     return Center(
-      child:   Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(height: 20,),
-                Text("Escanea el código QR", style: TextStyle(fontSize: 30.0, color: Theme.of(context).accentColor)),
-                 Container(
-            height: MediaQuery.of(context).size.height-130,
-            child: AnimatedQRView(
-              squareColor: Theme.of(context).primaryColor.withOpacity(0.25),
-              animationDuration: const Duration(milliseconds: 600),
-              /* onScanBeforeAnimation: (String str) {
-               _onQRViewCreate(context, str, bloc);
-              },      */
-              onScan: (val){_onQRViewCreate(context, val, bloc); },       
-              controller: controller )             
-            
-            )
-            ]) 
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            height: 500.0,
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: _onQRViewCreate,
+              overlay: QrScannerOverlayShape(
+                borderRadius: 10,
+                borderColor: Color.fromRGBO(255, 143, 52, 1),
+                borderLength: 30.0,
+                borderWidth: 10.0,
+                cutOutSize: 300,
+              ),
+            ),
+          )
+        ],
+      ),
     );
-  
   }
 
   @override
   void dispose() {
+    controller?.dispose();
     super.dispose();
-  }  
+  }
 
-
-  void _onQRViewCreate(BuildContext context, String value, Bloc bloc) {
-    
-    
-     if(banderadialog==0){
-        bloc.tramiteScreen.searchTramiteByNum(context, value, (){controller.pause(); controller.controller.resumeCamera(); controller.resume();}, bloc);
-      banderadialog++;     
-      }     
+  void _onQRViewCreate(QRViewController controller) {
+    this.controller = controller;
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        qrText = scanData;
+      });
+    });
   }
 }

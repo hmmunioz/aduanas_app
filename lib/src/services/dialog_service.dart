@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aduanas_app/src/widgets/appButton.dart';
+import 'package:flutter_chat/src/widgets/appButton.dart';
 
 enum DialogAction { yes, abort }
 
@@ -42,7 +42,7 @@ class Dialogs {
                     style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 22.0,
-                        color: Theme.of(context).primaryColor,
+                        color: Color.fromRGBO(142, 144, 146, 1),
                         fontWeight: FontWeight.w600),
                   )
                 ],

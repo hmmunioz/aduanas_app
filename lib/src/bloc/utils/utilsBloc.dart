@@ -1,17 +1,8 @@
-import 'package:aduanas_app/src/bloc/tramitesscreen/tramiteBloc.dart';
-import 'package:aduanas_app/src/models/tramites_model.dart';
-import 'package:aduanas_app/src/screens/tramite_detail_screen.dart';
-import 'package:aduanas_app/src/services/dialog_service.dart';
-import 'package:aduanas_app/src/validators/validators.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_chat/src/validators/validators.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UtilsBloc with Validators{
-  TramiteBloc tramiteBloc;
-  UtilsBloc({this.tramiteBloc});
     ///Keyboard widget
-    
     final _keyBoardController = BehaviorSubject<int>();
     Stream<int> get getKeyboardState => _keyBoardController.stream.transform(validateKeyboardState);
     Function(int) get changeKeyboardState => _keyBoardController.sink.add;  
@@ -19,142 +10,15 @@ class UtilsBloc with Validators{
 
     getDataKeyboardState(){
       final stateKeyboard = _keyBoardController.value;  
+      print("data a mostrar $stateKeyboard");
       return stateKeyboard;
     }
-     
+
+     ///Spinner widget
      final _toggleSpinnerController = BehaviorSubject<bool>();  ////Trasnform inData to outData Spinner widget   
      Stream<bool> get getSpinnerState => _toggleSpinnerController.stream.transform(validateSpinnerState);    ////Set data to block Spinner widget
      Function(bool) get changeSpinnerState => _toggleSpinnerController.sink.add;
- 
-     Future<Set<void>> openDialog(BuildContext context,String titleDialog, String contentDialog, Function singInOk, bool primaryButton, bool secondaryButton) async {
-                     final action =
-                       await Dialogs.yesAbortDialog(context, titleDialog, contentDialog, primaryButton, secondaryButton);
-                        if (action == DialogAction.yes) 
-                        {
-                          singInOk();
-                          print("ok");  
-                        } else 
-                        {    
-                            print("canel");  
-                        }
-           }
-  
 
- void showTramiteDetail(TramiteModel tramiteModel, BuildContext context){
-     Navigator.pop(context);
-      tramiteBloc.addSinkTramiteDetail(tramiteModel);
-        Navigator.of(context).push(PageRouteBuilder(
-           barrierColor: Colors.black.withOpacity(0.6),
-            opaque: false,
-          pageBuilder: (BuildContext context, _, __) =>
-        TramiteDetail()));
- }
-
-
-   void settingModalBottomSheet(BuildContext context, TramiteModel objTramite, Function changeTramite) {
-      var mensaje = "Tramite numero #" + objTramite.getNumeroTramite;  
-
-
-      showModalBottomSheet(
-        isDismissible: true,
-        context: context,
-        builder: (builder) {
-          return  Container(
-      margin: const EdgeInsets.only(top: 5, left: 15, right: 15),
-      height: 205,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-                  Container(
-            height: 170,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 10, color: Colors.grey[300], spreadRadius: 5)
-                ]),
-            child: Column(
-              children: [
-                  Container(
-            color: Colors.transparent,
-            child:  Container(
-                decoration:  BoxDecoration(
-                    color: Colors.white,                          
-                    borderRadius:  BorderRadius.only(
-                        topLeft: const Radius.circular(25.0),
-                        topRight: const Radius.circular(25.0),
-                           bottomLeft: const Radius.circular(25.0),
-                        bottomRight: const Radius.circular(25.0)
-                        )),
-                child: Wrap(
-                  children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.info_outline, color: Theme.of(context).primaryColor,),
-                        title: Text('Mas informacion'),
-                        onTap: () => {showTramiteDetail(objTramite, context)}),
-                      objTramite.getEstado!=3?
-                    ListTile(
-                      leading: Icon(Icons.check_circle_outline,  color: Theme.of(context).primaryColor,),
-                      title: Text('Realizar Tramite'),
-                      onTap:  ()  async{ openDialog(context, mensaje, '¿Esta seguro de realizar este trámite?',  ()=>{changeTramite()/* changeTramiteById(context, objTramite) */}, true, true); } ,  
-                    ):
-                    SizedBox(height: 0.0,),
-                    ListTile(
-                      leading: Icon(Icons.cancel,  color: Theme.of(context).primaryColor,),
-                      title: Text('Salir'),
-                      onTap:  ()=>{Navigator.pop(context)}
-                    ),
-                  ],
-                )),
-          )
-              ]
-            ),
-        )
-        ]
-      ),
-    );
-          
-          
-          
-          
-          
-   /*        Container(
-            color: Colors.transparent,
-            child:  Container(
-                decoration:  BoxDecoration(
-                    color: Colors.white,                          
-                    borderRadius:  BorderRadius.only(
-                        topLeft: const Radius.circular(25.0),
-                        topRight: const Radius.circular(25.0))),
-                child: Wrap(
-                  children: <Widget>[
-                    ListTile(
-                        leading: Icon(Icons.info_outline, color: Theme.of(context).primaryColor,),
-                        title: Text('Mas informacion'),
-                        onTap: () => {showTramiteDetail(objTramite, context)}),
-                      objTramite.getEstado!=3?
-                    ListTile(
-                      leading: Icon(Icons.check_circle_outline,  color: Theme.of(context).primaryColor,),
-                      title: Text('Realizar Tramite'),
-                      onTap:  ()  async{ openDialog(context, mensaje, '¿Esta seguro de realizar este trámite?',  ()=>{changeTramite()/* changeTramiteById(context, objTramite) */}, true, true); } ,  
-                    ):
-                    SizedBox(height: 0.0,),
-                    ListTile(
-                      leading: Icon(Icons.cancel,  color: Theme.of(context).primaryColor,),
-                      title: Text('Salir'),
-                      onTap:  ()=>{Navigator.pop(context)}
-                    ),
-                  ],
-                )),
-          );
-    */     }); 
-     }
-  
-  
-     
-    
     dipose(){
       _keyBoardController.close();
       _toggleSpinnerController.close();

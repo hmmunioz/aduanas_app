@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:aduanas_app/src/bloc/bloc.dart';
-import 'package:aduanas_app/src/models/password_model.dart';
-import 'package:aduanas_app/src/widgets/appButton.dart';
-import 'package:aduanas_app/src/widgets/appCurvedShape.dart';
-import 'package:aduanas_app/src/widgets/appRoundIcon.dart';
-import 'package:aduanas_app/src/widgets/appSpinner.dart';
-import 'package:aduanas_app/src/widgets/appTextField.dart';
-import 'package:aduanas_app/src/widgets/appTitle.dart';
+import 'package:flutter_chat/src/bloc/bloc.dart';
+import 'package:flutter_chat/src/models/password_model.dart';
+import 'package:flutter_chat/src/widgets/appButton.dart';
+import 'package:flutter_chat/src/widgets/appCurvedShape.dart';
+import 'package:flutter_chat/src/widgets/appRoundIcon.dart';
+import 'package:flutter_chat/src/widgets/appTextField.dart';
+import 'package:flutter_chat/src/widgets/appTitle.dart';
 import 'package:provider/provider.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -30,99 +29,84 @@ class _ChangePasswordState extends State<ChangePassword> {
     bloc.changePassword.changePassword(changePasswordText);
     print(value);
   }
-  void sendNewCredentials(BuildContext context, Bloc bloc){
-    bloc.changePassword.sendNewCredentials(context);
-  }
-  Widget containerRecover(Bloc bloc, Orientation orientation){
-          return Container(
-                    padding: orientation!=Orientation.landscape?EdgeInsets.symmetric(horizontal: 24.0):EdgeInsets.symmetric(horizontal: 20.0,),
-                    height:orientation!=Orientation.landscape?MediaQuery.of(context).size.height/0.44:((MediaQuery.of(context).size.height)*65)/100,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
+  @override
+  Widget build(BuildContext context) {
+       final bloc = Provider.of<Bloc>(context);
+    return Stack(
+      children: <Widget>[
+        Scaffold(
+            backgroundColor: Colors.white,
+            body: Stack(
+              children: <Widget>[
+                CurvedShape(),
+                AppTitle(
+                  inputText: "RCB logistic!",
+                ),
+                AppRoundIcon(),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 44.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
                             SizedBox(
-                            height: orientation!=Orientation.landscape?MediaQuery.of(context).size.height / 2.88:0.0,
-                          ),                               
-                               Text("Recuperar contraseña",
+                              height: 280.0,
+                            ),
+                            Text("Recuperar contraseña",
                                 style: TextStyle(
-                                    color: Theme.of(context).accentColor,
+                                    color: Color.fromRGBO(142, 144, 146, 1),
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w700)),
-                          SizedBox(
-                        height:20.0,
-                         ),
-                            AppTextField(                      
+                            SizedBox(
+                              height: 2.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      AppTextField(
+                      
                         addObsucre: true,
-                        onChanged:(value) => setNewPass(value, bloc),
+                        onChanged:(value) => setNewPass(value, bloc) /* (value)=> setNewPass(value, bloc) */,
                         inputText: "NUEVA CONTRASEÑA",
                         inputIcon: Icon(
                           Icons.vpn_key,
                           color: Colors.white,
                         ),
-                        inputColor: Theme.of(context).accentColor,
+                        inputColor: Color.fromRGBO(142, 144, 146, 1),
                       ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                  AppTextField(                         
+                      SizedBox(
+                        height: 2.0,
+                      ),
+                      AppTextField(                         
                         addObsucre: true,
                         onChanged:(value) =>  setRepeatNewPass(value, bloc)/* (value, bloc) */,
-                        inputText: "REPETIR CONTRASEÑA",
+                        inputText: "CONFIRMAR CONTRASEÑA",
                         inputIcon: Icon(Icons.vpn_key, color: Colors.white),
-                        inputColor: Theme.of(context).accentColor,
+                        inputColor: Color.fromRGBO(142, 144, 146, 1),
                       ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                AppButton(
+                      SizedBox(
+                        height: 7.0,
+                      ),
+                      AppButton(
                         streamDataTransform: bloc.changePassword.getChangePassword,
-                        color:Theme.of(context).primaryColor,
+                        color: Color.fromRGBO(255, 143, 52, 1),
                         name: "CAMBIAR",
                         invertColors: false,
-                        onPressed: () { sendNewCredentials(context, bloc);},
+                        onPressed: () { print("CAMBIAAR CLAVEE");},
                       ),
-                         ],
-                      ),
-                    )
-                   );
-       
-  }
-  @override
-  Widget build(BuildContext context) {
-       final bloc = Provider.of<Bloc>(context);
-    return OrientationBuilder(
-        builder: (context, orientation) {
-     return 
-    Stack(
-      children: <Widget>[
-             Scaffold(
-            resizeToAvoidBottomInset: true,
-            backgroundColor: Colors.white,
-            body: Stack(
-              children: <Widget>[
-                CurvedShape(),   
-                  SizedBox(height: 10.0,),          
-                  AppTitle(
-                  inputText: "RCB logistic!",
-                   withAppBar: false,
-                   inputTextAnimation: true,
-                   landscape: true,
-                ),        
-                 (orientation == Orientation.portrait?AppRoundIcon():SizedBox(height: 1.0,)),
-            (orientation == Orientation.portrait?containerRecover(bloc, orientation):Container(
-              padding: EdgeInsets.only(top:MediaQuery.of(context).size.height / 2.5),
-             child: SingleChildScrollView(
-              child: containerRecover(bloc, orientation),
-            ))
-            ) ,
+                    ],
+                  ),
+                ),
               ],
-            )
-          ),
-      SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState), 
+            ))
       ],
     );
-    });
   }
 }

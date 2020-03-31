@@ -70,7 +70,6 @@ class _OnSlideState extends State<OnSlide> {
 
     return true;
   }
-
  BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       //color:  Color.fromRGBO(142, 144, 146,0.5),
@@ -80,26 +79,6 @@ class _OnSlideState extends State<OnSlide> {
           ),
     );
   }
-   BoxDecoration myBoxDecoration2() {
-    return BoxDecoration(
-      //color:  Color.fromRGBO(142, 144, 146,0.5),
-    color:Colors.white.withOpacity(0.9),
-      borderRadius: BorderRadius.all(
-          Radius.circular(25.0) //         <--- border radius here
-          ),
-    );
-  }
-    BoxDecoration myBoxDecoration3() {
-    return BoxDecoration(
-      //color:  Color.fromRGBO(142, 144, 146,0.5),
-    color: Colors.transparent/* Color.fromRGBO(142, 144, 146, 0.9) */,
-      borderRadius: BorderRadius.all(
-          Radius.circular(25.0) //         <--- border radius here
-          ),
-    );
-  }
-
-   
   @override
   Widget build(BuildContext context) {
     if (childSize == null) {
@@ -119,10 +98,9 @@ class _OnSlideState extends State<OnSlide> {
 
     List<Widget> above = <Widget>[
       new Container(
-        decoration: myBoxDecoration2(),
         width: childSize.width,
         height: childSize.height,
-        
+        color: Color.fromRGBO(142, 144, 146, 0.9),
         child: widget.child,
       ),
     ];
@@ -130,15 +108,15 @@ class _OnSlideState extends State<OnSlide> {
 
     for (ActionItems item in widget.items) {
       under.add(new Container(
-        decoration: myBoxDecoration3(),
-          alignment: Alignment.center,         
-     
+        decoration: myBoxDecoration(),
+          alignment: Alignment.center,
+        /*   color: item.backgroudColor, */
           width: 60.0,
           height: childSize.height,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[item.icon, Text('Mas', style: TextStyle(color: Theme.of(context).primaryColor),)],
+              children: <Widget>[item.icon, Text('Mas')],
             ),
           )));
 
@@ -158,7 +136,6 @@ class _OnSlideState extends State<OnSlide> {
     Widget items = new Container(
       decoration: myBoxDecoration(),
       width: childSize.width,
-      margin: EdgeInsets.fromLTRB(0.0, 5.0, 5.0, 5.0) ,
       height: childSize.height,
       /* color: Color.fromRGBO(142, 144, 146, 0.5), */
       child: new Row(
@@ -170,7 +147,7 @@ class _OnSlideState extends State<OnSlide> {
     Widget scrollview = new NotificationListener(
       child:   Card(
   elevation: 0,
-  color: Theme.of(context).accentColor.withOpacity(0.5),
+  color: Colors.transparent,
  shape:RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft:Radius.circular(25) ,

@@ -1,53 +1,86 @@
-
-
-import 'package:aduanas_app/src/constants/constants.dart';
-import 'package:aduanas_app/src/screens/splash_rcb_screen.dart';
-import 'package:aduanas_app/src/screens/test_page.dart';
 import 'package:flutter/material.dart';
-import 'package:aduanas_app/src/bloc/bloc.dart';
-import 'package:aduanas_app/src/repositories/repository.dart';
-import 'package:aduanas_app/src/screens/container_screens.dart';
-import 'package:aduanas_app/src/screens/login_screen.dart';
-import 'package:aduanas_app/src/screens/recoverpass_code.dart';
-import 'package:aduanas_app/src/screens/recoverpass_email.dart';
-import 'package:aduanas_app/src/screens/change_password.dart';
+import 'package:flutter_chat/src/bloc/bloc.dart';
+import 'package:flutter_chat/src/screens/container_screens.dart';
+import 'package:flutter_chat/src/screens/home_screen.dart';
+import 'package:flutter_chat/src/screens/login_screen.dart';
+import 'package:flutter_chat/src/screens/qrscanner_screen.dart';
+import 'package:flutter_chat/src/screens/recoverpass_code.dart';
+import 'package:flutter_chat/src/screens/recoverpass_email.dart';
+import 'package:flutter_chat/src/screens/change_password.dart';
+
+import 'package:flutter_chat/src/widgets/appSpinner.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
 
-Repository repository = new Repository();
+void main() {
 
- void main() {   
   runApp(Provider<Bloc>(
-      create: (context) => Bloc(),
+      create: (context)=> Bloc(),
       dispose: (context, bloc) => bloc.dispose(),
-      child: ConstantsApp(
-          child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                backgroundColor: Color.fromRGBO(255, 143, 52, 1) ,
-                  primaryColor: Color.fromRGBO(255, 143, 52, 1),
-                  accentColor: Color.fromRGBO(142, 144, 146, 1),
-                  canvasColor: Colors.transparent,
-                  fontFamily: 'Montserrat',
-                  focusColor: Color.fromRGBO(255, 143, 52, 1),
-                  cursorColor: Color.fromRGBO(255, 143, 52, 1),
-                  textSelectionColor: Color.fromRGBO(255, 143, 52, 1),
-                  textTheme: TextTheme(body1: TextStyle(color: Colors.white))),
-              home: SplashRcbScreen(),
-              routes: <String, WidgetBuilder> {
-            LoginScreen.routeName: (BuildContext context)  => LoginScreen(),
-            RecoverPassEmail.routeName: (BuildContext context) =>   RecoverPassEmail(),
-            RecoverPassCode.routeName: (BuildContext context) => RecoverPassCode(),
-            ChangePassword.routeName: (BuildContext context) =>   ChangePassword(),  
-            SplashRcbScreen.routeName: (BuildContext context)=>    SplashRcbScreen(), 
-            TestPage.routeName:(BuildContext context)=> TestPage(),      
-            ContainerHome.routeName: (BuildContext context) => ContainerHome(),        
-          }
-         )
-        )
-       )
-      );
-}
+      child: MaterialApp(
+      
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+          primaryColor: Color.fromRGBO(255, 143, 52, 1),
+          canvasColor: Colors.transparent,
+          fontFamily: 'Montserrat',
+          textTheme: TextTheme(body1: TextStyle(color: Colors.white))),
+      home: Stack(
+        children: <Widget>[          
+           LoginScreen(),
+         
+        ],
+      ) ,
 
-class SystemUiOverlayStyle {
+      routes: <String, WidgetBuilder>{
+        LoginScreen.routeName: (BuildContext context) => Stack(
+        children: <Widget>[          
+          LoginScreen(),
+          SpinnerLoading(),
+        ],
+      ) ,
+       
+        RecoverPassEmail.routeName: (BuildContext context) => Stack(
+        children: <Widget>[ 
+          RecoverPassEmail(),
+          SpinnerLoading(),
+        ],
+      ), 
+
+        RecoverPassCode.routeName: (BuildContext context) => Stack(
+        children: <Widget>[   
+          RecoverPassCode(),
+          SpinnerLoading(),
+        ],
+      ), 
+    
+        ChangePassword.routeName: (BuildContext context) => Stack(
+        children: <Widget>[   
+          ChangePassword(),
+          SpinnerLoading(),
+        ],
+      ), 
+      
+        HomeScreen.routeName: (BuildContext context) =>  Stack(
+        children: <Widget>[   
+          ChangePassword(),
+          SpinnerLoading(),
+        ],
+      ), 
+       
+        ContainerHome.routeName: (BuildContext context) => Stack(
+        children: <Widget>[   
+          ContainerHome(),
+          SpinnerLoading(),
+        ],
+      ), 
+        
+       ScanScreen.routeName: (BuildContext context) =>  Stack(
+        children: <Widget>[   
+          ScanScreen(),
+          SpinnerLoading(),
+        ],
+      ), 
+       
+      }))
+);
 }

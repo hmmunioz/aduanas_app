@@ -6,7 +6,8 @@ class AppButton extends StatelessWidget {
   final String name;
   final bool invertColors;
   final Stream<dynamic> streamDataTransform;
-  const AppButton({this.color, this.onPressed, this.name, this.streamDataTransform, this.invertColors});
+  const AppButton(
+      {this.color, this.onPressed, this.name, this.streamDataTransform, this.invertColors});
  
  Widget getButtonAction(VoidCallback onPressedMetod){
      return InkWell(

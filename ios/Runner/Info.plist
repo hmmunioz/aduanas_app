@@ -4,8 +4,6 @@
 <dict>
 <key>io.flutter.embedded_views_preview</key>
 <true/>
-    <key>CFBundleDisplayName</key>
-	<string>AduanasApp</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -15,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>aduanas_app</string>
+	<string>flutter_chat</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

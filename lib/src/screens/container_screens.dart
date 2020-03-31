@@ -1,33 +1,14 @@
-import 'package:aduanas_app/src/widgets/appAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:aduanas_app/src/bloc/bloc.dart';
-import 'package:aduanas_app/src/models/profile_model.dart';
-/* import 'package:aduanas_app/src/repositories/repository.dart'; */
-import 'package:aduanas_app/src/screens/aforos_screen.dart';
-import 'package:aduanas_app/src/widgets/appSpinner.dart';
+import 'package:flutter_chat/src/bloc/bloc.dart';
+import 'package:flutter_chat/src/screens/aforos_screen.dart';
+import 'package:flutter_chat/src/screens/home_screen.dart';
+import 'package:flutter_chat/src/screens/qrscanner_screen.dart';
+import 'package:flutter_chat/src/screens/tramites_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ContainerHome extends StatefulWidget {
-
   static const String routeName = "/containerHome";
-   String token;
-     String nombre="";
-    final storage = new FlutterSecureStorage();
-     ProfileModel profileModel;
-   void logOut(Bloc bloc, BuildContext context){
-      Navigator.pop(context);
-   //   bloc.dispose();
-      bloc.login.logOut(context);
-   }
-     void refreshTramites(Bloc bloc, BuildContext context){
-      bloc.tramiteScreen.refreshTramites(context);
-   }
-   void moreInfoDialog(Bloc bloc, BuildContext context){
-     bloc.utilsBloc.openDialog(context, "Informacion de la App", "Version 1.0.0\n\n"+ "Desarrollador\n\n"+ "Mauricio Muñoz", null, true, false);
-   }
-        ContainerHome({this.token, this.profileModel});
+  ContainerHome({Key key}) : super(key: key);
 
   @override
   _ContainerHomeState createState() => _ContainerHomeState();
@@ -35,64 +16,17 @@ class ContainerHome extends StatefulWidget {
 
 class _ContainerHomeState extends State<ContainerHome> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
-  void iniToken(BuildContext context, Bloc bloc)async{ 
-    bloc.utilsBloc.changeSpinnerState(false);  
-        ProfileModel p = await bloc.login.addProfileData();        
-       widget.profileModel = p;   
-     }
-
-  Future<bool> navigationBack(Bloc bloc, BuildContext context){
-
-       if(bloc.containerScreens.getDataActualScreen()==0){
-          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        }
-        else if(bloc.containerScreens.getDataActualScreen()==5){       
-          bloc.containerScreens.changeActualScreen(1);
-        }
-        else if(bloc.containerScreens.getDataActualScreen()==1){
-
-            bloc.tramiteScreen.addIsCompleteLoading(false);
-            //Navigator.pushNamed(context, "/containerHome");
-            bloc.containerScreens.changeActualScreen(0);
-        }
-        else{
-         // Navigator.pushNamed(context, "/containerHome");
-          bloc.containerScreens.changeActualScreen(0);
-        }
-  }
-
-
-
-  Widget build(BuildContext context) {    
- 
-  WidgetsFlutterBinding.ensureInitialized();
-   final bloc = Provider.of<Bloc>(context);  
-   //bloc.disposeLogin();    
-   iniToken(context, bloc);    
-   if(bloc.containerScreens.getDataActualScreen()!=0){
-        bloc.containerScreens.changeActualScreen(0);    
-    }   
-    return WillPopScope(
-      onWillPop: () => navigationBack(bloc, context),
- 
-      child:Stack(
-      children: <Widget>[          
-        StreamBuilder(
-          stream: bloc.containerScreens.getActualScreen,
-          builder: (context, snapshot) {
-            
-            return    Scaffold(
-           backgroundColor: Colors.white,
-      appBar: bloc.containerScreens.getDataActualScreen()==1?AppappBar():PreferredSize(
+  @override
+  Widget build(BuildContext context) {
+   final bloc = Provider.of<Bloc>(context);
+   bloc.containerScreens.changeActualScreen(0);
+    return Scaffold(
+      appBar: PreferredSize(
           preferredSize: Size.fromHeight(40.0), // here the desired height
           child: AppBar(
             iconTheme: IconThemeData(color: Colors.white),
-            backgroundColor: Theme.of(context).primaryColor,
+            backgroundColor: Color.fromRGBO(255, 143, 52, 1),
             elevation: 0.0,
           )),
       drawer: Theme(
@@ -101,7 +35,7 @@ class _ContainerHomeState extends State<ContainerHome> {
           ),
           child: getDrawer(bloc)),
       
-      body: StreamBuilder(
+           body: StreamBuilder(
           stream: bloc.containerScreens.getActualScreen,
           builder: (context, snapshot) {
             return getWidgetActualScreen(bloc, snapshot);
@@ -110,25 +44,17 @@ class _ContainerHomeState extends State<ContainerHome> {
           builder: (context, snapshot) {
             return getWidgetActualScreen(bloc, snapshot);
           }) :  AforosScreen() 
-       );
-     
-          }),
-        SpinnerLoading(streamDataTransform: bloc.utilsBloc.getSpinnerState),       
-      ],
-    )
-    ); 
- }
-  Widget getWidgetActualScreen(Bloc bloc, AsyncSnapshot<dynamic> snapshot){   
+    );
+  }
+  Widget getWidgetActualScreen(Bloc bloc, AsyncSnapshot<dynamic> snapshot){
+    print("bloc.getDataActualSceen();");
+    print(snapshot.data);
      return snapshot.data;
   }
-  StreamBuilder getDrawer(Bloc bloc) {
-    return  StreamBuilder(
-          stream: bloc.containerScreens.getDrawerTrasnformer,
-          builder: (context, snapshot) {
-            return Drawer(
-                  child: getListDrawer(bloc),
-                );
-          });  
+  Drawer getDrawer(Bloc bloc) {
+    return Drawer(
+      child: getListDrawer(bloc),
+    );
   }
 
   ListTile getItem(Icon icon, String description, String route, int actualScreen, Bloc bloc) {
@@ -136,7 +62,7 @@ class _ContainerHomeState extends State<ContainerHome> {
       leading: icon,
       title: Text(
         description,
-        style: TextStyle(color: Theme.of(context).accentColor),
+        style: TextStyle(color: Color.fromRGBO(142, 144, 146, 1)),
       ),
       onTap: () {
         Navigator.pop(context);
@@ -150,30 +76,28 @@ class _ContainerHomeState extends State<ContainerHome> {
       leading: icon,
       title: Text(
         description,
-        style: TextStyle(color: Theme.of(context).accentColor),
+        style: TextStyle(color: Color.fromRGBO(142, 144, 146, 1)),
       ),
     );
   }
 
   ListView getListDrawer(Bloc bloc) {
-    var initials = widget.profileModel.getNombre!=null?widget.profileModel.getNombre.substring(0,1).toUpperCase() + " " +widget.profileModel.getNombre.substring(1,2).toUpperCase() :"" ;
-     
     return ListView(
       children: <Widget>[
         UserAccountsDrawerHeader(
           accountName: Text(
-            widget.profileModel.getNombre ,
+            "Mauricio Muñoz",
             style: TextStyle(color: Colors.white),
           ),
           accountEmail: Text(
-            widget.profileModel.getCorreo,        
+            "mauriciomuñoz@hotmail.com",
             style: TextStyle(color: Colors.white),
           ),
           currentAccountPicture: CircleAvatar(
             backgroundColor: Colors.white,
             child: Text(
-               initials,
-              style: TextStyle(color: Theme.of(context).accentColor),
+              "M M",
+              style: TextStyle(color: Color.fromRGBO(142, 144, 146, 1)),
             ),
           ),
         ),
@@ -186,19 +110,17 @@ class _ContainerHomeState extends State<ContainerHome> {
           height: 20.0,
         ),
         Divider(),
-         GestureDetector(
-          onTap: () => widget.refreshTramites( bloc,  context),
-          child:    getItemAccion(Icon(Icons.refresh), "Actualizar"),
-        ),  
-     GestureDetector(
-          onTap: () => widget.moreInfoDialog( bloc,  context),
-          child:   getItemAccion(Icon(Icons.info), "Más Información"),
-        ),   
-    
-        GestureDetector(
-          onTap: () => widget.logOut( bloc,  context),
-          child:   getItemAccion(Icon(Icons.exit_to_app), "Salir"),
-        ),      
+        getItemAccion(Icon(Icons.refresh), "Actualizar"),
+        AboutListTile(
+          child: Text(
+            "Más Información",
+            style: TextStyle(color: Color.fromRGBO(142, 144, 146, 1)),
+          ),
+          applicationVersion: "1.1.0",
+          applicationIcon: Icon(Icons.info),
+          icon: Icon(Icons.info),
+        ),
+        getItemAccion(Icon(Icons.exit_to_app), "Salir"),
       ],
     );
   }

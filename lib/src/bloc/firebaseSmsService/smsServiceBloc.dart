@@ -1,17 +1,16 @@
-import 'package:aduanas_app/src/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:aduanas_app/src/bloc/recovercode/recoverCodeBloc.dart';
-import 'package:aduanas_app/src/bloc/recoveremail/recoveEmailBloc.dart';
-import 'package:aduanas_app/src/bloc/utils/utilsBloc.dart';
-import 'package:aduanas_app/src/validators/validators.dart';
-import 'package:aduanas_app/src/models/password_model.dart';
-import 'package:aduanas_app/src/services/dialog_service.dart';
+import 'package:flutter_chat/src/bloc/recovercode/recoverCodeBloc.dart';
+import 'package:flutter_chat/src/bloc/recoverphone/recovePhoneBloc.dart';
+import 'package:flutter_chat/src/bloc/utils/utilsBloc.dart';
+import 'package:flutter_chat/src/validators/validators.dart';
+import 'package:flutter_chat/src/models/password_model.dart';
+import 'package:flutter_chat/src/services/dialog_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 class SmsServiceBloc with Validators{
- RecoverEmailBloc blocEmailRecover;
+ RecoverPhoneBloc blocPhoneRecover;
    RecoverCodeBloc blocCodeRecover;
-    UtilsBloc blocSpinnerRecover ;
-      SmsServiceBloc({this.blocEmailRecover, this.blocCodeRecover, this.blocSpinnerRecover});
+    UtilsBloc blocSpinnerRecover;
+      SmsServiceBloc({this.blocPhoneRecover, this.blocCodeRecover, this.blocSpinnerRecover});
     ///FirebaseMessagin Service
      String phoneNumber="";
      String smsCode;
@@ -50,13 +49,13 @@ class SmsServiceBloc with Validators{
          var errorText = exception.code + ": " + exception.message;
           openDialog(context, errorText);      
     };
-    var phoneNumber =blocEmailRecover.getDataEmailRecover();
+    var phoneNumber =blocPhoneRecover.getDataPhoneRecover();
     print("phoneNumber ----------------------- $phoneNumber");
     await FirebaseAuth.instance.verifyPhoneNumber(   
         phoneNumber: "+593${phoneNumber.substring(1)}",
         codeAutoRetrievalTimeout: autoRetrieve,
         codeSent: smsCodeSent,
-        timeout:  Duration(seconds: ConstantsApp.of(context).appConfig.timeout),
+        timeout: const Duration(seconds: 5),
         verificationCompleted: verifiedSuccess,
         verificationFailed: veriFailed);        
   }

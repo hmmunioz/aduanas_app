@@ -1,13 +1,9 @@
-import 'dart:math';
-
-import 'package:aduanas_app/src/models/tramites_model.dart';
 import 'package:flutter/material.dart';
-import 'package:aduanas_app/src/widgets/appMicroCircle.dart';
+import 'package:flutter_chat/src/widgets/appMicroCircle.dart';
 
 class CardElementList extends StatefulWidget {
-  final TramiteModel tramiteModel;
-  final int type;
-  CardElementList(this.tramiteModel, this.type);
+  final dynamic element;
+  CardElementList(this.element);
   @override
   _CardElementListState createState() => _CardElementListState();
 }
@@ -15,29 +11,31 @@ class CardElementList extends StatefulWidget {
 class _CardElementListState extends State<CardElementList> {
   @override
   Widget build(BuildContext context) {
-     var initials = widget.tramiteModel.getResponsable.substring(0,1).toUpperCase() + " " +widget.tramiteModel.getResponsable.substring(1,2).toUpperCase();
-    
     return
-     ListTile(    
-       leading: CircleAvatar(
-         radius: 25.0,
-            backgroundColor: Theme.of(context).primaryColor,
-            child: Text(
-              initials,
-              style: TextStyle(color: Colors.white),
-            ),
-          ),  
-        contentPadding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+    Card(
+  elevation: 0,
+  color: Colors.transparent,
+ shape:RoundedRectangleBorder(
+    borderRadius: BorderRadius.only(
+      bottomLeft:Radius.circular(20) ,
+      bottomRight: Radius.circular(20),
+      topRight: Radius.circular(20),
+      topLeft: Radius.circular(20),
+      ),
+    
+   ),
+  child:ListTile(      
+        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         title: Text(
-          "#"+widget.tramiteModel.getNumeroTramite,
+          widget.element['name'],
           style: TextStyle(
-              fontSize: 21, fontWeight: FontWeight.bold, color:Theme.of(context).primaryColor),
+              fontSize: 21, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         subtitle: Text(
-          widget.tramiteModel.getActividad,
-          style: TextStyle(fontSize: 18, color:Theme.of(context).accentColor),
+          widget.element['descripcion'],
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
-        trailing: MicroCircle(groupId: widget.type)/* )  */
+        trailing: MicroCircle(groupId: widget.element['groupId'])) 
     );
       }
 }

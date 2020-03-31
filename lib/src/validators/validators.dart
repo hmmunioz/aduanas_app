@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:aduanas_app/src/screens/waiting_screen.dart';
 import 'package:flutter/widgets.dart';
-import 'package:aduanas_app/src/models/password_model.dart';
-import 'package:aduanas_app/src/screens/aforos_screen.dart';
-import 'package:aduanas_app/src/screens/home_screen.dart';
-import 'package:aduanas_app/src/screens/qrscanner_screen.dart';
-import 'package:aduanas_app/src/screens/tramites_screen.dart';
+import 'package:flutter_chat/src/models/password_model.dart';
+import 'package:flutter_chat/src/screens/aforos_screen.dart';
+import 'package:flutter_chat/src/screens/home_screen.dart';
+import 'package:flutter_chat/src/screens/qrscanner_screen.dart';
+import 'package:flutter_chat/src/screens/tramites_screen.dart';
 
 class Validators{
   final validateEmail = 
@@ -25,7 +24,7 @@ class Validators{
         StreamTransformer<String, String>
         .fromHandlers(
           handleData: (pass, sink){
-            if(pass.length>2){
+            if(pass.length>5){
               sink.add(pass);
             }else{
               sink.addError("Contraseña invalida");
@@ -52,7 +51,7 @@ class Validators{
       StreamTransformer<String, String>
       .fromHandlers(
         handleData: (code, sink){       
-         if(code!=null && code.length==5){
+         if(code!=null && code.length==6){
    
            sink.add(code);
          }
@@ -66,8 +65,9 @@ class Validators{
   final validateEqualPassword =
   StreamTransformer<PasswordModel,bool>
   .fromHandlers(
-          handleData: (modelPassword, sink){  
-         if(modelPassword.getNewPassword.length>5 && modelPassword.getNewPassword==modelPassword.getRepeatNewPassword && modelPassword.getRepeatNewPassword!="" && modelPassword.getNewPassword!="" && modelPassword!=null)
+          handleData: (modelPassword, sink){       
+            print("data for handlressssss");
+         if(modelPassword.getNewPassword==modelPassword.getRepeatNewPassword && modelPassword.getRepeatNewPassword!="" && modelPassword.getNewPassword!="" && modelPassword!=null)
          {           
             sink.add(true);
          }
@@ -107,19 +107,13 @@ class Validators{
             sink.add(TramitesScreen());
          }
          else if(actualScreen==2){
-             sink.add(WaitingScreen());
-         }
-         else if(actualScreen==3){
-             sink.add(WaitingScreen());
-         }
-         else if(actualScreen==4){
-             sink.add(WaitingScreen());
+             sink.add(AforosScreen());
          }
          else if(actualScreen==5){
              sink.add(ScanScreen());
          }
          else if(actualScreen==null){
-             sink.add(WaitingScreen());
+             sink.add(AforosScreen());
          }         
          else{
            sink.addError("Numero incorrecto");
@@ -157,34 +151,4 @@ class Validators{
             }
           }
         );
-
-   final validateSearch = 
-        StreamTransformer<String,String>
-        .fromHandlers(
-          handleData: (tramiteIsOk, sink){
-            if(tramiteIsOk!=null){
-              sink.add(tramiteIsOk);
-            }else{
-              sink.addError("No se puedo agregara la lista");
-            }
-          }
-        );
-
-   final validateDrawer =
-  StreamTransformer<bool,bool>
-  .fromHandlers(
-          handleData: (changeDrawer, sink){       
-            print("data for handlressssss");
-
-         if(changeDrawer ==true  )
-         {           
-            sink.add(changeDrawer);
-         }
-         
-         else{
-           sink.addError(changeDrawer);
-         }
-          
-        }
-  );
 }

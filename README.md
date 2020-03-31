@@ -1,4 +1,4 @@
-# aduanas_app
+# flutter_chat
 
 A new Flutter project.
 
